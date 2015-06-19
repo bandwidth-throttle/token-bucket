@@ -34,11 +34,13 @@ class TokenBucket
     
     /**
      * One millisecond in microseconds.
+     * @internal
      */
     const MILLISECOND = 1000;
     
     /**
      * One secon in microseconds.
+     * @internal
      */
     const SECOND = 1000000;
     
@@ -59,10 +61,10 @@ class TokenBucket
      * Consumes tokens for the packet.
      *
      * Consumes tokens for the packet size. If there aren't sufficient tokens
-     * the method sleeps untils there are enough tokens.
+     * the method blocks until there are enough tokens.
      *
      * @param int $tokens The token amount.
-     * @throws LengthException The token amount is larger than the capacity.
+     * @throws \LengthException The token amount is larger than the capacity.
      */
     public function consume($tokens)
     {

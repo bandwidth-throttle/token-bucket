@@ -13,6 +13,15 @@ composer require bandwidth-throttle/token-bucket
 
 # Usage
 
+The package is in the namespace
+[`bandwidthThrottle\tokenBucket`](http://bandwidth-throttle.github.io/token-bucket/api/namespace-bandwidthThrottle.tokenBucket.html).
+Use [`TokenBucketBuilder`](http://bandwidth-throttle.github.io/token-bucket/api/class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html)
+to build a [`TokenBucket`](http://bandwidth-throttle.github.io/token-bucket/api/class-bandwidthThrottle.tokenBucket.TokenBucket.html).
+You can then consume tokens with
+[`TokenBucket::consume()`](http://bandwidth-throttle.github.io/token-bucket/api/class-bandwidthThrottle.tokenBucket.TokenBucket.html#_consume).
+
+## Example
+
 ```php
 <?php
 
