@@ -80,7 +80,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
     
     /**
      * Tests comsumption of cumulated tokens.
-     * 
+     *
      * @test
      */
     public function testConsumption()
@@ -106,7 +106,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
     
     /**
      * Tests consume() won't sleep less than one millisecond.
-     * 
+     *
      * @test
      */
     public function testMinimumSleep()

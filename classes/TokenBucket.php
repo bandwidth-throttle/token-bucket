@@ -112,7 +112,7 @@ class TokenBucket
     
     /**
      * Sets the amount of tokens of this bucket.
-     * 
+     *
      * @param int $tokens The amount of tokens.
      */
     private function setTokens($tokens)
@@ -134,7 +134,7 @@ class TokenBucket
     
     /**
      * Converts a duration of seconds into an amount of tokens.
-     * 
+     *
      * @param float The duration in seconds.
      *
      * @return int The amount of tokens.
@@ -146,7 +146,7 @@ class TokenBucket
     
     /**
      * Converts an amount of tokens into a duration of seconds.
-     * 
+     *
      * @param int $tokens The amount of tokens.
      *
      * @return float The duration in seconds.
