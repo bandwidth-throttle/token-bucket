@@ -106,7 +106,7 @@
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#5-94" title="Go to source code">TokenBucketBuilder.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#5-224" title="Go to source code">TokenBucketBuilder.php</a>
 		<br>
 	</div>
 
@@ -114,7 +114,7 @@
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="setRateInBytesPerSecond" id="_setRateInBytesPerSecond">
+	<tr data-order="setInitialTokens" id="_setInitialTokens">
 
 		<td class="attributes"><code>
 			 public 
@@ -125,31 +125,39 @@
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_setRateInBytesPerSecond">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#25-33" title="Go to source code">setRateInBytesPerSecond</a>( <span>integer <var>$bytes</var></span> )</code>
+		<a class="anchor" href="#_setInitialTokens">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#66-79" title="Go to source code">setInitialTokens</a>( <span>integer <var>$tokens</var></span>, <span>string <var>$unit</var> = <code><a href="class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#BYTES">bandwidthThrottle\tokenBucket\TokenBucketBuilder::<b>BYTES</b></a></code></span> )</code>
 
 		<div class="description short">
-			<p>Set the rate in bytes per second.</p>
+			<p>Sets the amount of initial tokens.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Set the rate in bytes per second.</p>
+			<p>Sets the amount of initial tokens.</p>
+
+<p>Setting the initial amount is optional. Default is 0.</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
-					<dt><var>$bytes</var></dt>
-					<dd>Bytes per second rate.</dd>
+					<dt><var>$tokens</var></dt>
+					<dd>The initial amount of tokens.</dd>
+					<dt><var>$unit</var></dt>
+					<dd>The unit for the amount, default is bytes.</dd>
 				</dl></div>
 
 
+				<h4>Throws</h4>
+				<div class="list">
+					InvalidArgumentException<br>The unit was invalid.
+				</div>
 
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="setRateInKiBperSecond" id="_setRateInKiBperSecond">
+	<tr data-order="setRate" id="_setRate">
 
 		<td class="attributes"><code>
 			 public 
@@ -160,31 +168,37 @@
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_setRateInKiBperSecond">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#35-43" title="Go to source code">setRateInKiBperSecond</a>( <span>integer <var>$kibibytes</var></span> )</code>
+		<a class="anchor" href="#_setRate">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#81-92" title="Go to source code">setRate</a>( <span>integer <var>$rate</var></span>, <span>string <var>$unit</var> = <code><a href="class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#BYTES">bandwidthThrottle\tokenBucket\TokenBucketBuilder::<b>BYTES</b></a></code></span> )</code>
 
 		<div class="description short">
-			<p>Set the rate in kibibytes per second.</p>
+			<p>Sets the rate of token production per second.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Set the rate in kibibytes per second.</p>
+			<p>Sets the rate of token production per second.</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
-					<dt><var>$kibibytes</var></dt>
-					<dd>Kibibytes per second rate.</dd>
+					<dt><var>$rate</var></dt>
+					<dd>The amount of tokens per second.</dd>
+					<dt><var>$unit</var></dt>
+					<dd>The unit for the amount, default is bytes.</dd>
 				</dl></div>
 
 
+				<h4>Throws</h4>
+				<div class="list">
+					InvalidArgumentException<br>The unit was invalid.
+				</div>
 
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="setRateInMiBPerSecond" id="_setRateInMiBPerSecond">
+	<tr data-order="setCapacity" id="_setCapacity">
 
 		<td class="attributes"><code>
 			 public 
@@ -195,129 +209,33 @@
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_setRateInMiBPerSecond">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#45-53" title="Go to source code">setRateInMiBPerSecond</a>( <span>integer <var>$mebibytes</var></span> )</code>
+		<a class="anchor" href="#_setCapacity">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#94-108" title="Go to source code">setCapacity</a>( <span>integer <var>$capacity</var></span>, <span>string <var>$unit</var> = <code><a href="class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#BYTES">bandwidthThrottle\tokenBucket\TokenBucketBuilder::<b>BYTES</b></a></code></span> )</code>
 
 		<div class="description short">
-			<p>Set the rate in mebibytes per second.</p>
+			<p>Sets the capacity of the token bucket.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Set the rate in mebibytes per second.</p>
+			<p>Sets the capacity of the token bucket.</p>
+
+<p>Setting the capacity is optional. If no capacity was set, the capacity
+is set to the amount of tokens which will be produced in one second.</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
-					<dt><var>$mebibytes</var></dt>
-					<dd>mebibytes per second rate.</dd>
+					<dt><var>$capacity</var></dt>
+					<dd>The amount of tokens.</dd>
+					<dt><var>$unit</var></dt>
+					<dd>The unit for the amount, default is bytes.</dd>
 				</dl></div>
 
 
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="setCapacityInBytes" id="_setCapacityInBytes">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_setCapacityInBytes">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#55-63" title="Go to source code">setCapacityInBytes</a>( <span>integer <var>$bytes</var></span> )</code>
-
-		<div class="description short">
-			<p>Sets the capacity in bytes.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Sets the capacity in bytes.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$bytes</var></dt>
-					<dd>The capacity in bytes.</dd>
-				</dl></div>
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="setCapacityInKiB" id="_setCapacityInKiB">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_setCapacityInKiB">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#65-73" title="Go to source code">setCapacityInKiB</a>( <span>integer <var>$kibibytes</var></span> )</code>
-
-		<div class="description short">
-			<p>Sets the capacity in kibibytes.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Sets the capacity in kibibytes.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$kibibytes</var></dt>
-					<dd>The capacity in kibibytes.</dd>
-				</dl></div>
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="setCapacityInMiB" id="_setCapacityInMiB">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_setCapacityInMiB">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#75-83" title="Go to source code">setCapacityInMiB</a>( <span>integer <var>$mebibytes</var></span> )</code>
-
-		<div class="description short">
-			<p>Sets the capacity in mebibytes.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Sets the capacity in mebibytes.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$mebibytes</var></dt>
-					<dd>The capacity in mebibytes.</dd>
-				</dl></div>
-
-
+				<h4>Throws</h4>
+				<div class="list">
+					InvalidArgumentException<br>The unit was invalid.
+				</div>
 
 
 
@@ -336,7 +254,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_build">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#85-93" title="Go to source code">build</a>( )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#110-126" title="Go to source code">build</a>( )</code>
 
 		<div class="description short">
 			<p>Builds the Token Bucket.</p>
@@ -344,6 +262,9 @@
 
 		<div class="description detailed hidden">
 			<p>Builds the Token Bucket.</p>
+
+<p>If no capacity was set, the capacity is set to the amount of tokens which
+will be produced in one second.</p>
 
 
 
@@ -358,6 +279,264 @@
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="setRateInBytesPerSecond" id="_setRateInBytesPerSecond" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setRateInBytesPerSecond">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#147-158" title="Go to source code">setRateInBytesPerSecond</a>( <span>integer <var>$bytes</var></span> )</code>
+
+		<div class="description short">
+			<p>Set the rate in bytes per second.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Set the rate in bytes per second.</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						since 0.2<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$bytes</var></dt>
+					<dd>Bytes per second rate.</dd>
+				</dl></div>
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#_setRate">bandwidthThrottle\tokenBucket\TokenBucketBuilder::setRate()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setRateInKiBperSecond" id="_setRateInKiBperSecond" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setRateInKiBperSecond">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#160-171" title="Go to source code">setRateInKiBperSecond</a>( <span>integer <var>$kibibytes</var></span> )</code>
+
+		<div class="description short">
+			<p>Set the rate in kibibytes per second.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Set the rate in kibibytes per second.</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						since 0.2<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$kibibytes</var></dt>
+					<dd>Kibibytes per second rate.</dd>
+				</dl></div>
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#_setRate">bandwidthThrottle\tokenBucket\TokenBucketBuilder::setRate()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setRateInMiBPerSecond" id="_setRateInMiBPerSecond" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setRateInMiBPerSecond">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#173-184" title="Go to source code">setRateInMiBPerSecond</a>( <span>integer <var>$mebibytes</var></span> )</code>
+
+		<div class="description short">
+			<p>Set the rate in mebibytes per second.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Set the rate in mebibytes per second.</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						since 0.2<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$mebibytes</var></dt>
+					<dd>mebibytes per second rate.</dd>
+				</dl></div>
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#_setRate">bandwidthThrottle\tokenBucket\TokenBucketBuilder::setRate()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setCapacityInBytes" id="_setCapacityInBytes" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setCapacityInBytes">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#186-197" title="Go to source code">setCapacityInBytes</a>( <span>integer <var>$bytes</var></span> )</code>
+
+		<div class="description short">
+			<p>Sets the capacity in bytes.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets the capacity in bytes.</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						since 0.2<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$bytes</var></dt>
+					<dd>The capacity in bytes.</dd>
+				</dl></div>
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#_setCapacity">bandwidthThrottle\tokenBucket\TokenBucketBuilder::setCapacity()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setCapacityInKiB" id="_setCapacityInKiB" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setCapacityInKiB">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#199-210" title="Go to source code">setCapacityInKiB</a>( <span>integer <var>$kibibytes</var></span> )</code>
+
+		<div class="description short">
+			<p>Sets the capacity in kibibytes.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets the capacity in kibibytes.</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						since 0.2<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$kibibytes</var></dt>
+					<dd>The capacity in kibibytes.</dd>
+				</dl></div>
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#_setCapacity">bandwidthThrottle\tokenBucket\TokenBucketBuilder::setCapacity()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setCapacityInMiB" id="_setCapacityInMiB" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setCapacityInMiB">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#212-223" title="Go to source code">setCapacityInMiB</a>( <span>integer <var>$mebibytes</var></span> )</code>
+
+		<div class="description short">
+			<p>Sets the capacity in mebibytes.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets the capacity in mebibytes.</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						since 0.2<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$mebibytes</var></dt>
+					<dd>The capacity in mebibytes.</dd>
+				</dl></div>
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#_setCapacity">bandwidthThrottle\tokenBucket\TokenBucketBuilder::setCapacity()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	</table>
 
 
@@ -367,6 +546,129 @@
 
 
 
+	<table class="summary constants" id="constants">
+	<caption>Constants summary</caption>
+	<tr data-order="BYTES" id="BYTES">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#15-18" title="Go to source code"><b>BYTES</b></a>
+			</code>
+
+			<div class="description short">
+				<p>Unit for bytes.</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Unit for bytes.</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#BYTES" class="anchor">#</a>
+				<code><span class="php-quote">&quot;bytes&quot;</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="KILOBYTES" id="KILOBYTES">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#20-23" title="Go to source code"><b>KILOBYTES</b></a>
+			</code>
+
+			<div class="description short">
+				<p>Unit for kilobytes (1000 bytes).</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Unit for kilobytes (1000 bytes).</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#KILOBYTES" class="anchor">#</a>
+				<code><span class="php-quote">&quot;kilobytes&quot;</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="KIBIBYTES" id="KIBIBYTES">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#25-28" title="Go to source code"><b>KIBIBYTES</b></a>
+			</code>
+
+			<div class="description short">
+				<p>Unit for kibibytes (1024 bytes).</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Unit for kibibytes (1024 bytes).</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#KIBIBYTES" class="anchor">#</a>
+				<code><span class="php-quote">&quot;kibibytes&quot;</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="MEGABYTES" id="MEGABYTES">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#30-33" title="Go to source code"><b>MEGABYTES</b></a>
+			</code>
+
+			<div class="description short">
+				<p>Unit for megabytes (1000 kilobytes).</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Unit for megabytes (1000 kilobytes).</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#MEGABYTES" class="anchor">#</a>
+				<code><span class="php-quote">&quot;megabytes&quot;</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="MEBIBYTES" id="MEBIBYTES">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html#35-38" title="Go to source code"><b>MEBIBYTES</b></a>
+			</code>
+
+			<div class="description short">
+				<p>Unit for mebibytes (1024 kibibytes).</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Unit for mebibytes (1024 kibibytes).</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#MEBIBYTES" class="anchor">#</a>
+				<code><span class="php-quote">&quot;mebibytes&quot;</span></code>
+			</div>
+		</td>
+	</tr>
+	</table>
 
 
 

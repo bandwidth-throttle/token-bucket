@@ -106,7 +106,7 @@
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#5-160" title="Go to source code">TokenBucket.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#5-165" title="Go to source code">TokenBucket.php</a>
 		<br>
 	</div>
 
@@ -126,7 +126,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#47-58" title="Go to source code">__construct</a>( <span>integer <var>$capacity</var></span>, <span>integer <var>$microRate</var></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#47-63" title="Go to source code">__construct</a>( <span>integer <var>$capacity</var></span>, <span>integer <var>$microRate</var></span>, <span>integer <var>$initialTokens</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
 			<p>Initializes an empty Token bucket.</p>
@@ -142,6 +142,8 @@
 					<dd>Capacity of the bucket.</dd>
 					<dt><var>$microRate</var></dt>
 					<dd>Microseconds for adding one token.</dd>
+					<dt><var>$initialTokens</var></dt>
+					<dd>Initial amount of tokens, default is 0.</dd>
 				</dl></div>
 
 
@@ -163,7 +165,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_consume">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#60-92" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#65-97" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span> )</code>
 
 		<div class="description short">
 			<p>Consumes tokens for the packet.</p>
@@ -205,7 +207,7 @@ the method blocks until there are enough tokens.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getCapacity">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#94-102" title="Go to source code">getCapacity</a>( )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#99-107" title="Go to source code">getCapacity</a>( )</code>
 
 		<div class="description short">
 			<p>The token capacity of this bucket.</p>
