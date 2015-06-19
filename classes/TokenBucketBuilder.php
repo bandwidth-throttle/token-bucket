@@ -85,10 +85,18 @@ class TokenBucketBuilder
     /**
      * Builds the Token Bucket.
      *
+     * If no capacity was set, the capacity is set to amount of tokens which
+     * will be produced in one second.
+     *
      * @return TokenBucket The Token Bucket
      */
     public function build()
     {
-        return new TokenBucket($this->capacity, $this->microRate);
+        $capacity = $this->capacity;
+        if (empty($capacity)) {
+            $capacity = ceil(TokenBucket::SECOND / $this->microRate);
+
+        }
+        return new TokenBucket($capacity, $this->microRate);
     }
 }
