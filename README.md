@@ -29,8 +29,8 @@ use bandwidthThrottle\tokenBucket\TokenBucketBuilder;
 
 // Build a token bucket with a capacity of 10MiB and a rate of 1 MiB/s.
 $builder = new TokenBucketBuilder();
-$builder->setRateInMiBPerSecond(1);
-$builder->setCapacityInMiB(10);
+$builder->setCapacity(10, TokenBucketBuilder::MEBIBYTES);
+$builder->setRate(1, TokenBucketBuilder::MEBIBYTES);
 
 $tokenBucket = $builder->build();
 

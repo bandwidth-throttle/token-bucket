@@ -57,7 +57,27 @@ class TokenBucketBuilder
      * @var int Token capacity in bytes.
      */
     private $capacity;
+    
+    /**
+     * @var int The amount of initial tokens, default is 0.
+     */
+    private $initialTokens = 0;
 
+    /**
+     * Sets the amount of initial tokens.
+     *
+     * Setting the initial amount is optional. Default is 0.
+     *
+     * @param int    $tokens The initial amount of tokens.
+     * @param string $unit   The unit for the amount, default is bytes.
+     *
+     * @throws \InvalidArgumentException The unit was invalid.
+     */
+    public function setInitialTokens($tokens, $unit = self::BYTES)
+    {
+        $this->initialTokens = $this->convertToBytes($tokens, $unit);
+    }
+    
     /**
      * Sets the rate of token production per second.
      *
@@ -102,7 +122,7 @@ class TokenBucketBuilder
             $capacity = ceil(TokenBucket::SECOND / $this->microRate);
 
         }
-        return new TokenBucket($capacity, $this->microRate);
+        return new TokenBucket($capacity, $this->microRate, $this->initialTokens);
     }
     
     /**

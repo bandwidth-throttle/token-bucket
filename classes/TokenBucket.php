@@ -47,14 +47,19 @@ class TokenBucket
     /**
      * Initializes an empty Token bucket.
      *
-     * @param int $capacity  Capacity of the bucket.
-     * @param int $microRate Microseconds for adding one token.
+     * @param int $capacity      Capacity of the bucket.
+     * @param int $microRate     Microseconds for adding one token.
+     * @param int $initialTokens Initial amount of tokens, default is 0.
      */
-    public function __construct($capacity, $microRate)
+    public function __construct($capacity, $microRate, $initialTokens = 0)
     {
-        $this->capacity       = $capacity;
-        $this->microRate      = $microRate;
-        $this->microTimestamp = microtime(true);
+        $this->capacity  = $capacity;
+        $this->microRate = $microRate;
+        
+        if ($initialTokens > $capacity) {
+            throw new \LengthException("Initial token amount ($initialTokens) is larger than the capacity ($capacity).");
+        }
+        $this->setTokens($initialTokens);
     }
     
     /**

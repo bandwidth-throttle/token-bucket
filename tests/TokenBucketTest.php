@@ -49,6 +49,49 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
         $tokenBucket->consume(1);
         $this->assertEquals(microtime(true) - $time, 1);
     }
+
+    /**
+     * Tests initializing with tokens.
+     *
+     * @param int $capacity The capacity.
+     * @param int $tokens   The initial amount of tokens.
+     *
+     * @test
+     * @dataProvider provideTestSetInitialTokens
+     */
+    public function testSetInitialTokens($capacity, $tokens)
+    {
+        $tokenBucket = new TokenBucket($capacity, TokenBucket::SECOND, $tokens);
+        $time        = microtime(true);
+
+        $tokenBucket->consume($tokens);
+        $tokenBucket->consume(1);
+        $this->assertEquals(1, microtime(true) - $time);
+    }
+
+    /**
+     * Returns test cases for testSetInitialTokens().
+     *
+     * @return int[][] Test cases.
+     */
+    public function provideTestSetInitialTokens()
+    {
+        return [
+            [10, 1],
+            [10, 10]
+        ];
+    }
+
+    /**
+     * Tests initializing with too many tokens.
+     *
+     * @test
+     * @expectedException \LengthException
+     */
+    public function testInitialTokensTooMany()
+    {
+        new TokenBucket(20, TokenBucket::SECOND, 21);
+    }
     
     /**
      * Tests consuming more than the capacity.
@@ -56,7 +99,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \LengthException
      */
-    public function testConsumeTooMuch()
+    public function testConsumeTooMany()
     {
         $tokenBucket = new TokenBucket(20, TokenBucket::SECOND);
         $tokenBucket->consume(21);
