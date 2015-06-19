@@ -1,0 +1,8 @@
+{
+    "name": "bandwidth-throttle/token-bucket-doc",
+    "require": {
+        "php": ">=5",
+	"bandwidth-throttle/token-bucket": "dev-master",
+	"apigen/apigen": "^4"
+    }
+}
