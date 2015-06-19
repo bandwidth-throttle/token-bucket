@@ -57,7 +57,9 @@ class TokenBucket
         $this->microRate = $microRate;
         
         if ($initialTokens > $capacity) {
-            throw new \LengthException("Initial token amount ($initialTokens) is larger than the capacity ($capacity).");
+            throw new \LengthException(
+                "Initial token amount ($initialTokens) is larger than the capacity ($capacity)."
+            );
         }
         $this->setTokens($initialTokens);
     }
