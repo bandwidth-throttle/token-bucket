@@ -45,7 +45,7 @@ class TokenBucket
     const SECOND = 1000000;
     
     /**
-     * Initializes an empty Token bucket.
+     * Initializes the Token bucket.
      *
      * @param int $capacity      Capacity of the bucket.
      * @param int $microRate     Microseconds for adding one token.
