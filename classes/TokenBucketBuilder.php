@@ -44,8 +44,8 @@ class TokenBucketBuilder
         self::BYTES     => 1,
         self::KILOBYTES => 1000,
         self::KIBIBYTES => 1024,
-        self::MEGABYTES => 1000^2,
-        self::MEGIBYTES => 1024^2,
+        self::MEGABYTES => 1000000,
+        self::MEBIBYTES => 1048576,
     ];
     
     /**
