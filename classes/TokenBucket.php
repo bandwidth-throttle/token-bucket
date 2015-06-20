@@ -33,12 +33,6 @@ class TokenBucket
     private $bcScale = 8;
     
     /**
-     * One millisecond in microseconds.
-     * @internal
-     */
-    const MILLISECOND = 1000;
-    
-    /**
      * One second in microseconds.
      * @internal
      */
@@ -67,13 +61,17 @@ class TokenBucket
     /**
      * Consumes tokens for the packet.
      *
-     * Consumes tokens for the packet size. If there aren't sufficient tokens
-     * the method blocks until there are enough tokens.
+     * This method consumes only tokens if there are sufficient tokens available.
+     * If there aren't sufficient tokens, no tokens will be removed and the
+     * remaining amount of tokens is written to $missingTokens.
      *
-     * @param int $tokens The token amount.
+     * @param int $tokens         The token amount.
+     * @param int &$missingTokens The remaining amount of tokens to wait.
+     *
      * @throws \LengthException The token amount is larger than the capacity.
+     * @return bool If tokens were consumed. 
      */
-    public function consume($tokens)
+    public function consume($tokens, &$missingTokens = 0)
     {
         if ($tokens > $this->capacity) {
             throw new \LengthException("Token amount ($tokens) is larger than the capacity ($this->capacity).");
@@ -84,20 +82,28 @@ class TokenBucket
             $this->setTokens($this->capacity);
         }
         
-        // Wait until tokens are refilled
-        while ($this->getTokens() < $tokens) {
-            $missingTokens = $tokens - $this->getTokens();
-            if ($missingTokens <= 0) {
-                break;
+        $delta = $this->getTokens() - $tokens;
+        if ($delta < 0) {
+            $missingTokens = -$delta;
+            return false;
 
-            }
-            // sleep, but not less than a millisecond
-            usleep(max($missingTokens * $this->microRate, self::MILLISECOND));
+        } else {
+            $this->removeTokens($tokens);
+            $missingTokens = 0;
+            return true;
         }
-        
-        $this->removeTokens($tokens);
     }
-        
+
+    /**
+     * Returns the amount of microseconds to produce one token.
+     *
+     * @return int Microseconds for one token.
+     */
+    public function getMicroRate()
+    {
+        return $this->microRate;
+    }
+    
     /**
      * The token capacity of this bucket.
      *

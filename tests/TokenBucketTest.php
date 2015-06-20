@@ -44,10 +44,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
     public function testInitialBucketIsEmpty()
     {
         $tokenBucket = new TokenBucket(10, TokenBucket::SECOND);
-        $time        = microtime(true);
 
-        $tokenBucket->consume(1);
-        $this->assertEquals(microtime(true) - $time, 1);
+        $this->assertFalse($tokenBucket->consume(1));
     }
 
     /**
@@ -62,11 +60,9 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
     public function testSetInitialTokens($capacity, $tokens)
     {
         $tokenBucket = new TokenBucket($capacity, TokenBucket::SECOND, $tokens);
-        $time        = microtime(true);
 
-        $tokenBucket->consume($tokens);
-        $tokenBucket->consume(1);
-        $this->assertEquals(1, microtime(true) - $time);
+        $this->assertTrue($tokenBucket->consume($tokens));
+        $this->assertFalse($tokenBucket->consume(1));
     }
 
     /**
@@ -81,7 +77,78 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
             [10, 10]
         ];
     }
+    
+    /**
+     * Tests comsumption of cumulated tokens.
+     *
+     * @test
+     */
+    public function testConsume()
+    {
+        $bucket   = new TokenBucket(10, TokenBucket::SECOND);
+        sleep(10);
+        
+        $this->assertTrue($bucket->consume(1));
+        $this->assertTrue($bucket->consume(2));
+        $this->assertTrue($bucket->consume(3));
+        $this->assertTrue($bucket->consume(4));
+        
+        $this->assertFalse($bucket->consume(1));
+        
+        sleep(3);
+        $this->assertFalse($bucket->consume(4, $missingTokens));
+        $this->assertEquals(1, $missingTokens);
+    }
 
+    /**
+     * Test token rate.
+     * 
+     * @test
+     */
+    public function testWaitingAddsTokens()
+    {
+        $bucket = new TokenBucket(10, TokenBucket::SECOND);
+
+        $this->assertFalse($bucket->consume(1));
+
+        sleep(1);
+        $this->assertTrue($bucket->consume(1));
+        
+        sleep(2);
+        $this->assertTrue($bucket->consume(2));
+    }
+    
+    /**
+     * Tests consuming insuficient tokens wont remove any token.
+     * 
+     * @test
+     */
+    public function testConsumeInsufficientDontRemoveTokens()
+    {
+        $bucket = new TokenBucket(10, TokenBucket::SECOND, 1);
+
+        $this->assertFalse($bucket->consume(2, $missingTokens));
+        $this->assertEquals(1, $missingTokens);
+
+        $this->assertFalse($bucket->consume(2, $missingTokens));
+        $this->assertEquals(1, $missingTokens);
+        
+        $this->assertTrue($bucket->consume(1));
+    }
+
+    /**
+     * Tests consuming tokens.
+     * 
+     * @test
+     */
+    public function testConsumeSufficientRemoveTokens()
+    {
+        $bucket = new TokenBucket(10, TokenBucket::SECOND, 1);
+        $this->assertTrue($bucket->consume(1));
+        $this->assertFalse($bucket->consume(1, $missingTokens));
+        $this->assertEquals(1, $missingTokens);
+    }
+    
     /**
      * Tests initializing with too many tokens.
      *
@@ -115,49 +182,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
         $tokenBucket = new TokenBucket(10, TokenBucket::SECOND);
         sleep(11);
 
-        $time = microtime(true);
-        $tokenBucket->consume(10);
-        $tokenBucket->consume(1);
-        $this->assertEquals(microtime(true) - $time, 1);
-    }
-    
-    /**
-     * Tests comsumption of cumulated tokens.
-     *
-     * @test
-     */
-    public function testConsumption()
-    {
-        $tokenBucket = new TokenBucket(10, TokenBucket::SECOND);
-        sleep(10);
-        $time = microtime(true);
-        
-        $tokenBucket->consume(1);
-        $tokenBucket->consume(2);
-        $tokenBucket->consume(3);
-        $tokenBucket->consume(4);
-        $this->assertEquals(microtime(true) - $time, 0);
-        
-        $tokenBucket->consume(1);
-        $this->assertEquals(microtime(true) - $time, 1);
-        
-        sleep(3);
-        $time = microtime(true);
-        $tokenBucket->consume(4);
-        $this->assertEquals(microtime(true) - $time, 1);
-    }
-    
-    /**
-     * Tests consume() won't sleep less than one millisecond.
-     *
-     * @test
-     */
-    public function testMinimumSleep()
-    {
-        $tokenBucket = new TokenBucket(10, 1);
-        $time        = microtime(true);
-
-        $tokenBucket->consume(1);
-        $this->assertLessThan(abs((microtime(true) - $time) - 0.001), 1e-10);
+        $this->assertTrue($tokenBucket->consume(10));
+        $this->assertFalse($tokenBucket->consume(1));
     }
 }

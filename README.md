@@ -15,27 +15,20 @@ composer require bandwidth-throttle/token-bucket
 
 The package is in the namespace
 [`bandwidthThrottle\tokenBucket`](http://bandwidth-throttle.github.io/token-bucket/api/namespace-bandwidthThrottle.tokenBucket.html).
-Use [`TokenBucketBuilder`](http://bandwidth-throttle.github.io/token-bucket/api/class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html)
-to build a [`TokenBucket`](http://bandwidth-throttle.github.io/token-bucket/api/class-bandwidthThrottle.tokenBucket.TokenBucket.html).
-You can then consume tokens with
-[`TokenBucket::consume()`](http://bandwidth-throttle.github.io/token-bucket/api/class-bandwidthThrottle.tokenBucket.TokenBucket.html#_consume).
 
 ## Example
 
 ```php
 <?php
 
-use bandwidthThrottle\tokenBucket\TokenBucketBuilder;
+use bandwidthThrottle\tokenBucket\TokenBucket;
 
-// Build a token bucket with a capacity of 10MiB and a rate of 1 MiB/s.
-$builder = new TokenBucketBuilder();
-$builder->setCapacity(10, TokenBucketBuilder::MEBIBYTES);
-$builder->setRate(1, TokenBucketBuilder::MEBIBYTES);
+$bucket = new TokenBucket(10, 1000);
 
-$tokenBucket = $builder->build();
-
-// Consume 1024 tokens.
-$tokenBucket->consume(1024);
+if (!$bucket->consume(1)) {
+    http_response_code(429);
+    exit();
+}
 ```
 
 # License and authors
