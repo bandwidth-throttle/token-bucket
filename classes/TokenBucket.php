@@ -39,7 +39,7 @@ class TokenBucket
     const MILLISECOND = 1000;
     
     /**
-     * One secon in microseconds.
+     * One second in microseconds.
      * @internal
      */
     const SECOND = 1000000;
