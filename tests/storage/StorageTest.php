@@ -27,7 +27,7 @@ class StorageTest extends \PHPUnit_Framework_TestCase
     
     /**
      * Tests setMicrotime() and getMicrotime().
-     * 
+     *
      * @param Storage $storage The SUT.
      * @test
      * @dataProvider provideImplementations
@@ -43,16 +43,17 @@ class StorageTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Tests isUninitialized().
-     * 
+     * Tests isBootstrapped().
+     *
      * @param Storage $storage The SUT.
      * @test
      * @dataProvider provideImplementations
      */
-    public function testIsUninitialized(Storage $storage)
+    public function testIsBootstrapped(Storage $storage)
     {
-        $this->assertTrue($storage->isUninitialized());
-        $storage->setMicrotime(microtime());
-        $this->assertFalse($storage->isUninitialized());
+        $this->assertFalse($storage->isBootstrapped());
+        $storage->bootstrap(123);
+        $this->assertTrue($storage->isBootstrapped());
+        $this->assertEquals(123, $storage->getMicrotime());
     }
 }

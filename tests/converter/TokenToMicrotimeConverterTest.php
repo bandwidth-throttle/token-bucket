@@ -15,7 +15,7 @@ class TokenToMicrotimeConverterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests convert().
-     * 
+     *
      * @test
      */
     public function testConvert()

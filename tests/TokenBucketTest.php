@@ -39,40 +39,62 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Tests the intial bucket is empty
+     * Tests bootstrap() is bootstraps not on already bootstrapped storages.
      *
      * @test
      */
-    public function testInitialBucketIsEmpty()
+    public function testBootstrapOnce()
+    {
+        $storage = $this->getMock(SingleProcessStorage::class, ["isBootstrapped", "bootstrap"]);
+        $storage->expects($this->any())
+                ->method("isBootstrapped")
+                ->willReturn(true);
+        
+        $bucket = new TokenBucket(1, 1, $storage);
+        
+        $storage->expects($this->never())
+                ->method("bootstrap");
+        
+        $bucket->bootstrap();
+    }
+    
+    /**
+     * Tests bootstrapping sets to 0 tokens.
+     *
+     * @test
+     */
+    public function testDefaultBootstrap()
     {
         $tokenBucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $tokenBucket->bootstrap();
 
         $this->assertFalse($tokenBucket->consume(1));
     }
 
     /**
-     * Tests initializing with tokens.
+     * Tests bootstrapping with tokens.
      *
      * @param int $capacity The capacity.
      * @param int $tokens   The initial amount of tokens.
      *
      * @test
-     * @dataProvider provideTestSetInitialTokens
+     * @dataProvider provideTestBootstrapWithInitialTokens
      */
-    public function testSetInitialTokens($capacity, $tokens)
+    public function testBootstrapWithInitialTokens($capacity, $tokens)
     {
-        $tokenBucket = new TokenBucket($capacity, 1000000, new SingleProcessStorage(), $tokens);
+        $tokenBucket = new TokenBucket($capacity, 1000000, new SingleProcessStorage());
+        $tokenBucket->bootstrap($tokens);
 
         $this->assertTrue($tokenBucket->consume($tokens));
         $this->assertFalse($tokenBucket->consume(1));
     }
 
     /**
-     * Returns test cases for testSetInitialTokens().
+     * Returns test cases for testBootstrapWithInitialTokens().
      *
      * @return int[][] Test cases.
      */
-    public function provideTestSetInitialTokens()
+    public function provideTestBootstrapWithInitialTokens()
     {
         return [
             [10, 1],
@@ -87,7 +109,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsume()
     {
-        $bucket   = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $bucket->bootstrap();
         sleep(10);
         
         $this->assertTrue($bucket->consume(1));
@@ -104,12 +127,13 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test token rate.
-     * 
+     *
      * @test
      */
     public function testWaitingAddsTokens()
     {
         $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $bucket->bootstrap();
 
         $this->assertFalse($bucket->consume(1));
 
@@ -122,12 +146,13 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
     
     /**
      * Tests consuming insuficient tokens wont remove any token.
-     * 
+     *
      * @test
      */
     public function testConsumeInsufficientDontRemoveTokens()
     {
-        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage(), 1);
+        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $bucket->bootstrap(1);
 
         $this->assertFalse($bucket->consume(2, $missingTokens));
         $this->assertEquals(1, $missingTokens);
@@ -140,26 +165,29 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests consuming tokens.
-     * 
+     *
      * @test
      */
     public function testConsumeSufficientRemoveTokens()
     {
-        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage(), 1);
+        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $bucket->bootstrap(1);
+
         $this->assertTrue($bucket->consume(1));
         $this->assertFalse($bucket->consume(1, $missingTokens));
         $this->assertEquals(1, $missingTokens);
     }
     
     /**
-     * Tests initializing with too many tokens.
+     * Tests bootstrapping with too many tokens.
      *
      * @test
      * @expectedException \LengthException
      */
     public function testInitialTokensTooMany()
     {
-        new TokenBucket(20, 1000000, new SingleProcessStorage(), 21);
+        $bucket = new TokenBucket(20, 1000000, new SingleProcessStorage());
+        $bucket->bootstrap(21);
     }
     
     /**
@@ -171,6 +199,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
     public function testConsumeTooMany()
     {
         $tokenBucket = new TokenBucket(20, 1000000, new SingleProcessStorage());
+        $tokenBucket->bootstrap();
+
         $tokenBucket->consume(21);
     }
     
@@ -182,6 +212,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
     public function testCapacity()
     {
         $tokenBucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $tokenBucket->bootstrap();
         sleep(11);
 
         $this->assertTrue($tokenBucket->consume(10));

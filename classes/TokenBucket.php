@@ -56,14 +56,11 @@ class TokenBucket
     /**
      * Initializes the Token bucket.
      *
-     * @param int     $capacity      Capacity of the bucket.
-     * @param int     $microRate     Microseconds for adding one token.
-     * @param Storage $storage       The storage.
-     * @param int     $initialTokens Initial amount of tokens, default is 0.
-     *
-     * @throws StorageException Storing the initial tokens failed.
+     * @param int     $capacity  Capacity of the bucket.
+     * @param int     $microRate Microseconds for adding one token.
+     * @param Storage $storage   The storage.
      */
-    public function __construct($capacity, $microRate, Storage $storage, $initialTokens = 0)
+    public function __construct($capacity, $microRate, Storage $storage)
     {
         $this->capacity  = $capacity;
         $this->microRate = $microRate;
@@ -72,17 +69,39 @@ class TokenBucket
         $this->tokenToSecondConverter    = new TokenToSecondConverter($microRate);
         $this->secondToTokenConverter    = new SecondToTokenConverter($microRate);
         $this->tokenToMicrotimeConverter = new TokenToMicrotimeConverter($this->tokenToSecondConverter);
-        
-        if ($initialTokens > $capacity) {
+    }
+    
+    /**
+     * Bootstraps the storage with an initial amount of tokens.
+     *
+     * If the storage was already bootstrapped this method returns silently.
+     *
+     * While you could call bootstrap() on each request, you should not do that!
+     * This method will do unnecessary storage communications just to see that
+     * bootstrapping was performed already. You therefore should call that
+     * method in your application's bootstrap or deploy process.
+     *
+     * This method is threadsafe.
+     *
+     * @param int $initialTokens Initial amount of tokens, default is 0.
+     *
+     * @throws StorageException Bootstrapping failed.
+     * @throws \LengthException The initial amount of tokens is larger than the capacity.
+     */
+    public function bootstrap($initialTokens = 0)
+    {
+        if ($initialTokens > $this->capacity) {
             throw new \LengthException(
-                "Initial token amount ($initialTokens) is larger than the capacity ($capacity)."
+                "Initial token amount ($initialTokens) is larger than the capacity ($this->capacity)."
             );
         }
         
         $this->storage->getMutex()
-            ->check([$storage, "isUninitialized"])
+            ->check(function () {
+                return !$this->storage->isBootstrapped();
+            })
             ->then(function () use ($initialTokens) {
-                $this->storage->setMicrotime($this->tokenToMicrotimeConverter->convert($initialTokens));
+                $this->storage->bootstrap($this->tokenToMicrotimeConverter->convert($initialTokens));
             });
     }
     

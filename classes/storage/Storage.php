@@ -23,15 +23,21 @@ interface Storage
     public function getMutex();
     
     /**
-     * Returns true if the storage was not yet initialized.
+     * Returns if the storage was already bootstrapped.
      *
-     * I.e. the storage was never used before and doesn't have a microtime
-     * stored yet.
-     *
-     * @return bool True, if this is the first usage of the storage.
+     * @return bool True if the storage was already bootstrapped.
      * @internal
      */
-    public function isUninitialized();
+    public function isBootstrapped();
+    
+    /**
+     * Bootstraps the storage.
+     *
+     * @param float $microtime The timestamp.
+     * @throws StorageException Bootstrapping failed.
+     * @internal
+     */
+    public function bootstrap($microtime);
     
     /**
      * Stores a timestamp.

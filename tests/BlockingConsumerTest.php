@@ -72,7 +72,9 @@ class BlockingConsumerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMinimumSleep()
     {
-        $bucket   = new TokenBucket(1, 100, new SingleProcessStorage());
+        $bucket = new TokenBucket(1, 100, new SingleProcessStorage());
+        $bucket->bootstrap();
+
         $consumer = new BlockingConsumer($bucket);
         $time     = microtime(true);
         

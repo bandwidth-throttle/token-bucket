@@ -34,19 +34,24 @@ class SingleProcessStorage implements Storage
         $this->mutex = new NoMutex();
     }
     
-    public function getMicrotime()
+    public function isBootstrapped()
     {
-        return $this->microtime;
+        return ! is_null($this->microtime);
     }
-
-    public function isUninitialized()
+    
+    public function bootstrap($microtime)
     {
-        return is_null($this->microtime);
+        $this->setMicrotime($microtime);
     }
 
     public function setMicrotime($microtime)
     {
         $this->microtime = $microtime;
+    }
+    
+    public function getMicrotime()
+    {
+        return $this->microtime;
     }
 
     /**
