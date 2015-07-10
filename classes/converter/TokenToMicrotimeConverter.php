@@ -32,7 +32,7 @@ class TokenToMicrotimeConverter
      * Converts an amount of tokens into a timestamp.
      *
      * @param int $tokens The amount of tokens.
-     * @return float The timestamp.
+     * @return double The timestamp.
      */
     public function convert($tokens)
     {

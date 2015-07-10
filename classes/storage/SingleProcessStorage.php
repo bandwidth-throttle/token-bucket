@@ -22,7 +22,7 @@ class SingleProcessStorage implements Storage
     private $mutex;
     
     /**
-     * @var float The microtime.
+     * @var double The microtime.
      */
     private $microtime;
     

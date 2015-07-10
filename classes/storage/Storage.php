@@ -33,7 +33,7 @@ interface Storage
     /**
      * Bootstraps the storage.
      *
-     * @param float $microtime The timestamp.
+     * @param double $microtime The timestamp.
      * @throws StorageException Bootstrapping failed.
      * @internal
      */
@@ -42,7 +42,7 @@ interface Storage
     /**
      * Stores a timestamp.
      *
-     * @param float $microtime The timestamp.
+     * @param double $microtime The timestamp.
      * @throws StorageException An error occured.
      * @internal
      */
@@ -51,7 +51,7 @@ interface Storage
     /**
      * Returns the stored timestamp.
      *
-     * @return float The timestamp.
+     * @return double The timestamp.
      * @throws StorageException An error occured.
      * @internal
      */

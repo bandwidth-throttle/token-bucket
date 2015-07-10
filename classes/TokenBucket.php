@@ -174,7 +174,7 @@ class TokenBucket
     /**
      * Returns the tokens.
      *
-     * @param float $microtime The timestamp.
+     * @param double $microtime The timestamp.
      *
      * @return int The tokens.
      */

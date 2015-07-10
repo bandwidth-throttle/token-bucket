@@ -32,7 +32,7 @@ class TokenToSecondConverter
      * Converts an amount of tokens into a duration of seconds.
      *
      * @param int $tokens The amount of tokens.
-     * @return float The seconds.
+     * @return double The seconds.
      */
     public function convert($tokens)
     {
