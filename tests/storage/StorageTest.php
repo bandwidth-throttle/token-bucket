@@ -2,6 +2,8 @@
 
 namespace bandwidthThrottle\tokenBucket\storage;
 
+use org\bovigo\vfs\vfsStream;
+
 /**
  * Tests for Storage implementations.
  *
@@ -20,8 +22,11 @@ class StorageTest extends \PHPUnit_Framework_TestCase
      */
     public function provideImplementations()
     {
+        vfsStream::setup('fileStorage');
+        
         return [
-            [new SingleProcessStorage()]
+            [new SingleProcessStorage()],
+            [new FileStorage(vfsStream::url("fileStorage/data"))],
         ];
     }
     
@@ -40,6 +45,9 @@ class StorageTest extends \PHPUnit_Framework_TestCase
         
         $storage->setMicrotime(1.2);
         $this->assertEquals(1.2, $storage->getMicrotime());
+        
+        $storage->setMicrotime(1436551945.0192);
+        $this->assertEquals(1436551945.0192, $storage->getMicrotime());
     }
     
     /**
