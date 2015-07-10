@@ -2,6 +2,9 @@
 
 namespace bandwidthThrottle\tokenBucket;
 
+use bandwidthThrottle\tokenBucket\storage\Storage;
+use bandwidthThrottle\tokenBucket\storage\StorageException;
+
 /**
  * Token Bucket algorithm.
  *
@@ -23,14 +26,14 @@ class TokenBucket
     private $capacity;
     
     /**
-     * @var float last micro timestamp when tokens where added.
-     */
-    private $microTimestamp;
-    
-    /**
      * @var int precision scale for bc_* operations.
      */
     private $bcScale = 8;
+    
+    /**
+     * @var Storage The storage.
+     */
+    private $storage;
     
     /**
      * One second in microseconds.
@@ -41,21 +44,29 @@ class TokenBucket
     /**
      * Initializes the Token bucket.
      *
-     * @param int $capacity      Capacity of the bucket.
-     * @param int $microRate     Microseconds for adding one token.
-     * @param int $initialTokens Initial amount of tokens, default is 0.
+     * @param int     $capacity      Capacity of the bucket.
+     * @param int     $microRate     Microseconds for adding one token.
+     * @param Storage $storage       The storage.
+     * @param int     $initialTokens Initial amount of tokens, default is 0.
+     *
+     * @throws StorageException Storing the initial tokens failed.
      */
-    public function __construct($capacity, $microRate, $initialTokens = 0)
+    public function __construct($capacity, $microRate, Storage $storage, $initialTokens = 0)
     {
         $this->capacity  = $capacity;
         $this->microRate = $microRate;
+        $this->storage   = $storage;
         
         if ($initialTokens > $capacity) {
             throw new \LengthException(
                 "Initial token amount ($initialTokens) is larger than the capacity ($capacity)."
             );
         }
-        $this->setTokens($initialTokens);
+        // TODO double checked locking
+        if ($storage->isUninitialized()) {
+            $this->setTokens($initialTokens);
+
+        }
     }
     
     /**
@@ -68,14 +79,18 @@ class TokenBucket
      * @param int $tokens         The token amount.
      * @param int &$missingTokens The remaining amount of tokens to wait.
      *
+     * @return bool If tokens were consumed.
+     *
      * @throws \LengthException The token amount is larger than the capacity.
-     * @return bool If tokens were consumed. 
+     * @throws StorageException The stored microtime could not be accessed.
      */
     public function consume($tokens, &$missingTokens = 0)
     {
         if ($tokens > $this->capacity) {
             throw new \LengthException("Token amount ($tokens) is larger than the capacity ($this->capacity).");
         }
+        
+        // TODO Locking
         
         // Drop overflowing tokens
         if ($this->getTokens() > $this->capacity) {
@@ -118,10 +133,11 @@ class TokenBucket
      * Returns the tokens.
      *
      * @return int The tokens.
+     * @throws StorageException The stored microtime could not be accessed.
      */
     private function getTokens()
     {
-        $delta = bcsub(microtime(true), $this->microTimestamp, $this->bcScale);
+        $delta = bcsub(microtime(true), $this->storage->getMicrotime(), $this->bcScale);
         return $this->convertSecondsToTokens($delta);
     }
     
@@ -129,22 +145,24 @@ class TokenBucket
      * Sets the amount of tokens of this bucket.
      *
      * @param int $tokens The amount of tokens.
+     * @throws StorageException The microtime could not be stored.
      */
     private function setTokens($tokens)
     {
         $delta = $this->convertTokensToSeconds($tokens);
-        $this->microTimestamp = microtime(true) - $delta;
+        $this->storage->setMicrotime(microtime(true) - $delta);
     }
     
     /**
      * Removes token from this bucket.
      *
      * @param int $tokens The amount of tokens.
+     * @throws StorageException The microtime storage failed.
      */
     private function removeTokens($tokens)
     {
         $delta = $this->convertTokensToSeconds($tokens);
-        $this->microTimestamp += $delta;
+        $this->storage->setMicrotime($this->storage->getMicrotime() + $delta);
     }
     
     /**

@@ -4,6 +4,7 @@ namespace bandwidthThrottle\tokenBucket;
 
 use phpmock\environment\SleepEnvironmentBuilder;
 use phpmock\environment\MockEnvironment;
+use bandwidthThrottle\tokenBucket\storage\SingleProcessStorage;
 
 /**
  * Test for BlockingConsumer.
@@ -43,7 +44,7 @@ class BlockingConsumerTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsume()
     {
-        $bucket   = new TokenBucket(10, TokenBucket::SECOND);
+        $bucket   = new TokenBucket(10, TokenBucket::SECOND, new SingleProcessStorage());
         $consumer = new BlockingConsumer($bucket);
         sleep(10);
         $time = microtime(true);
@@ -70,7 +71,7 @@ class BlockingConsumerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMinimumSleep()
     {
-        $bucket   = new TokenBucket(1, 100);
+        $bucket   = new TokenBucket(1, 100, new SingleProcessStorage());
         $consumer = new BlockingConsumer($bucket);
         $time     = microtime(true);
         

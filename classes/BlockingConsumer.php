@@ -19,7 +19,7 @@ class BlockingConsumer
 
     /**
      * Set the token bucket.
-     * 
+     *
      * @param TokenBucket $bucket The token bucket.
      */
     public function __construct(TokenBucket $bucket)
