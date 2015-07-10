@@ -2,6 +2,8 @@
 
 namespace bandwidthThrottle\tokenBucket\storage;
 
+use bandwidthThrottle\tokenBucket\lock\Mutex;
+
 /**
  * Token storage.
  *
@@ -13,12 +15,21 @@ interface Storage
 {
     
     /**
+     * Returns the Mutex for this storage.
+     *
+     * @return Mutex The mutex.
+     * @internal
+     */
+    public function getMutex();
+    
+    /**
      * Returns true if the storage was not yet initialized.
      *
      * I.e. the storage was never used before and doesn't have a microtime
      * stored yet.
      *
      * @return bool True, if this is the first usage of the storage.
+     * @internal
      */
     public function isUninitialized();
     
@@ -27,6 +38,7 @@ interface Storage
      *
      * @param float $microtime The timestamp.
      * @throws StorageException An error occured.
+     * @internal
      */
     public function setMicrotime($microtime);
 
@@ -35,6 +47,7 @@ interface Storage
      *
      * @return float The timestamp.
      * @throws StorageException An error occured.
+     * @internal
      */
     public function getMicrotime();
 }

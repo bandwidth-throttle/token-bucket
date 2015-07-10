@@ -62,11 +62,12 @@ class TokenBucket
                 "Initial token amount ($initialTokens) is larger than the capacity ($capacity)."
             );
         }
-        // TODO double checked locking
-        if ($storage->isUninitialized()) {
-            $this->setTokens($initialTokens);
-
-        }
+        
+        $this->storage->getMutex()
+            ->check([$storage, "isUninitialized"])
+            ->then(function () use ($initialTokens) {
+                $this->setTokens($initialTokens);
+            });
     }
     
     /**
@@ -90,23 +91,26 @@ class TokenBucket
             throw new \LengthException("Token amount ($tokens) is larger than the capacity ($this->capacity).");
         }
         
-        // TODO Locking
-        
-        // Drop overflowing tokens
-        if ($this->getTokens() > $this->capacity) {
-            $this->setTokens($this->capacity);
-        }
-        
-        $delta = $this->getTokens() - $tokens;
-        if ($delta < 0) {
-            $missingTokens = -$delta;
-            return false;
+        return $this->storage->getMutex()->synchronized(
+            function () use ($tokens, &$missingTokens) {
 
-        } else {
-            $this->removeTokens($tokens);
-            $missingTokens = 0;
-            return true;
-        }
+                // Drop overflowing tokens
+                if ($this->getTokens() > $this->capacity) {
+                    $this->setTokens($this->capacity);
+                }
+
+                $delta = $this->getTokens() - $tokens;
+                if ($delta < 0) {
+                    $missingTokens = -$delta;
+                    return false;
+
+                } else {
+                    $this->removeTokens($tokens);
+                    $missingTokens = 0;
+                    return true;
+                }
+            }
+        );
     }
 
     /**
