@@ -19,7 +19,7 @@ class Flock extends Mutex
     
     /**
      * Sets the file handle.
-     * 
+     *
      * @param resource $fp The file handle.
      */
     public function __construct($fp)

@@ -26,6 +26,7 @@ class BlockingConsumerTest extends \PHPUnit_Framework_TestCase
     {
         $builder = new SleepEnvironmentBuilder();
         $builder->addNamespace(__NAMESPACE__)
+                ->addNamespace("bandwidthThrottle\\tokenBucket\\converter")
                 ->setTimestamp(1417011228);
 
         $this->sleepEnvironent = $builder->build();
@@ -44,7 +45,7 @@ class BlockingConsumerTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsume()
     {
-        $bucket   = new TokenBucket(10, TokenBucket::SECOND, new SingleProcessStorage());
+        $bucket   = new TokenBucket(10, 1000000, new SingleProcessStorage());
         $consumer = new BlockingConsumer($bucket);
         sleep(10);
         $time = microtime(true);

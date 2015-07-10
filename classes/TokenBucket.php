@@ -4,6 +4,9 @@ namespace bandwidthThrottle\tokenBucket;
 
 use bandwidthThrottle\tokenBucket\storage\Storage;
 use bandwidthThrottle\tokenBucket\storage\StorageException;
+use bandwidthThrottle\tokenBucket\converter\TokenToMicrotimeConverter;
+use bandwidthThrottle\tokenBucket\converter\TokenToSecondConverter;
+use bandwidthThrottle\tokenBucket\converter\SecondToTokenConverter;
 
 /**
  * Token Bucket algorithm.
@@ -36,10 +39,19 @@ class TokenBucket
     private $storage;
     
     /**
-     * One second in microseconds.
-     * @internal
+     * @var TokenToSecondConverter Token to second converter.
      */
-    const SECOND = 1000000;
+    private $tokenToSecondConverter;
+    
+    /**
+     * @var TokenToMicrotimeConverter Token to microtime converter.
+     */
+    private $tokenToMicrotimeConverter;
+
+    /**
+     * @var SecondToTokenConverter Seconds to tokens converter.
+     */
+    private $secondToTokenConverter;
     
     /**
      * Initializes the Token bucket.
@@ -56,6 +68,10 @@ class TokenBucket
         $this->capacity  = $capacity;
         $this->microRate = $microRate;
         $this->storage   = $storage;
+
+        $this->tokenToSecondConverter    = new TokenToSecondConverter($microRate);
+        $this->secondToTokenConverter    = new SecondToTokenConverter($microRate);
+        $this->tokenToMicrotimeConverter = new TokenToMicrotimeConverter($this->tokenToSecondConverter);
         
         if ($initialTokens > $capacity) {
             throw new \LengthException(
@@ -66,7 +82,7 @@ class TokenBucket
         $this->storage->getMutex()
             ->check([$storage, "isUninitialized"])
             ->then(function () use ($initialTokens) {
-                $this->setTokens($initialTokens);
+                $this->storage->setMicrotime($this->tokenToMicrotimeConverter->convert($initialTokens));
             });
     }
     
@@ -94,18 +110,21 @@ class TokenBucket
         return $this->storage->getMutex()->synchronized(
             function () use ($tokens, &$missingTokens) {
 
+                $microtime = $this->storage->getMicrotime();
+            
                 // Drop overflowing tokens
-                if ($this->getTokens() > $this->capacity) {
-                    $this->setTokens($this->capacity);
+                if ($this->getTokens($microtime) > $this->capacity) {
+                    $microtime = $this->tokenToMicrotimeConverter->convert($this->capacity);
                 }
 
-                $delta = $this->getTokens() - $tokens;
+                $delta = $this->getTokens($microtime) - $tokens;
                 if ($delta < 0) {
                     $missingTokens = -$delta;
                     return false;
 
                 } else {
-                    $this->removeTokens($tokens);
+                    $microtime += $this->tokenToSecondConverter->convert($tokens);
+                    $this->storage->setMicrotime($microtime);
                     $missingTokens = 0;
                     return true;
                 }
@@ -136,60 +155,13 @@ class TokenBucket
     /**
      * Returns the tokens.
      *
+     * @param float $microtime The timestamp.
+     *
      * @return int The tokens.
-     * @throws StorageException The stored microtime could not be accessed.
      */
-    private function getTokens()
+    private function getTokens($microtime)
     {
-        $delta = bcsub(microtime(true), $this->storage->getMicrotime(), $this->bcScale);
-        return $this->convertSecondsToTokens($delta);
-    }
-    
-    /**
-     * Sets the amount of tokens of this bucket.
-     *
-     * @param int $tokens The amount of tokens.
-     * @throws StorageException The microtime could not be stored.
-     */
-    private function setTokens($tokens)
-    {
-        $delta = $this->convertTokensToSeconds($tokens);
-        $this->storage->setMicrotime(microtime(true) - $delta);
-    }
-    
-    /**
-     * Removes token from this bucket.
-     *
-     * @param int $tokens The amount of tokens.
-     * @throws StorageException The microtime storage failed.
-     */
-    private function removeTokens($tokens)
-    {
-        $delta = $this->convertTokensToSeconds($tokens);
-        $this->storage->setMicrotime($this->storage->getMicrotime() + $delta);
-    }
-    
-    /**
-     * Converts a duration of seconds into an amount of tokens.
-     *
-     * @param float The duration in seconds.
-     *
-     * @return int The amount of tokens.
-     */
-    private function convertSecondsToTokens($seconds)
-    {
-        return (int) ($seconds * self::SECOND / $this->microRate);
-    }
-    
-    /**
-     * Converts an amount of tokens into a duration of seconds.
-     *
-     * @param int $tokens The amount of tokens.
-     *
-     * @return float The duration in seconds.
-     */
-    private function convertTokensToSeconds($tokens)
-    {
-        return $tokens * $this->microRate / self::SECOND;
+        $delta = bcsub(microtime(true), $microtime, $this->bcScale);
+        return $this->secondToTokenConverter->convert($delta);
     }
 }

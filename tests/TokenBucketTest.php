@@ -26,6 +26,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
     {
         $builder = new SleepEnvironmentBuilder();
         $builder->addNamespace(__NAMESPACE__)
+                ->addNamespace("bandwidthThrottle\\tokenBucket\\converter")
                 ->setTimestamp(1417011228);
 
         $this->sleepEnvironent = $builder->build();
@@ -44,7 +45,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitialBucketIsEmpty()
     {
-        $tokenBucket = new TokenBucket(10, TokenBucket::SECOND, new SingleProcessStorage());
+        $tokenBucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
 
         $this->assertFalse($tokenBucket->consume(1));
     }
@@ -60,7 +61,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetInitialTokens($capacity, $tokens)
     {
-        $tokenBucket = new TokenBucket($capacity, TokenBucket::SECOND, new SingleProcessStorage(), $tokens);
+        $tokenBucket = new TokenBucket($capacity, 1000000, new SingleProcessStorage(), $tokens);
 
         $this->assertTrue($tokenBucket->consume($tokens));
         $this->assertFalse($tokenBucket->consume(1));
@@ -86,7 +87,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsume()
     {
-        $bucket   = new TokenBucket(10, TokenBucket::SECOND, new SingleProcessStorage());
+        $bucket   = new TokenBucket(10, 1000000, new SingleProcessStorage());
         sleep(10);
         
         $this->assertTrue($bucket->consume(1));
@@ -108,7 +109,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testWaitingAddsTokens()
     {
-        $bucket = new TokenBucket(10, TokenBucket::SECOND, new SingleProcessStorage());
+        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
 
         $this->assertFalse($bucket->consume(1));
 
@@ -126,7 +127,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsumeInsufficientDontRemoveTokens()
     {
-        $bucket = new TokenBucket(10, TokenBucket::SECOND, new SingleProcessStorage(), 1);
+        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage(), 1);
 
         $this->assertFalse($bucket->consume(2, $missingTokens));
         $this->assertEquals(1, $missingTokens);
@@ -144,7 +145,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsumeSufficientRemoveTokens()
     {
-        $bucket = new TokenBucket(10, TokenBucket::SECOND, new SingleProcessStorage(), 1);
+        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage(), 1);
         $this->assertTrue($bucket->consume(1));
         $this->assertFalse($bucket->consume(1, $missingTokens));
         $this->assertEquals(1, $missingTokens);
@@ -158,7 +159,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitialTokensTooMany()
     {
-        new TokenBucket(20, TokenBucket::SECOND, new SingleProcessStorage(), 21);
+        new TokenBucket(20, 1000000, new SingleProcessStorage(), 21);
     }
     
     /**
@@ -169,7 +170,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsumeTooMany()
     {
-        $tokenBucket = new TokenBucket(20, TokenBucket::SECOND, new SingleProcessStorage());
+        $tokenBucket = new TokenBucket(20, 1000000, new SingleProcessStorage());
         $tokenBucket->consume(21);
     }
     
@@ -180,7 +181,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testCapacity()
     {
-        $tokenBucket = new TokenBucket(10, TokenBucket::SECOND, new SingleProcessStorage());
+        $tokenBucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
         sleep(11);
 
         $this->assertTrue($tokenBucket->consume(10));
