@@ -135,7 +135,7 @@ class PDOStorage implements Storage
     public function getMicrotime()
     {
         $forUpdate = $this->forVendor(["sqlite" => ""], "FOR UPDATE");
-        return $this->querySingleValue(
+        return (double) $this->querySingleValue(
             "SELECT microtime from TokenBucket WHERE name = ? $forUpdate",
             [$this->name]
         );

@@ -93,14 +93,14 @@ class StorageTest extends \PHPUnit_Framework_TestCase
         $this->storage->bootstrap(1);
         
         $this->storage->setMicrotime(1.1);
-        $this->assertEquals(1.1, $this->storage->getMicrotime());
-        $this->assertEquals(1.1, $this->storage->getMicrotime());
+        $this->assertSame(1.1, $this->storage->getMicrotime());
+        $this->assertSame(1.1, $this->storage->getMicrotime());
         
         $this->storage->setMicrotime(1.2);
-        $this->assertEquals(1.2, $this->storage->getMicrotime());
+        $this->assertSame(1.2, $this->storage->getMicrotime());
         
         $this->storage->setMicrotime(1436551945.0192);
-        $this->assertEquals(1436551945.0192, $this->storage->getMicrotime());
+        $this->assertSame(1436551945.0192, $this->storage->getMicrotime());
     }
     
     /**
