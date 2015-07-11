@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class bandwidthThrottle\tokenBucket\lock\Flock</title>
+
+	<link rel="stylesheet" href="resources/style.css?95ada9fb523b6ab4fd1c47bb375f713f2cc65542">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active">
+					<a href="namespace-bandwidthThrottle.html">
+						bandwidthThrottle<span></span>
+					</a>
+
+						<ul>
+				<li class="active">
+					<a href="namespace-bandwidthThrottle.tokenBucket.html">
+						tokenBucket<span></span>
+					</a>
+
+						<ul>
+				<li class="active">
+					<a href="namespace-bandwidthThrottle.tokenBucket.lock.html">
+						lock					</a>
+
+						</li>
+				<li>
+					<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">
+						storage					</a>
+
+						</li>
+							</ul></li></ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-bandwidthThrottle.tokenBucket.lock.DoubleCheckedLocking.html">DoubleCheckedLocking</a></li>
+				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.lock.Flock.html">Flock</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.lock.Mutex.html">Mutex</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.lock.NoMutex.html">NoMutex</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.lock.TransactionalMutex.html">TransactionalMutex</a></li>
+			</ul>
+
+
+
+			<h3>Exceptions</h3>
+			<ul>
+				<li><a href="class-bandwidthThrottle.tokenBucket.lock.MutexException.html">MutexException</a></li>
+			</ul>
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-bandwidthThrottle.tokenBucket.lock.html" title="Summary of bandwidthThrottle\tokenBucket\lock"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class Flock</h1>
+
+
+	<div class="description">
+	<p>Flock() based mutex implementation.</p>
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+			<a href="class-bandwidthThrottle.tokenBucket.lock.Mutex.html"><span>bandwidthThrottle\tokenBucket\lock\Mutex</span></a>
+			
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>bandwidthThrottle\tokenBucket\lock\Flock</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\<a href="namespace-bandwidthThrottle.tokenBucket.html">tokenBucket</a>\<a href="namespace-bandwidthThrottle.tokenBucket.lock.html">lock</a><br>
+		
+
+				<b>License:</b>
+				<a href="WTFPL">WTFPL</a><br>
+				<b>Author:</b>
+				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
+				<b>Link:</b>
+				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.lock.Flock.html#5-44" title="Go to source code">lock/Flock.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.lock.Flock.html#20-28" title="Go to source code">__construct</a>( <span>resource <var>$fileHandle</var></span> )</code>
+
+		<div class="description short">
+			<p>Sets the file handle.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets the file handle.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$fileHandle</var></dt>
+					<dd>The file handle.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="synchronized" id="_synchronized">
+
+		<td class="attributes"><code>
+			 public 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_synchronized">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.lock.Flock.html#30-43" title="Go to source code">synchronized</a>( <span>callable <var>$block</var></span> )</code>
+
+		<div class="description short">
+			<p>Executes a block of code non interruptable.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Executes a block of code non interruptable.</p>
+
+<p>This method implements Java's synchronized semantic.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$block</var></dt>
+					<dd>The synchronized execution block.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed<br>The return value of the execution block.
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					Exception<br>The execution block threw an exception.<br>
+					<code><a href="class-bandwidthThrottle.tokenBucket.lock.MutexException.html">bandwidthThrottle\tokenBucket\lock\MutexException</a></code><br>The mutex could not be aquired.
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+	<table class="summary inherited">
+	<caption>Methods inherited from <a href="class-bandwidthThrottle.tokenBucket.lock.Mutex.html#methods">bandwidthThrottle\tokenBucket\lock\Mutex</a></caption>
+	<tr>
+		<td><code>
+			<a href="class-bandwidthThrottle.tokenBucket.lock.Mutex.html#_check">check()</a>
+		</code></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		 API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>

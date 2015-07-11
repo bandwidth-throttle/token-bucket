@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Namespace bandwidthThrottle\tokenBucket</title>
+	<title>Namespace bandwidthThrottle\tokenBucket\lock</title>
 
 	<link rel="stylesheet" href="resources/style.css?95ada9fb523b6ab4fd1c47bb375f713f2cc65542">
 
@@ -30,7 +30,7 @@
 					</a>
 
 						<ul>
-				<li>
+				<li class="active">
 					<a href="namespace-bandwidthThrottle.tokenBucket.lock.html">
 						lock					</a>
 
@@ -50,15 +50,18 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">BlockingConsumer</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">TokenBucket</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.lock.DoubleCheckedLocking.html">DoubleCheckedLocking</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.lock.Flock.html">Flock</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.lock.Mutex.html">Mutex</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.lock.NoMutex.html">NoMutex</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.lock.TransactionalMutex.html">TransactionalMutex</a></li>
 			</ul>
 
 
 
 			<h3>Exceptions</h3>
 			<ul>
-				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html">TokenBucketException</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.lock.MutexException.html">MutexException</a></li>
 			</ul>
 
 
@@ -93,28 +96,31 @@
 	</div>
 
 <div id="content" class="namespace">
-	<h1>Namespace <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\tokenBucket</h1>
+	<h1>Namespace <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\<a href="namespace-bandwidthThrottle.tokenBucket.html">tokenBucket</a>\lock</h1>
 
-	<table class="summary" id="namespaces">
-	<caption>Namespaces summary</caption>
-	<tr>
-		<td class="name"><a href="namespace-bandwidthThrottle.tokenBucket.lock.html">bandwidthThrottle\tokenBucket\lock</a></td>
-	</tr>
-	<tr>
-		<td class="name"><a href="namespace-bandwidthThrottle.tokenBucket.storage.html">bandwidthThrottle\tokenBucket\storage</a></td>
-	</tr>
-	</table>
 
 
 <table class="summary" id="classes">
 <caption>Classes summary</caption>
 <tr>
-	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">BlockingConsumer</a></td>
-	<td>Blocking token bucket consumer.</td>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.lock.DoubleCheckedLocking.html">DoubleCheckedLocking</a></td>
+	<td>The double-checked locking pattern.</td>
 </tr>
 <tr>
-	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">TokenBucket</a></td>
-	<td>Token Bucket algorithm.</td>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.lock.Flock.html">Flock</a></td>
+	<td>Flock() based mutex implementation.</td>
+</tr>
+<tr>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.lock.Mutex.html">Mutex</a></td>
+	<td>The mutex provides methods for locked execution.</td>
+</tr>
+<tr>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.lock.NoMutex.html">NoMutex</a></td>
+	<td>This mutex doesn't lock at all.</td>
+</tr>
+<tr>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.lock.TransactionalMutex.html">TransactionalMutex</a></td>
+	<td>Synchronization is delegated to the DBS.</td>
 </tr>
 </table>
 
@@ -123,8 +129,8 @@
 <table class="summary" id="exceptions">
 <caption>Exceptions summary</caption>
 <tr>
-	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html">TokenBucketException</a></td>
-	<td>The package's base exception.</td>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.lock.MutexException.html">MutexException</a></td>
+	<td>A Mutex exception.</td>
 </tr>
 </table>
 

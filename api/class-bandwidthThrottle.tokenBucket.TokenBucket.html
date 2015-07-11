@@ -26,10 +26,21 @@
 						<ul>
 				<li class="active">
 					<a href="namespace-bandwidthThrottle.tokenBucket.html">
-						tokenBucket					</a>
+						tokenBucket<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-bandwidthThrottle.tokenBucket.lock.html">
+						lock					</a>
 
 						</li>
-							</ul></li>
+				<li>
+					<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">
+						storage					</a>
+
+						</li>
+							</ul></li></ul></li>
 			</ul>
 		</div>
 
@@ -39,12 +50,16 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">BlockingConsumer</a></li>
 				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">TokenBucket</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucketBuilder.html">TokenBucketBuilder</a></li>
 			</ul>
 
 
 
+			<h3>Exceptions</h3>
+			<ul>
+				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html">TokenBucketException</a></li>
+			</ul>
 
 
 		</div>
@@ -106,7 +121,7 @@
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#5-167" title="Go to source code">TokenBucket.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#11-187" title="Go to source code">TokenBucket.php</a>
 		<br>
 	</div>
 
@@ -126,7 +141,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#47-65" title="Go to source code">__construct</a>( <span>integer <var>$capacity</var></span>, <span>integer <var>$microRate</var></span>, <span>integer <var>$initialTokens</var> = <span class="php-num">0</span></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#56-72" title="Go to source code">__construct</a>( <span>integer <var>$capacity</var></span>, <span>integer <var>$microRate</var></span>, <span><code><a href="class-bandwidthThrottle.tokenBucket.storage.Storage.html">bandwidthThrottle\tokenBucket\storage\Storage</a></code> <var>$storage</var></span> )</code>
 
 		<div class="description short">
 			<p>Initializes the Token bucket.</p>
@@ -142,11 +157,60 @@
 					<dd>Capacity of the bucket.</dd>
 					<dt><var>$microRate</var></dt>
 					<dd>Microseconds for adding one token.</dd>
+					<dt><var>$storage</var></dt>
+					<dd>The storage.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="bootstrap" id="_bootstrap">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_bootstrap">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#74-106" title="Go to source code">bootstrap</a>( <span>integer <var>$initialTokens</var> = <span class="php-num">0</span></span> )</code>
+
+		<div class="description short">
+			<p>Bootstraps the storage with an initial amount of tokens.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Bootstraps the storage with an initial amount of tokens.</p>
+
+<p>If the storage was already bootstrapped this method returns silently.</p>
+
+<p>While you could call bootstrap() on each request, you should not do that!
+This method will do unnecessary storage communications just to see that
+bootstrapping was performed already. You therefore should call that
+method in your application's bootstrap or deploy process.</p>
+
+<p>This method is threadsafe.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
 					<dt><var>$initialTokens</var></dt>
 					<dd>Initial amount of tokens, default is 0.</dd>
 				</dl></div>
 
 
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">bandwidthThrottle\tokenBucket\storage\StorageException</a></code><br>Bootstrapping failed.<br>
+					LengthException<br>The initial amount of tokens is larger than the capacity.
+				</div>
 
 
 
@@ -158,14 +222,14 @@
 		<td class="attributes"><code>
 			 public 
 
-			
+			boolean
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_consume">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#67-99" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#108-153" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span>, <span>integer <var>&amp; $missingTokens</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
 			<p>Consumes tokens for the packet.</p>
@@ -174,21 +238,66 @@
 		<div class="description detailed hidden">
 			<p>Consumes tokens for the packet.</p>
 
-<p>Consumes tokens for the packet size. If there aren't sufficient tokens
-the method blocks until there are enough tokens.</p>
+<p>This method consumes only tokens if there are sufficient tokens available.
+If there aren't sufficient tokens, no tokens will be removed and the
+remaining amount of tokens is written to $missingTokens.</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$tokens</var></dt>
 					<dd>The token amount.</dd>
+					<dt><var>$missingTokens</var></dt>
+					<dd>$missingTokens The remaining amount of tokens to wait.</dd>
 				</dl></div>
 
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>If tokens were consumed.
+				</div>
 
 				<h4>Throws</h4>
 				<div class="list">
-					LengthException<br>The token amount is larger than the capacity.
+					LengthException<br>The token amount is larger than the capacity.<br>
+					<code><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">bandwidthThrottle\tokenBucket\storage\StorageException</a></code><br>The stored microtime could not be accessed.
 				</div>
+
+				<h4>Suppresswarnings(phpmd)</h4>
+				<div class="list">
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getMicroRate" id="_getMicroRate">
+
+		<td class="attributes"><code>
+			 public 
+
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getMicroRate">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#155-163" title="Go to source code">getMicroRate</a>( )</code>
+
+		<div class="description short">
+			<p>Returns the amount of microseconds to produce one token.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns the amount of microseconds to produce one token.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					integer<br>Microseconds for one token.
+				</div>
+
 
 
 
@@ -207,7 +316,7 @@ the method blocks until there are enough tokens.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getCapacity">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#101-109" title="Go to source code">getCapacity</a>( )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#165-173" title="Go to source code">getCapacity</a>( )</code>
 
 		<div class="description short">
 			<p>The token capacity of this bucket.</p>

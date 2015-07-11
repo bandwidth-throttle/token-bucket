@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Namespace bandwidthThrottle\tokenBucket</title>
+	<title>Namespace bandwidthThrottle\tokenBucket\storage</title>
 
 	<link rel="stylesheet" href="resources/style.css?95ada9fb523b6ab4fd1c47bb375f713f2cc65542">
 
@@ -35,7 +35,7 @@
 						lock					</a>
 
 						</li>
-				<li>
+				<li class="active">
 					<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">
 						storage					</a>
 
@@ -50,15 +50,20 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">BlockingConsumer</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">TokenBucket</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.FileStorage.html">FileStorage</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html">PDOStorage</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.SingleProcessStorage.html">SingleProcessStorage</a></li>
 			</ul>
 
+			<h3>Interfaces</h3>
+			<ul>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.Storage.html">Storage</a></li>
+			</ul>
 
 
 			<h3>Exceptions</h3>
 			<ul>
-				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html">TokenBucketException</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">StorageException</a></li>
 			</ul>
 
 
@@ -93,38 +98,40 @@
 	</div>
 
 <div id="content" class="namespace">
-	<h1>Namespace <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\tokenBucket</h1>
+	<h1>Namespace <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\<a href="namespace-bandwidthThrottle.tokenBucket.html">tokenBucket</a>\storage</h1>
 
-	<table class="summary" id="namespaces">
-	<caption>Namespaces summary</caption>
-	<tr>
-		<td class="name"><a href="namespace-bandwidthThrottle.tokenBucket.lock.html">bandwidthThrottle\tokenBucket\lock</a></td>
-	</tr>
-	<tr>
-		<td class="name"><a href="namespace-bandwidthThrottle.tokenBucket.storage.html">bandwidthThrottle\tokenBucket\storage</a></td>
-	</tr>
-	</table>
 
 
 <table class="summary" id="classes">
 <caption>Classes summary</caption>
 <tr>
-	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">BlockingConsumer</a></td>
-	<td>Blocking token bucket consumer.</td>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.storage.FileStorage.html">FileStorage</a></td>
+	<td>File based storage which can be shared among processes.</td>
 </tr>
 <tr>
-	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">TokenBucket</a></td>
-	<td>Token Bucket algorithm.</td>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html">PDOStorage</a></td>
+	<td>PDO based storage which can be shared over a common DBS.</td>
+</tr>
+<tr>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.storage.SingleProcessStorage.html">SingleProcessStorage</a></td>
+	<td>In-memory token storage which is only used for one single process.</td>
 </tr>
 </table>
 
+<table class="summary" id="interfaces">
+<caption>Interfaces summary</caption>
+<tr>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.storage.Storage.html">Storage</a></td>
+	<td>Token storage.</td>
+</tr>
+</table>
 
 
 <table class="summary" id="exceptions">
 <caption>Exceptions summary</caption>
 <tr>
-	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html">TokenBucketException</a></td>
-	<td>The package's base exception.</td>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">StorageException</a></td>
+	<td>The storage exception.</td>
 </tr>
 </table>
 
