@@ -57,6 +57,7 @@
 			<h3>Classes</h3>
 			<ul>
 				<li><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">BlockingConsumer</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.Rate.html">Rate</a></li>
 				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">TokenBucket</a></li>
 			</ul>
 
@@ -112,11 +113,13 @@ storage.</p>
 
 <p>Example:</p>
 
-<pre><span class="php-keyword1">use</span> bandwidthThrottle\tokenBucket\TokenBucket;
+<pre><span class="php-keyword1">use</span> bandwidthThrottle\tokenBucket\Rate;
+<span class="php-keyword1">use</span> bandwidthThrottle\tokenBucket\TokenBucket;
 <span class="php-keyword1">use</span> bandwidthThrottle\tokenBucket\storage\FileStorage;
 
 <span class="php-var">$storage</span> = <span class="php-keyword1">new</span> FileStorage(__DIR__ . <span class="php-quote">&quot;/api.bucket&quot;</span>);
-<span class="php-var">$bucket</span>  = <span class="php-keyword1">new</span> TokenBucket(<span class="php-num">10</span>, <span class="php-num">1000</span>, <span class="php-var">$storage</span>);
+<span class="php-var">$rate</span>    = <span class="php-keyword1">new</span> Rate(<span class="php-num">10</span>, Rate::SECOND);
+<span class="php-var">$bucket</span>  = <span class="php-keyword1">new</span> TokenBucket(<span class="php-num">10</span>, <span class="php-var">$rate</span>, <span class="php-var">$storage</span>);
 <span class="php-var">$bucket</span>-&gt;bootstrap(<span class="php-num">10</span>);
 
 <span class="php-keyword1">if</span> (!<span class="php-var">$bucket</span>-&gt;consume(<span class="php-num">1</span>, <span class="php-var">$seconds</span>)) {
@@ -146,7 +149,7 @@ storage.</p>
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#11-211" title="Go to source code">TokenBucket.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#11-213" title="Go to source code">TokenBucket.php</a>
 		<br>
 	</div>
 
@@ -166,7 +169,7 @@ storage.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#76-94" title="Go to source code">__construct</a>( <span>integer <var>$capacity</var></span>, <span>integer <var>$microRate</var></span>, <span><code><a href="class-bandwidthThrottle.tokenBucket.storage.Storage.html">bandwidthThrottle\tokenBucket\storage\Storage</a></code> <var>$storage</var></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#78-96" title="Go to source code">__construct</a>( <span>integer <var>$capacity</var></span>, <span><code><a href="class-bandwidthThrottle.tokenBucket.Rate.html">bandwidthThrottle\tokenBucket\Rate</a></code> <var>$rate</var></span>, <span><code><a href="class-bandwidthThrottle.tokenBucket.storage.Storage.html">bandwidthThrottle\tokenBucket\storage\Storage</a></code> <var>$storage</var></span> )</code>
 
 		<div class="description short">
 			<p>Initializes the Token bucket.</p>
@@ -182,8 +185,8 @@ storage.</p>
 				<div class="list"><dl>
 					<dt><var>$capacity</var></dt>
 					<dd>Capacity of the bucket.</dd>
-					<dt><var>$microRate</var></dt>
-					<dd>Microseconds for adding one token.</dd>
+					<dt><var>$rate</var></dt>
+					<dd>The rate.</dd>
 					<dt><var>$storage</var></dt>
 					<dd>The storage.</dd>
 				</dl></div>
@@ -207,7 +210,7 @@ storage.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_bootstrap">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#96-128" title="Go to source code">bootstrap</a>( <span>integer <var>$tokens</var> = <span class="php-num">0</span></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#98-130" title="Go to source code">bootstrap</a>( <span>integer <var>$tokens</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
 			<p>Bootstraps the storage with an initial amount of tokens.</p>
@@ -256,7 +259,7 @@ method in your application's bootstrap or deploy process.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_consume">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#130-177" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span>, <span>float <var>&amp; $seconds</var> = <span class="php-num">0</span></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#132-179" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span>, <span>float <var>&amp; $seconds</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
 			<p>Consumes tokens from the bucket.</p>
@@ -297,32 +300,32 @@ remaining seconds to wait is written to $seconds.</p>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="getMicroRate" id="_getMicroRate">
+	<tr data-order="getRate" id="_getRate">
 
 		<td class="attributes"><code>
 			 public 
 
-			integer
+			<code><a href="class-bandwidthThrottle.tokenBucket.Rate.html">bandwidthThrottle\tokenBucket\Rate</a></code>
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_getMicroRate">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#179-187" title="Go to source code">getMicroRate</a>( )</code>
+		<a class="anchor" href="#_getRate">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#181-189" title="Go to source code">getRate</a>( )</code>
 
 		<div class="description short">
-			<p>Returns the amount of microseconds to produce one token.</p>
+			<p>Returns the token add rate.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Returns the amount of microseconds to produce one token.</p>
+			<p>Returns the token add rate.</p>
 
 
 
 				<h4>Returns</h4>
 				<div class="list">
-					integer<br>Microseconds for one token.
+					<code><a href="class-bandwidthThrottle.tokenBucket.Rate.html">bandwidthThrottle\tokenBucket\Rate</a></code><br>The rate.
 				</div>
 
 
@@ -343,7 +346,7 @@ remaining seconds to wait is written to $seconds.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getCapacity">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#189-197" title="Go to source code">getCapacity</a>( )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#191-199" title="Go to source code">getCapacity</a>( )</code>
 
 		<div class="description short">
 			<p>The token capacity of this bucket.</p>
