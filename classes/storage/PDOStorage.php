@@ -4,15 +4,18 @@ namespace bandwidthThrottle\tokenBucket\storage;
 
 use bandwidthThrottle\tokenBucket\storage\Storage;
 use bandwidthThrottle\tokenBucket\lock\TransactionalMutex;
+use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
 
 /**
  * PDO based storage which can be shared over a common DBS.
+ *
+ * This storage is in the global scope.
  *
  * @author Markus Malkusch <markus@malkusch.de>
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class PDOStorage implements Storage
+class PDOStorage implements Storage, GlobalScope
 {
 
     /**

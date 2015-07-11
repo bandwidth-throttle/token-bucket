@@ -3,17 +3,19 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use bandwidthThrottle\tokenBucket\lock\NoMutex;
+use bandwidthThrottle\tokenBucket\storage\scope\RequestScope;
 
 /**
  * In-memory token storage which is only used for one single process.
  *
- * This storage is not shared among processes and therefore needs no locking.
+ * This storage is in the request scope. It is not shared among processes and
+ * therefore needs no locking.
  *
  * @author Markus Malkusch <markus@malkusch.de>
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class SingleProcessStorage implements Storage
+class SingleProcessStorage implements Storage, RequestScope
 {
  
     /**
@@ -59,14 +61,6 @@ class SingleProcessStorage implements Storage
         return $this->microtime;
     }
 
-    /**
-     * Returns a non locking mutex.
-     *
-     * This storage doesn't need a mutex at all.
-     *
-     * @return NoMutex The non locking mutex.
-     * @internal
-     */
     public function getMutex()
     {
         return $this->mutex;

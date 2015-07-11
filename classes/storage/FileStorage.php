@@ -3,15 +3,19 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use bandwidthThrottle\tokenBucket\lock\Flock;
+use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
 
 /**
  * File based storage which can be shared among processes.
+ *
+ * This storage is in the global scope. However the scope is limited to the
+ * underlying filesystem. I.e. the scope is not shared between hosts.
  *
  * @author Markus Malkusch <markus@malkusch.de>
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class FileStorage implements Storage
+class FileStorage implements Storage, GlobalScope
 {
  
     /**

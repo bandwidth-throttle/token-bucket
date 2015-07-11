@@ -3,9 +3,12 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use bandwidthThrottle\tokenBucket\lock\NoMutex;
+use bandwidthThrottle\tokenBucket\storage\scope\SessionScope;
 
 /**
  * Session based storage which is shared for one user accross requests.
+ *
+ * This storage is in the global scope.
  *
  * As PHP's session are thread safe this implementation doesn't provide a
  * locking Mutex.
@@ -14,7 +17,7 @@ use bandwidthThrottle\tokenBucket\lock\NoMutex;
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class SessionStorage implements Storage
+class SessionStorage implements Storage, SessionScope
 {
  
     /**
@@ -43,14 +46,6 @@ class SessionStorage implements Storage
         $this->key   = self::SESSION_NAMESPACE . $name;
     }
 
-    /**
-     * Returns a non locking mutex.
-     *
-     * This storage doesn't need a mutex at all.
-     *
-     * @return NoMutex The non locking mutex.
-     * @internal
-     */
     public function getMutex()
     {
         return $this->mutex;

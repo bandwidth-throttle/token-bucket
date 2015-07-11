@@ -11,6 +11,26 @@ use bandwidthThrottle\tokenBucket\converter\SecondToTokenConverter;
 /**
  * Token Bucket algorithm.
  *
+ * The token bucket algorithm can be used for controlling the usage rate
+ * of a resource. The scope of that rate is determined by the underlying
+ * storage.
+ *
+ * Example:
+ * <code>
+ * use bandwidthThrottle\tokenBucket\TokenBucket;
+ * use bandwidthThrottle\tokenBucket\storage\FileStorage;
+ *
+ * $storage = new FileStorage(__DIR__ . "/api.bucket");
+ * $bucket  = new TokenBucket(10, 1000, $storage);
+ * $bucket->bootstrap(10);
+ *
+ * if (!$bucket->consume(1, $seconds)) {
+ *     http_response_code(429);
+ *     header(sprintf("Retry-After: %d", floor($seconds)));
+ *     exit();
+ * }
+ * </code>
+ *
  * @author Markus Malkusch <markus@malkusch.de>
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
@@ -56,6 +76,8 @@ class TokenBucket
     /**
      * Initializes the Token bucket.
      *
+     * The storage determines the scope of the bucket.
+     *
      * @param int     $capacity  Capacity of the bucket.
      * @param int     $microRate Microseconds for adding one token.
      * @param Storage $storage   The storage.
@@ -83,16 +105,16 @@ class TokenBucket
      *
      * This method is threadsafe.
      *
-     * @param int $initialTokens Initial amount of tokens, default is 0.
+     * @param int $tokens Initial amount of tokens, default is 0.
      *
      * @throws StorageException Bootstrapping failed.
      * @throws \LengthException The initial amount of tokens is larger than the capacity.
      */
-    public function bootstrap($initialTokens = 0)
+    public function bootstrap($tokens = 0)
     {
-        if ($initialTokens > $this->capacity) {
+        if ($tokens > $this->capacity) {
             throw new \LengthException(
-                "Initial token amount ($initialTokens) is larger than the capacity ($this->capacity)."
+                "Initial token amount ($tokens) is larger than the capacity ($this->capacity)."
             );
         }
         
@@ -100,13 +122,13 @@ class TokenBucket
             ->check(function () {
                 return !$this->storage->isBootstrapped();
             })
-            ->then(function () use ($initialTokens) {
-                $this->storage->bootstrap($this->tokenToMicrotimeConverter->convert($initialTokens));
+            ->then(function () use ($tokens) {
+                $this->storage->bootstrap($this->tokenToMicrotimeConverter->convert($tokens));
             });
     }
     
     /**
-     * Consumes tokens for the packet.
+     * Consumes tokens from the bucket.
      *
      * This method consumes only tokens if there are sufficient tokens available.
      * If there aren't sufficient tokens, no tokens will be removed and the

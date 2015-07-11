@@ -3,9 +3,19 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use bandwidthThrottle\tokenBucket\lock\Mutex;
+use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
+use bandwidthThrottle\tokenBucket\storage\scope\SessionScope;
+use bandwidthThrottle\tokenBucket\storage\scope\RequestScope;
 
 /**
  * Token storage.
+ *
+ * The storage determines the scope for the token bucket. It therefore
+ * implements one of the *Scope marker interfaces:
+ *
+ * - {@link RequestScope}: The bucket is shared only within one request.
+ * - {@link SessionScope}: The bucket is shared between requests of one session.
+ * - {@link GlobalScope}: The bucket is shared among all processes.
  *
  * @author Markus Malkusch <markus@malkusch.de>
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
