@@ -59,6 +59,11 @@ class FileStorage implements Storage
         $this->mutex = new Flock($this->fileHandle);
     }
     
+    /**
+     * Closes the file handle.
+     *
+     * @internal
+     */
     public function __destruct()
     {
         fclose($this->fileHandle);

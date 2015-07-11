@@ -22,8 +22,11 @@ The package is in the namespace
 <?php
 
 use bandwidthThrottle\tokenBucket\TokenBucket;
+use bandwidthThrottle\tokenBucket\storage\FileStorage;
 
-$bucket = new TokenBucket(10, 1000);
+$storage = new FileStorage(__DIR__ . "/api.bucket");
+$bucket  = new TokenBucket(10, 1000, $storage);
+$bucket->bootstrap(10);
 
 if (!$bucket->consume(1)) {
     http_response_code(429);

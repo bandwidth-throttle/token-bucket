@@ -65,6 +65,7 @@ class SingleProcessStorage implements Storage
      * This storage doesn't need a mutex at all.
      *
      * @return NoMutex The non locking mutex.
+     * @internal
      */
     public function getMutex()
     {
