@@ -33,8 +33,8 @@ class Rate
         self::HOUR        =>     3600,
         self::DAY         =>    86400,
         self::WEEK        =>   604800,
-        self::MONTH       =>  2592000,
-        self::YEAR        => 31104000,
+        self::MONTH       =>  2629743.83,
+        self::YEAR        => 31556926,
     ];
     
     /**
@@ -73,7 +73,7 @@ class Rate
      * @return double The rate.
      * @internal
      */
-    public function getRate()
+    public function getTokensPerSecond()
     {
         return $this->tokens / self::$unitMap[$this->unit];
     }

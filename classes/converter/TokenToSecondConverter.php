@@ -38,6 +38,6 @@ class TokenToSecondConverter
      */
     public function convert($tokens)
     {
-        return $tokens / $this->rate->getRate();
+        return $tokens / $this->rate->getTokensPerSecond();
     }
 }
