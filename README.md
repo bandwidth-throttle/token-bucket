@@ -44,8 +44,10 @@ The first parameter is the capacity of the bucket. I.e. there will be never
 more tokens available. This also means that consuming more tokens than the
 capacity is invalid.
 
-The second parameter is the rate. This parameter determines the speed for filling
-the bucket with tokens. The rate is the amount of microseconds to add one token.
+The second parameter is the token-add-[`Rate`](http://bandwidth-throttle.github.io/token-bucket/api/class-bandwidthThrottle.tokenBucket.Rate.html).
+It determines the speed for filling the bucket with tokens. The rate is the
+amount of tokens added per unit, e.g. `new Rate(100, Rate::SECOND)`
+would add 100 tokens per second.
 
 The third parameter is the storage, which is used to persist the token amount
 of the bucket. The storage does also determin the scope of the bucket.
