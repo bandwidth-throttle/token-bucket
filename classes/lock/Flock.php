@@ -13,30 +13,30 @@ class Flock extends Mutex
 {
     
     /**
-     * @var resource $fp The file handle.
+     * @var resource $fileHandle The file handle.
      */
-    private $fp;
+    private $fileHandle;
     
     /**
      * Sets the file handle.
      *
-     * @param resource $fp The file handle.
+     * @param resource $fileHandle The file handle.
      */
-    public function __construct($fp)
+    public function __construct($fileHandle)
     {
-        $this->fp = $fp;
+        $this->fileHandle = $fileHandle;
     }
     
     public function synchronized(callable $block)
     {
-        if (!flock($this->fp, LOCK_EX)) {
+        if (!flock($this->fileHandle, LOCK_EX)) {
             throw new MutexException("Could not aquire lock.");
         }
         try {
             return call_user_func($block);
             
         } finally {
-            if (!flock($this->fp, LOCK_UN)) {
+            if (!flock($this->fileHandle, LOCK_UN)) {
                 throw new MutexException("Could not release lock.");
             }
         }

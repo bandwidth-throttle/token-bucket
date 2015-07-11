@@ -127,4 +127,14 @@ class FileStorageTest extends \PHPUnit_Framework_TestCase
         $storage = new FileStorage(vfsStream::url("test/data"));
         $storage->getMicrotime();
     }
+    
+    /**
+     * Tests deleting fails.
+     *
+     * @test
+     */
+    public function testRemoveFails()
+    {
+        $this->markTestIncomplete();
+    }
 }

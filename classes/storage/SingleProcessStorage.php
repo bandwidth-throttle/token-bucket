@@ -43,6 +43,11 @@ class SingleProcessStorage implements Storage
     {
         $this->setMicrotime($microtime);
     }
+    
+    public function remove()
+    {
+        $this->microtime = null;
+    }
 
     public function setMicrotime($microtime)
     {

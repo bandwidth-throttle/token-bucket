@@ -116,6 +116,7 @@ class TokenBucket
      * @param int &$missingTokens The remaining amount of tokens to wait.
      *
      * @return bool If tokens were consumed.
+     * @SuppressWarnings(PHPMD)
      *
      * @throws \LengthException The token amount is larger than the capacity.
      * @throws StorageException The stored microtime could not be accessed.

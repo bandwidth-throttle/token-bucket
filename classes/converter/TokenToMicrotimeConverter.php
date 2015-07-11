@@ -16,16 +16,16 @@ class TokenToMicrotimeConverter
     /**
      * @var TokenToSecondConverter Token converter.
      */
-    private $tokenToSecondConverter;
+    private $secondsConverter;
     
     /**
      * Sets the token token converter.
      *
-     * @param TokenToSecondConverter $tokenToSecondConverter Converter.
+     * @param TokenToSecondConverter $secondsConverter Converter.
      */
-    public function __construct(TokenToSecondConverter $tokenToSecondConverter)
+    public function __construct(TokenToSecondConverter $secondsConverter)
     {
-        $this->tokenToSecondConverter = $tokenToSecondConverter;
+        $this->secondsConverter = $secondsConverter;
     }
     
     /**
@@ -36,6 +36,6 @@ class TokenToMicrotimeConverter
      */
     public function convert($tokens)
     {
-        return microtime(true) - $this->tokenToSecondConverter->convert($tokens);
+        return microtime(true) - $this->secondsConverter->convert($tokens);
     }
 }
