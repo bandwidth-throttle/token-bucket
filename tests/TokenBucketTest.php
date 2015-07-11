@@ -110,8 +110,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
     public function testConsume()
     {
         $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
-        $bucket->bootstrap();
-        sleep(10);
+        $bucket->bootstrap(10);
         
         $this->assertTrue($bucket->consume(1));
         $this->assertTrue($bucket->consume(2));
@@ -121,10 +120,32 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($bucket->consume(1));
         
         sleep(3);
-        $this->assertFalse($bucket->consume(4, $missingTokens));
-        $this->assertEquals(1, $missingTokens);
+        $this->assertFalse($bucket->consume(4, $seconds));
+        $this->assertEquals(1, $seconds);
     }
 
+    /**
+     * Tests consume() returns the expected amount of seconds to wait.
+     *
+     * @test
+     */
+    public function testWaitCalculation()
+    {
+        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $bucket->bootstrap(1);
+        
+        $bucket->consume(3, $seconds);
+        $this->assertEquals(2, $seconds);
+        sleep(1);
+        
+        $bucket->consume(3, $seconds);
+        $this->assertEquals(1, $seconds);
+        sleep(1);
+        
+        $bucket->consume(3, $seconds);
+        $this->assertEquals(0, $seconds);
+    }
+    
     /**
      * Test token rate.
      *
@@ -154,11 +175,11 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
         $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
         $bucket->bootstrap(1);
 
-        $this->assertFalse($bucket->consume(2, $missingTokens));
-        $this->assertEquals(1, $missingTokens);
+        $this->assertFalse($bucket->consume(2, $seconds));
+        $this->assertEquals(1, $seconds);
 
-        $this->assertFalse($bucket->consume(2, $missingTokens));
-        $this->assertEquals(1, $missingTokens);
+        $this->assertFalse($bucket->consume(2, $seconds));
+        $this->assertEquals(1, $seconds);
         
         $this->assertTrue($bucket->consume(1));
     }
@@ -174,8 +195,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
         $bucket->bootstrap(1);
 
         $this->assertTrue($bucket->consume(1));
-        $this->assertFalse($bucket->consume(1, $missingTokens));
-        $this->assertEquals(1, $missingTokens);
+        $this->assertFalse($bucket->consume(1, $seconds));
+        $this->assertEquals(1, $seconds);
     }
     
     /**

@@ -110,10 +110,10 @@ class TokenBucket
      *
      * This method consumes only tokens if there are sufficient tokens available.
      * If there aren't sufficient tokens, no tokens will be removed and the
-     * remaining amount of tokens is written to $missingTokens.
+     * remaining seconds to wait is written to $seconds.
      *
-     * @param int $tokens         The token amount.
-     * @param int &$missingTokens The remaining amount of tokens to wait.
+     * @param int    $tokens   The token amount.
+     * @param double &$seconds The seconds to wait.
      *
      * @return bool If tokens were consumed.
      * @SuppressWarnings(PHPMD)
@@ -121,14 +121,14 @@ class TokenBucket
      * @throws \LengthException The token amount is larger than the capacity.
      * @throws StorageException The stored microtime could not be accessed.
      */
-    public function consume($tokens, &$missingTokens = 0)
+    public function consume($tokens, &$seconds = 0)
     {
         if ($tokens > $this->capacity) {
             throw new \LengthException("Token amount ($tokens) is larger than the capacity ($this->capacity).");
         }
         
         return $this->storage->getMutex()->synchronized(
-            function () use ($tokens, &$missingTokens) {
+            function () use ($tokens, &$seconds) {
 
                 $microtime = $this->storage->getMicrotime();
             
@@ -140,13 +140,14 @@ class TokenBucket
 
                 $delta = $this->getTokens($microtime) - $tokens;
                 if ($delta < 0) {
-                    $missingTokens = -$delta;
+                    $passed  = microtime(true) - $microtime;
+                    $seconds = max(0, $this->tokenToSecondConverter->convert($tokens) - $passed);
                     return false;
 
                 } else {
                     $microtime += $this->tokenToSecondConverter->convert($tokens);
                     $this->storage->setMicrotime($microtime);
-                    $missingTokens = 0;
+                    $seconds = 0;
                     return true;
                 }
             }

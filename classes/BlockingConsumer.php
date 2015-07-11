@@ -2,6 +2,8 @@
 
 namespace bandwidthThrottle\tokenBucket;
 
+use bandwidthThrottle\tokenBucket\storage\StorageException;
+
 /**
  * Blocking token bucket consumer.
  *
@@ -34,13 +36,15 @@ class BlockingConsumer
      * consumer blocks until it can consume the tokens.
      *
      * @param int $tokens The token amount.
+     *
      * @throws \LengthException The token amount is larger than the bucket's capacity.
+     * @throws StorageException The stored microtime could not be accessed.
      */
     public function consume($tokens)
     {
-        while (!$this->bucket->consume($tokens, $missingTokens)) {
+        while (!$this->bucket->consume($tokens, $seconds)) {
             // sleep at least 1 millisecond.
-            usleep(max(10000, $this->bucket->getMicroRate() * $missingTokens));
+            usleep(max(10000, $seconds * 1000000));
         }
     }
 }

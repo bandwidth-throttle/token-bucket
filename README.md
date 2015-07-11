@@ -28,8 +28,9 @@ $storage = new FileStorage(__DIR__ . "/api.bucket");
 $bucket  = new TokenBucket(10, 1000, $storage);
 $bucket->bootstrap(10);
 
-if (!$bucket->consume(1)) {
+if (!$bucket->consume(1, $seconds)) {
     http_response_code(429);
+    header(sprintf("Retry-After: %d", floor($seconds)));
     exit();
 }
 ```
