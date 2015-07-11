@@ -44,6 +44,9 @@ class StorageTest extends \PHPUnit_Framework_TestCase
             [function () {
                 return new SingleProcessStorage();
             }],
+            [function () {
+                return new SessionStorage("test");
+            }],
 
             [function () {
                 vfsStream::setup('fileStorage');

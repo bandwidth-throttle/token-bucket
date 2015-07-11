@@ -20,6 +20,16 @@ class PDOStorageTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * Tests two storages with different names don't interfere each other.
+     *
+     * @test
+     */
+    public function testStoragesDontInterfere()
+    {
+        $this->markTestIncomplete();
+    }
+
+    /**
      * Tests instantiation with a too long name should fail.
      *
      * @test
