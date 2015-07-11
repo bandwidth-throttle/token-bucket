@@ -50,7 +50,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
                 ->method("isBootstrapped")
                 ->willReturn(true);
         
-        $bucket = new TokenBucket(1, 1, $storage);
+        $bucket = new TokenBucket(1, new Rate(1, Rate::SECOND), $storage);
         
         $storage->expects($this->never())
                 ->method("bootstrap");
@@ -65,7 +65,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testDefaultBootstrap()
     {
-        $tokenBucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $rate        = new Rate(1, Rate::SECOND);
+        $tokenBucket = new TokenBucket(10, $rate, new SingleProcessStorage());
         $tokenBucket->bootstrap();
 
         $this->assertFalse($tokenBucket->consume(1));
@@ -82,7 +83,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testBootstrapWithInitialTokens($capacity, $tokens)
     {
-        $tokenBucket = new TokenBucket($capacity, 1000000, new SingleProcessStorage());
+        $rate        = new Rate(1, Rate::SECOND);
+        $tokenBucket = new TokenBucket($capacity, $rate, new SingleProcessStorage());
         $tokenBucket->bootstrap($tokens);
 
         $this->assertTrue($tokenBucket->consume($tokens));
@@ -109,7 +111,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsume()
     {
-        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $rate   = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(10, $rate, new SingleProcessStorage());
         $bucket->bootstrap(10);
         
         $this->assertTrue($bucket->consume(1));
@@ -131,7 +134,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testWaitCalculation()
     {
-        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $rate   = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(10, $rate, new SingleProcessStorage());
         $bucket->bootstrap(1);
         
         $bucket->consume(3, $seconds);
@@ -153,7 +157,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testWaitingAddsTokens()
     {
-        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $rate   = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(10, $rate, new SingleProcessStorage());
         $bucket->bootstrap();
 
         $this->assertFalse($bucket->consume(1));
@@ -172,7 +177,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsumeInsufficientDontRemoveTokens()
     {
-        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $rate   = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(10, $rate, new SingleProcessStorage());
         $bucket->bootstrap(1);
 
         $this->assertFalse($bucket->consume(2, $seconds));
@@ -191,7 +197,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsumeSufficientRemoveTokens()
     {
-        $bucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $rate   = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(10, $rate, new SingleProcessStorage());
         $bucket->bootstrap(1);
 
         $this->assertTrue($bucket->consume(1));
@@ -207,7 +214,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitialTokensTooMany()
     {
-        $bucket = new TokenBucket(20, 1000000, new SingleProcessStorage());
+        $rate   = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(20, $rate, new SingleProcessStorage());
         $bucket->bootstrap(21);
     }
     
@@ -219,7 +227,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsumeTooMany()
     {
-        $tokenBucket = new TokenBucket(20, 1000000, new SingleProcessStorage());
+        $rate        = new Rate(1, Rate::SECOND);
+        $tokenBucket = new TokenBucket(20, $rate, new SingleProcessStorage());
         $tokenBucket->bootstrap();
 
         $tokenBucket->consume(21);
@@ -232,7 +241,8 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testCapacity()
     {
-        $tokenBucket = new TokenBucket(10, 1000000, new SingleProcessStorage());
+        $rate        = new Rate(1, Rate::SECOND);
+        $tokenBucket = new TokenBucket(10, $rate, new SingleProcessStorage());
         $tokenBucket->bootstrap();
         sleep(11);
 

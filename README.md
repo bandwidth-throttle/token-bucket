@@ -72,17 +72,19 @@ tokens would be available.
 
 ## Example
 
-This example will limit the rate of a global resource to 1000 requests per second
+This example will limit the rate of a global resource to 10 requests per second
 for all requests. Therefore we use a storage from the global scope.
 
 ```php
 <?php
 
+use bandwidthThrottle\tokenBucket\Rate;
 use bandwidthThrottle\tokenBucket\TokenBucket;
 use bandwidthThrottle\tokenBucket\storage\FileStorage;
 
 $storage = new FileStorage(__DIR__ . "/api.bucket");
-$bucket  = new TokenBucket(10, 1000, $storage);
+$rate    = new Rate(10, Rate::SECOND);
+$bucket  = new TokenBucket(10, $rate, $storage);
 $bucket->bootstrap(10);
 
 if (!$bucket->consume(1, $seconds)) {

@@ -2,6 +2,8 @@
 
 namespace bandwidthThrottle\tokenBucket\converter;
 
+use bandwidthThrottle\tokenBucket\Rate;
+
 /**
  * Token to seconds converter.
  *
@@ -14,18 +16,18 @@ class TokenToSecondConverter
 {
     
     /**
-     * @var int Microseconds for adding one token.
+     * @var Rate $rate The rate
      */
-    private $microRate;
+    private $rate;
     
     /**
      * Sets the token rate.
      *
-     * @param int $microRate Microseconds for adding one token.
+     * @param Rate $rate The rate.
      */
-    public function __construct($microRate)
+    public function __construct(Rate $rate)
     {
-        $this->microRate = $microRate;
+        $this->rate = $rate;
     }
     
     /**
@@ -36,6 +38,6 @@ class TokenToSecondConverter
      */
     public function convert($tokens)
     {
-        return $tokens * $this->microRate / 1000000;
+        return $tokens / $this->rate->getRate();
     }
 }

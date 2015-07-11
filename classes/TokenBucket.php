@@ -17,11 +17,13 @@ use bandwidthThrottle\tokenBucket\converter\SecondToTokenConverter;
  *
  * Example:
  * <code>
+ * use bandwidthThrottle\tokenBucket\Rate;
  * use bandwidthThrottle\tokenBucket\TokenBucket;
  * use bandwidthThrottle\tokenBucket\storage\FileStorage;
  *
  * $storage = new FileStorage(__DIR__ . "/api.bucket");
- * $bucket  = new TokenBucket(10, 1000, $storage);
+ * $rate    = new Rate(10, Rate::SECOND);
+ * $bucket  = new TokenBucket(10, $rate, $storage);
  * $bucket->bootstrap(10);
  *
  * if (!$bucket->consume(1, $seconds)) {
@@ -39,9 +41,9 @@ class TokenBucket
 {
 
     /**
-     * @var int Microseconds for adding one token.
+     * @var Rate The rate.
      */
-    private $microRate;
+    private $rate;
     
     /**
      * @var int Token capacity of this bucket.
@@ -79,17 +81,17 @@ class TokenBucket
      * The storage determines the scope of the bucket.
      *
      * @param int     $capacity  Capacity of the bucket.
-     * @param int     $microRate Microseconds for adding one token.
+     * @param Rate    $rate      The rate.
      * @param Storage $storage   The storage.
      */
-    public function __construct($capacity, $microRate, Storage $storage)
+    public function __construct($capacity, Rate $rate, Storage $storage)
     {
-        $this->capacity  = $capacity;
-        $this->microRate = $microRate;
-        $this->storage   = $storage;
+        $this->capacity = $capacity;
+        $this->rate     = $rate;
+        $this->storage  = $storage;
 
-        $this->tokenToSecondConverter    = new TokenToSecondConverter($microRate);
-        $this->secondToTokenConverter    = new SecondToTokenConverter($microRate);
+        $this->tokenToSecondConverter    = new TokenToSecondConverter($rate);
+        $this->secondToTokenConverter    = new SecondToTokenConverter($rate);
         $this->tokenToMicrotimeConverter = new TokenToMicrotimeConverter($this->tokenToSecondConverter);
     }
     
@@ -177,13 +179,13 @@ class TokenBucket
     }
 
     /**
-     * Returns the amount of microseconds to produce one token.
+     * Returns the token add rate.
      *
-     * @return int Microseconds for one token.
+     * @return Rate The rate.
      */
-    public function getMicroRate()
+    public function getRate()
     {
-        return $this->microRate;
+        return $this->rate;
     }
     
     /**
