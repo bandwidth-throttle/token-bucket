@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Namespace bandwidthThrottle\tokenBucket</title>
+	<title>Namespace bandwidthThrottle\tokenBucket\storage\scope</title>
 
 	<link rel="stylesheet" href="resources/style.css?95ada9fb523b6ab4fd1c47bb375f713f2cc65542">
 
@@ -35,13 +35,13 @@
 						lock					</a>
 
 						</li>
-				<li>
+				<li class="active">
 					<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">
 						storage<span></span>
 					</a>
 
 						<ul>
-				<li>
+				<li class="active">
 					<a href="namespace-bandwidthThrottle.tokenBucket.storage.scope.html">
 						scope					</a>
 
@@ -54,18 +54,15 @@
 
 
 		<div id="elements">
-			<h3>Classes</h3>
+
+			<h3>Interfaces</h3>
 			<ul>
-				<li><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">BlockingConsumer</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">TokenBucket</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.scope.GlobalScope.html">GlobalScope</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.scope.RequestScope.html">RequestScope</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.scope.SessionScope.html">SessionScope</a></li>
 			</ul>
 
 
-
-			<h3>Exceptions</h3>
-			<ul>
-				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html">TokenBucketException</a></li>
-			</ul>
 
 
 		</div>
@@ -99,40 +96,28 @@
 	</div>
 
 <div id="content" class="namespace">
-	<h1>Namespace <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\tokenBucket</h1>
-
-	<table class="summary" id="namespaces">
-	<caption>Namespaces summary</caption>
-	<tr>
-		<td class="name"><a href="namespace-bandwidthThrottle.tokenBucket.lock.html">bandwidthThrottle\tokenBucket\lock</a></td>
-	</tr>
-	<tr>
-		<td class="name"><a href="namespace-bandwidthThrottle.tokenBucket.storage.html">bandwidthThrottle\tokenBucket\storage</a></td>
-	</tr>
-	</table>
+	<h1>Namespace <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\<a href="namespace-bandwidthThrottle.tokenBucket.html">tokenBucket</a>\<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">storage</a>\scope</h1>
 
 
-<table class="summary" id="classes">
-<caption>Classes summary</caption>
+
+
+<table class="summary" id="interfaces">
+<caption>Interfaces summary</caption>
 <tr>
-	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">BlockingConsumer</a></td>
-	<td>Blocking token bucket consumer.</td>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.storage.scope.GlobalScope.html">GlobalScope</a></td>
+	<td>Marker interface for the global scope.</td>
 </tr>
 <tr>
-	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">TokenBucket</a></td>
-	<td>Token Bucket algorithm.</td>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.storage.scope.RequestScope.html">RequestScope</a></td>
+	<td>Marker interface for the request scope.</td>
+</tr>
+<tr>
+	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.storage.scope.SessionScope.html">SessionScope</a></td>
+	<td>Marker interface for the session scope.</td>
 </tr>
 </table>
 
 
-
-<table class="summary" id="exceptions">
-<caption>Exceptions summary</caption>
-<tr>
-	<td class="name"><a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html">TokenBucketException</a></td>
-	<td>The package's base exception.</td>
-</tr>
-</table>
 
 
 </div>

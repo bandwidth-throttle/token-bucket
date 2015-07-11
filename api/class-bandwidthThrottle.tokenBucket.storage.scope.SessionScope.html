@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class bandwidthThrottle\tokenBucket\TokenBucketException</title>
+	<title>Interface bandwidthThrottle\tokenBucket\storage\scope\SessionScope</title>
 
 	<link rel="stylesheet" href="resources/style.css?95ada9fb523b6ab4fd1c47bb375f713f2cc65542">
 
@@ -35,13 +35,13 @@
 						lock					</a>
 
 						</li>
-				<li>
+				<li class="active">
 					<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">
 						storage<span></span>
 					</a>
 
 						<ul>
-				<li>
+				<li class="active">
 					<a href="namespace-bandwidthThrottle.tokenBucket.storage.scope.html">
 						scope					</a>
 
@@ -54,18 +54,15 @@
 
 
 		<div id="elements">
-			<h3>Classes</h3>
+
+			<h3>Interfaces</h3>
 			<ul>
-				<li><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">BlockingConsumer</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">TokenBucket</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.scope.GlobalScope.html">GlobalScope</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.scope.RequestScope.html">RequestScope</a></li>
+				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.storage.scope.SessionScope.html">SessionScope</a></li>
 			</ul>
 
 
-
-			<h3>Exceptions</h3>
-			<ul>
-				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html">TokenBucketException</a></li>
-			</ul>
 
 
 		</div>
@@ -88,7 +85,7 @@
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
 			<li>
-				<a href="namespace-bandwidthThrottle.tokenBucket.html" title="Summary of bandwidthThrottle\tokenBucket"><span>Namespace</span></a>
+				<a href="namespace-bandwidthThrottle.tokenBucket.storage.scope.html" title="Summary of bandwidthThrottle\tokenBucket\storage\scope"><span>Namespace</span></a>
 			</li>
 			<li class="active">
 <span>Class</span>			</li>
@@ -100,34 +97,26 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class TokenBucketException</h1>
+	<h1>Interface SessionScope</h1>
 
 
 	<div class="description">
-	<p>The package's base exception.</p>
+	<p>Marker interface for the session scope.</p>
+
+<p>The session scope is available per session (i.e. per user).</p>
+
+<p>A Token bucket which uses a storage of the session scope can limit a rate
+for a resource within a session. E.g. limit an API usage per user.</p>
 	</div>
 
-	<dl class="tree">
-		<dd style="padding-left:0px">
-Exception
-			
-			
-		</dd>
-		<dd style="padding-left:30px">
-			<img src="resources/inherit.png" alt="Extended by">
-<b><span>bandwidthThrottle\tokenBucket\TokenBucketException</span></b>			
-			
-			
-		</dd>
-	</dl>
+
+
 
 
 	<div>
-		<h4>Direct known subclasses</h4>
-			<a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">bandwidthThrottle\tokenBucket\storage\StorageException</a>
+		<h4>Direct known implementers</h4>
+			<a href="class-bandwidthThrottle.tokenBucket.storage.SessionStorage.html">bandwidthThrottle\tokenBucket\storage\SessionStorage</a>
 	</div>
-
-
 
 
 
@@ -135,7 +124,7 @@ Exception
 	<div class="info">
 		
 		
-		<b>Namespace:</b> <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\<a href="namespace-bandwidthThrottle.tokenBucket.html">tokenBucket</a><br>
+		<b>Namespace:</b> <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\<a href="namespace-bandwidthThrottle.tokenBucket.html">tokenBucket</a>\<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">storage</a>\<a href="namespace-bandwidthThrottle.tokenBucket.storage.scope.html">scope</a><br>
 		
 
 				<b>License:</b>
@@ -144,29 +133,13 @@ Exception
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucketException.html#5-15" title="Go to source code">TokenBucketException.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.scope.SessionScope.html#5-20" title="Go to source code">storage/scope/SessionScope.php</a>
 		<br>
 	</div>
 
 
 
 
-	<table class="summary inherited">
-	<caption>Methods inherited from Exception</caption>
-	<tr>
-		<td><code>
-__construct(), 
-__toString(), 
-getCode(), 
-getFile(), 
-getLine(), 
-getMessage(), 
-getPrevious(), 
-getTrace(), 
-getTraceAsString()
-		</code></td>
-	</tr>
-	</table>
 
 
 
@@ -179,17 +152,6 @@ getTraceAsString()
 
 
 
-	<table class="summary inherited">
-	<caption>Properties inherited from Exception</caption>
-	<tr>
-		<td><code>
-<var>$code</var>, 
-<var>$file</var>, 
-<var>$line</var>, 
-<var>$message</var>
-		</code></td>
-	</tr>
-	</table>
 
 
 

@@ -37,10 +37,16 @@
 						</li>
 				<li>
 					<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">
-						storage					</a>
+						storage<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-bandwidthThrottle.tokenBucket.storage.scope.html">
+						scope					</a>
 
 						</li>
-							</ul></li></ul></li>
+							</ul></li></ul></li></ul></li>
 			</ul>
 		</div>
 
@@ -121,7 +127,7 @@
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#5-46" title="Go to source code">BlockingConsumer.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#7-50" title="Go to source code">BlockingConsumer.php</a>
 		<br>
 	</div>
 
@@ -141,7 +147,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#20-28" title="Go to source code">__construct</a>( <span><code><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">bandwidthThrottle\tokenBucket\TokenBucket</a></code> <var>$bucket</var></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#22-30" title="Go to source code">__construct</a>( <span><code><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">bandwidthThrottle\tokenBucket\TokenBucket</a></code> <var>$bucket</var></span> )</code>
 
 		<div class="description short">
 			<p>Set the token bucket.</p>
@@ -176,7 +182,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_consume">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#30-45" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#32-49" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span> )</code>
 
 		<div class="description short">
 			<p>Consumes tokens.</p>
@@ -198,7 +204,8 @@ consumer blocks until it can consume the tokens.</p>
 
 				<h4>Throws</h4>
 				<div class="list">
-					LengthException<br>The token amount is larger than the bucket's capacity.
+					LengthException<br>The token amount is larger than the bucket's capacity.<br>
+					<code><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">bandwidthThrottle\tokenBucket\storage\StorageException</a></code><br>The stored microtime could not be accessed.
 				</div>
 
 

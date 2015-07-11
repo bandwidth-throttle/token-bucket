@@ -37,10 +37,16 @@
 						</li>
 				<li class="active">
 					<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">
-						storage					</a>
+						storage<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-bandwidthThrottle.tokenBucket.storage.scope.html">
+						scope					</a>
 
 						</li>
-							</ul></li></ul></li>
+							</ul></li></ul></li></ul></li>
 			</ul>
 		</div>
 
@@ -52,6 +58,7 @@
 			<ul>
 				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.storage.FileStorage.html">FileStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html">PDOStorage</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.SessionStorage.html">SessionStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.SingleProcessStorage.html">SingleProcessStorage</a></li>
 			</ul>
 
@@ -104,13 +111,18 @@
 
 	<div class="description">
 	<p>File based storage which can be shared among processes.</p>
+
+<p>This storage is in the global scope. However the scope is limited to the
+underlying filesystem. I.e. the scope is not shared between hosts.</p>
 	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
 <b><span>bandwidthThrottle\tokenBucket\storage\FileStorage</span></b>			
 			 implements 
-				<a href="class-bandwidthThrottle.tokenBucket.storage.Storage.html"><span>bandwidthThrottle\tokenBucket\storage\Storage</span></a>
+				<a href="class-bandwidthThrottle.tokenBucket.storage.Storage.html"><span>bandwidthThrottle\tokenBucket\storage\Storage</span></a>, 
+			
+				<a href="class-bandwidthThrottle.tokenBucket.storage.scope.GlobalScope.html"><span>bandwidthThrottle\tokenBucket\storage\scope\GlobalScope</span></a>
 			
 			
 		</dd>
@@ -135,7 +147,7 @@
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.FileStorage.html#7-137" title="Go to source code">storage/FileStorage.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.FileStorage.html#8-141" title="Go to source code">storage/FileStorage.php</a>
 		<br>
 	</div>
 
@@ -155,7 +167,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.storage.FileStorage.html#32-45" title="Go to source code">__construct</a>( <span>string <var>$path</var></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.storage.FileStorage.html#36-49" title="Go to source code">__construct</a>( <span>string <var>$path</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the file path and opens it.</p>

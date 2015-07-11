@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Interface bandwidthThrottle\tokenBucket\storage\Storage</title>
+	<title>Interface bandwidthThrottle\tokenBucket\storage\scope\RequestScope</title>
 
 	<link rel="stylesheet" href="resources/style.css?95ada9fb523b6ab4fd1c47bb375f713f2cc65542">
 
@@ -41,7 +41,7 @@
 					</a>
 
 						<ul>
-				<li>
+				<li class="active">
 					<a href="namespace-bandwidthThrottle.tokenBucket.storage.scope.html">
 						scope					</a>
 
@@ -54,24 +54,15 @@
 
 
 		<div id="elements">
-			<h3>Classes</h3>
-			<ul>
-				<li><a href="class-bandwidthThrottle.tokenBucket.storage.FileStorage.html">FileStorage</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html">PDOStorage</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.storage.SessionStorage.html">SessionStorage</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.storage.SingleProcessStorage.html">SingleProcessStorage</a></li>
-			</ul>
 
 			<h3>Interfaces</h3>
 			<ul>
-				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.storage.Storage.html">Storage</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.scope.GlobalScope.html">GlobalScope</a></li>
+				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.storage.scope.RequestScope.html">RequestScope</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.scope.SessionScope.html">SessionScope</a></li>
 			</ul>
 
 
-			<h3>Exceptions</h3>
-			<ul>
-				<li><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">StorageException</a></li>
-			</ul>
 
 
 		</div>
@@ -94,7 +85,7 @@
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
 			<li>
-				<a href="namespace-bandwidthThrottle.tokenBucket.storage.html" title="Summary of bandwidthThrottle\tokenBucket\storage"><span>Namespace</span></a>
+				<a href="namespace-bandwidthThrottle.tokenBucket.storage.scope.html" title="Summary of bandwidthThrottle\tokenBucket\storage\scope"><span>Namespace</span></a>
 			</li>
 			<li class="active">
 <span>Class</span>			</li>
@@ -106,20 +97,17 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Interface Storage</h1>
+	<h1>Interface RequestScope</h1>
 
 
 	<div class="description">
-	<p>Token storage.</p>
+	<p>Marker interface for the request scope.</p>
 
-<p>The storage determines the scope for the token bucket. It therefore
-implements one of the *Scope marker interfaces:</p>
+<p>The request scope is available only per process (i.e. per request).</p>
 
-<ul>
-<li><code><a href="class-bandwidthThrottle.tokenBucket.storage.scope.RequestScope.html">bandwidthThrottle\tokenBucket\storage\scope\RequestScope</a></code>: The bucket is shared only within one request.</li>
-<li><code><a href="class-bandwidthThrottle.tokenBucket.storage.scope.SessionScope.html">bandwidthThrottle\tokenBucket\storage\scope\SessionScope</a></code>: The bucket is shared between requests of one session.</li>
-<li><code><a href="class-bandwidthThrottle.tokenBucket.storage.scope.GlobalScope.html">bandwidthThrottle\tokenBucket\storage\scope\GlobalScope</a></code>: The bucket is shared among all processes.</li>
-</ul>
+<p>A Token bucket which uses a storage of the request scope can limit a rate
+for a resource which is used within one request. E.g. bandwidth throtteling
+for downloading a stream.</p>
 	</div>
 
 
@@ -128,9 +116,6 @@ implements one of the *Scope marker interfaces:</p>
 
 	<div>
 		<h4>Direct known implementers</h4>
-			<a href="class-bandwidthThrottle.tokenBucket.storage.FileStorage.html">bandwidthThrottle\tokenBucket\storage\FileStorage</a>, 
-			<a href="class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html">bandwidthThrottle\tokenBucket\storage\PDOStorage</a>, 
-			<a href="class-bandwidthThrottle.tokenBucket.storage.SessionStorage.html">bandwidthThrottle\tokenBucket\storage\SessionStorage</a>, 
 			<a href="class-bandwidthThrottle.tokenBucket.storage.SingleProcessStorage.html">bandwidthThrottle\tokenBucket\storage\SingleProcessStorage</a>
 	</div>
 
@@ -140,7 +125,7 @@ implements one of the *Scope marker interfaces:</p>
 	<div class="info">
 		
 		
-		<b>Namespace:</b> <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\<a href="namespace-bandwidthThrottle.tokenBucket.html">tokenBucket</a>\<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">storage</a><br>
+		<b>Namespace:</b> <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\<a href="namespace-bandwidthThrottle.tokenBucket.html">tokenBucket</a>\<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">storage</a>\<a href="namespace-bandwidthThrottle.tokenBucket.storage.scope.html">scope</a><br>
 		
 
 				<b>License:</b>
@@ -149,7 +134,7 @@ implements one of the *Scope marker interfaces:</p>
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.Storage.html#10-83" title="Go to source code">storage/Storage.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.scope.RequestScope.html#5-21" title="Go to source code">storage/scope/RequestScope.php</a>
 		<br>
 	</div>
 
