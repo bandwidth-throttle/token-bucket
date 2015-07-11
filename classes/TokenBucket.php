@@ -133,8 +133,9 @@ class TokenBucket
                 $microtime = $this->storage->getMicrotime();
             
                 // Drop overflowing tokens
-                if ($this->getTokens($microtime) > $this->capacity) {
-                    $microtime = $this->tokenToMicrotimeConverter->convert($this->capacity);
+                $minMicrotime = $this->tokenToMicrotimeConverter->convert($this->capacity);
+                if ($minMicrotime > $microtime) {
+                    $microtime = $minMicrotime;
                 }
 
                 $delta = $this->getTokens($microtime) - $tokens;
