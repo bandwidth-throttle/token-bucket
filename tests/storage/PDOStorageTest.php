@@ -55,29 +55,6 @@ class PDOStorageTest extends \PHPUnit_Framework_TestCase
         }
         return $cases;
     }
-    
-    /**
-     * Tests two storages with different names don't interfere each other.
-     *
-     * @param \PDO $pdo The PDO.
-     * @test
-     * @dataProvider providePDO
-     */
-    public function testStoragesDontInterfere(\PDO $pdo)
-    {
-        $storageA = new PDOStorage("A", $pdo);
-        $storageA->bootstrap(0);
-        $this->storages[] = $storageA;
-
-        $storageB = new PDOStorage("B", $pdo);
-        $storageB->bootstrap(0);
-        $this->storages[] = $storageB;
-        
-        $storageA->setMicrotime(1);
-        $storageB->setMicrotime(2);
-        
-        $this->assertNotEquals($storageA->getMicrotime(), $storageB->getMicrotime());
-    }
 
     /**
      * Tests instantiation with a too long name should fail.

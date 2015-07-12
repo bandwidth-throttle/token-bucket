@@ -3,6 +3,7 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use org\bovigo\vfs\vfsStream;
+use malkusch\lock\NoMutex;
 
 /**
  * Tests for Storage implementations.
@@ -12,6 +13,7 @@ use org\bovigo\vfs\vfsStream;
  *
  * - MYSQL_DSN, MYSQL_USER
  * - PGSQL_DSN, PGSQL_USER
+ * - MEMCACHE_HOST
  *
  * @author Markus Malkusch <markus@malkusch.de>
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
@@ -76,7 +78,14 @@ class StorageTest extends \PHPUnit_Framework_TestCase
             }];
             
         }
+        if (getenv("MEMCACHE_HOST")) {
+            $cases[] = [function () {
+                $memcache = new \Memcache();
+                $memcache->connect(getenv("MEMCACHE_HOST"));
+                return new MemcacheStorage("test", $memcache, new NoMutex());
+            }];
             
+        }
         return $cases;
     }
     
