@@ -8,7 +8,7 @@ use bandwidthThrottle\tokenBucket\storage\scope\SessionScope;
 /**
  * Session based storage which is shared for one user accross requests.
  *
- * This storage is in the global scope.
+ * This storage is in the session scope.
  *
  * As PHP's session are thread safe this implementation doesn't provide a
  * locking Mutex.
