@@ -35,6 +35,10 @@ class BlockingConsumer
      * If the underlying token bucket doesn't have sufficient tokens, the
      * consumer blocks until it can consume the tokens.
      *
+     * Please be aware that this delay might hit PHP's max_execution_time.
+     * You should adjust that time (with e.g. set_time_limit()) to the
+     * expected delay.
+     *
      * @param int $tokens The token amount.
      *
      * @throws \LengthException The token amount is larger than the bucket's capacity.
