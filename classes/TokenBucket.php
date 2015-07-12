@@ -139,7 +139,9 @@ class TokenBucket
      *
      * This method consumes only tokens if there are sufficient tokens available.
      * If there aren't sufficient tokens, no tokens will be removed and the
-     * remaining seconds to wait is written to $seconds.
+     * remaining seconds to wait are written to $seconds.
+     *
+     * This method is threadsafe.
      *
      * @param int    $tokens   The token amount.
      * @param double &$seconds The seconds to wait.
