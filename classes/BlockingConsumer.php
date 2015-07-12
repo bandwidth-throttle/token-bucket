@@ -43,12 +43,15 @@ class BlockingConsumer
     public function consume($tokens)
     {
         while (!$this->bucket->consume($tokens, $seconds)) {
-            // avoid an overflow
+            // avoid an overflow before converting $seconds into microseconds.
             if ($seconds > 1) {
-                sleep((int) $seconds - 1);
-                $seconds -= (int) $seconds - 1;
+                // leave more than one second to avoid sleeping the minimum of one millisecond.
+                $sleepSeconds = ((int) $seconds) - 1;
 
+                sleep($sleepSeconds);
+                $seconds -= $sleepSeconds;
             }
+
             // sleep at least 1 millisecond.
             usleep(max(1000, $seconds * 1000000));
         }
