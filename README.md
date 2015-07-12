@@ -1,8 +1,13 @@
 # Tocken Bucket
 
-This is an implementation of the [Token Bucket algorithm](https://en.wikipedia.org/wiki/Token_bucket)
+This is a threadsafe implementation of the [Token Bucket algorithm](https://en.wikipedia.org/wiki/Token_bucket)
 in PHP. You can use a token bucket to limit a usage rate for a resource 
-(e.g. the bandwidth or an API usage).
+(e.g. a stream bandwidth or an API usage).
+
+The token bucket is an abstract metapher which doesn't have a direction of
+the resource consumption. I.e. you can limit a rate for consuming or producing.
+E.g. you can limit the consumption rate of a third party API service, or you
+can limit the usage rate of your own API service.
 
 # Installation
 
@@ -34,7 +39,9 @@ all requests of one session. E.g. to limit the API usage per user.
 
 - The [`GlobalScope`](http://bandwidth-throttle.github.io/token-bucket/api/class-bandwidthThrottle.tokenBucket.storage.scope.GlobalScope.html)
 limits the rate of a resource for all processes (i.e. requests). E.g. to limit
-the aggregated download bandwidth of a resource over all processes.
+the aggregated download bandwidth of a resource over all processes. This scope
+permits race conditions between processes. The TokenBucket is therefore
+synchronized on a shared mutex.
 
 ## TokenBucket
 
