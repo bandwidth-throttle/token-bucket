@@ -51,7 +51,7 @@ class PDOStorage implements Storage, GlobalScope
             throw new \LengthException("The name should not be longer than 128 characters.");
             
         }
-        if (~$pdo->getAttribute(\PDO::ATTR_ERRMODE) & \PDO::ERRMODE_EXCEPTION) {
+        if ($pdo->getAttribute(\PDO::ATTR_ERRMODE) !== \PDO::ERRMODE_EXCEPTION) {
             throw new \InvalidArgumentException("The pdo must have PDO::ERRMODE_EXCEPTION set.");
             
         }
