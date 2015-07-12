@@ -20,6 +20,15 @@ class SessionStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testStoragesDontInterfere()
     {
-        $this->markTestIncomplete();
+        $storageA = new SessionStorage("A");
+        $storageA->bootstrap(0);
+
+        $storageB = new SessionStorage("B");
+        $storageB->bootstrap(0);
+        
+        $storageA->setMicrotime(1);
+        $storageB->setMicrotime(2);
+        
+        $this->assertNotEquals($storageA->getMicrotime(), $storageB->getMicrotime());
     }
 }

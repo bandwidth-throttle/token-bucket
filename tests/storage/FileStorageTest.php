@@ -132,9 +132,16 @@ class FileStorageTest extends \PHPUnit_Framework_TestCase
      * Tests deleting fails.
      *
      * @test
+     * @expectedException bandwidthThrottle\tokenBucket\storage\StorageException
      */
     public function testRemoveFails()
     {
-        $this->markTestIncomplete();
+        $data = new vfsStreamFile("data");
+        $root = vfsStream::setup('test');
+        $root->chmod(0);
+        $root->addChild($data);
+        
+        $storage = new FileStorage(vfsStream::url("test/data"));
+        $storage->remove();
     }
 }
