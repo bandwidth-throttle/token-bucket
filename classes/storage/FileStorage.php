@@ -2,7 +2,7 @@
 
 namespace bandwidthThrottle\tokenBucket\storage;
 
-use bandwidthThrottle\tokenBucket\lock\Flock;
+use malkusch\lock\Flock;
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
 
 /**

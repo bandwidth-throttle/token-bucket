@@ -2,6 +2,7 @@
 
 namespace bandwidthThrottle\tokenBucket;
 
+use malkusch\lock\MutexException;
 use bandwidthThrottle\tokenBucket\storage\Storage;
 use bandwidthThrottle\tokenBucket\storage\StorageException;
 use bandwidthThrottle\tokenBucket\converter\TokenToMicrotimeConverter;
@@ -114,19 +115,23 @@ class TokenBucket
      */
     public function bootstrap($tokens = 0)
     {
-        if ($tokens > $this->capacity) {
-            throw new \LengthException(
-                "Initial token amount ($tokens) is larger than the capacity ($this->capacity)."
-            );
+        try {
+            if ($tokens > $this->capacity) {
+                throw new \LengthException(
+                    "Initial token amount ($tokens) is larger than the capacity ($this->capacity)."
+                );
+            }
+            $this->storage->getMutex()
+                ->check(function () {
+                    return !$this->storage->isBootstrapped();
+                })
+                ->then(function () use ($tokens) {
+                    $this->storage->bootstrap($this->tokenToMicrotimeConverter->convert($tokens));
+                });
+                
+        } catch (MutexException $e) {
+            throw new StorageException("Could not lock bootstrapping", 0, $e);
         }
-        
-        $this->storage->getMutex()
-            ->check(function () {
-                return !$this->storage->isBootstrapped();
-            })
-            ->then(function () use ($tokens) {
-                $this->storage->bootstrap($this->tokenToMicrotimeConverter->convert($tokens));
-            });
     }
     
     /**
@@ -147,35 +152,39 @@ class TokenBucket
      */
     public function consume($tokens, &$seconds = 0)
     {
-        if ($tokens > $this->capacity) {
-            throw new \LengthException("Token amount ($tokens) is larger than the capacity ($this->capacity).");
-        }
-        
-        return $this->storage->getMutex()->synchronized(
-            function () use ($tokens, &$seconds) {
-
-                $microtime = $this->storage->getMicrotime();
-            
-                // Drop overflowing tokens
-                $minMicrotime = $this->tokenToMicrotimeConverter->convert($this->capacity);
-                if ($minMicrotime > $microtime) {
-                    $microtime = $minMicrotime;
-                }
-
-                $delta = $this->getTokens($microtime) - $tokens;
-                if ($delta < 0) {
-                    $passed  = microtime(true) - $microtime;
-                    $seconds = max(0, $this->tokenToSecondConverter->convert($tokens) - $passed);
-                    return false;
-
-                } else {
-                    $microtime += $this->tokenToSecondConverter->convert($tokens);
-                    $this->storage->setMicrotime($microtime);
-                    $seconds = 0;
-                    return true;
-                }
+        try {
+            if ($tokens > $this->capacity) {
+                throw new \LengthException("Token amount ($tokens) is larger than the capacity ($this->capacity).");
             }
-        );
+
+            return $this->storage->getMutex()->synchronized(
+                function () use ($tokens, &$seconds) {
+                    $microtime = $this->storage->getMicrotime();
+
+                    // Drop overflowing tokens
+                    $minMicrotime = $this->tokenToMicrotimeConverter->convert($this->capacity);
+                    if ($minMicrotime > $microtime) {
+                        $microtime = $minMicrotime;
+                    }
+
+                    $delta = $this->getTokens($microtime) - $tokens;
+                    if ($delta < 0) {
+                        $passed  = microtime(true) - $microtime;
+                        $seconds = max(0, $this->tokenToSecondConverter->convert($tokens) - $passed);
+                        return false;
+
+                    } else {
+                        $microtime += $this->tokenToSecondConverter->convert($tokens);
+                        $this->storage->setMicrotime($microtime);
+                        $seconds = 0;
+                        return true;
+                    }
+                }
+            );
+
+        } catch (MutexException $e) {
+            throw new StorageException("Could not lock token consumption.", 0, $e);
+        }
     }
 
     /**
