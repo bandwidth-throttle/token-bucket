@@ -22,7 +22,38 @@ composer require bandwidth-throttle/token-bucket
 The package is in the namespace
 [`bandwidthThrottle\tokenBucket`](http://bandwidth-throttle.github.io/token-bucket/api/namespace-bandwidthThrottle.tokenBucket.html).
 
-## Scope
+## Example
+
+This example will limit the rate of a global resource to 10 requests per second
+for all requests.
+
+```php
+<?php
+
+use bandwidthThrottle\tokenBucket\Rate;
+use bandwidthThrottle\tokenBucket\TokenBucket;
+use bandwidthThrottle\tokenBucket\storage\FileStorage;
+
+$storage = new FileStorage(__DIR__ . "/api.bucket");
+$rate    = new Rate(10, Rate::SECOND);
+$bucket  = new TokenBucket(10, $rate, $storage);
+$bucket->bootstrap(10);
+
+if (!$bucket->consume(1, $seconds)) {
+    http_response_code(429);
+    header(sprintf("Retry-After: %d", floor($seconds)));
+    exit();
+}
+
+echo "API respose";
+```
+
+Note: In this example `TokenBucket::bootstrap()` is part of the code. This is
+not recommended for production, as this is producing unnecessary storage
+communication. `TokenBucket::bootstrap()` should be part of the application's
+bootstrap or deploy process.
+
+## Scope of the storage
 
 First you need to decide the scope of your resource. I.e. do you want to limit
 it per request, per user or amongst all requests? You can do this by choosing a
@@ -64,8 +95,8 @@ of the bucket. The storage does also determin the scope of the bucket.
 A token bucket needs to be bootstrapped. While the method
 [`TokenBucket::bootstrap()`](http://bandwidth-throttle.github.io/token-bucket/api/class-bandwidthThrottle.tokenBucket.TokenBucket.html#_bootstrap)
 doesn't have any side effects on an already bootstrapped bucket, it is not
-recommended. Better include that in your application's bootstrap or deploy
-process.
+recommended do call it for every request. Better include that in your
+application's bootstrap or deploy process.
 
 ### Consuming
 
@@ -79,34 +110,42 @@ In that case `consume()` did write a duration of seconds into its second paramet
 (which was passed by reference). This is the duration until sufficient
 tokens would be available.
 
-## Example
+## BlockingConsumer
 
-This example will limit the rate of a global resource to 10 requests per second
-for all requests. Therefore we use a storage from the global scope.
+In the first example we did either serve the request or fail with the HTTP status
+code 429. This is actually a very resource efficient way of throtteling API
+requests as it doesn't reserve resources on your server.
+
+However sometimes
+it is desirable not to fail but instead wait a little bit and then continue
+serving the requests. You can do this by consuming the token bucket with
+a [`BlockingConsumer`](http://bandwidth-throttle.github.io/token-bucket/api/class-bandwidthThrottle.tokenBucket.BlockingConsumer.html).
 
 ```php
 <?php
 
 use bandwidthThrottle\tokenBucket\Rate;
 use bandwidthThrottle\tokenBucket\TokenBucket;
+use bandwidthThrottle\tokenBucket\BlockingConsumer;
 use bandwidthThrottle\tokenBucket\storage\FileStorage;
 
-$storage = new FileStorage(__DIR__ . "/api.bucket");
-$rate    = new Rate(10, Rate::SECOND);
-$bucket  = new TokenBucket(10, $rate, $storage);
+$storage  = new FileStorage(__DIR__ . "/api.bucket");
+$rate     = new Rate(10, Rate::SECOND);
+$bucket   = new TokenBucket(10, $rate, $storage);
+$consumer = new BlockingConsumer(bucket);
 $bucket->bootstrap(10);
 
-if (!$bucket->consume(1, $seconds)) {
-    http_response_code(429);
-    header(sprintf("Retry-After: %d", floor($seconds)));
-    exit();
-}
+// This will block until one token is available.
+$consumer->consume(1);
+
+echo "API respose";
 ```
 
-Note: In this example `TokenBucket::bootstrap()` is part of the code. This is
-not recommended for production, as this is producing unnecessary storage
-communication. `TokenBucket::bootstrap()` should be part of the application's
-bootstrap or deploy process.
+This will effectively limit the rate to 10 requests per seconds as well. But
+in this case the client has not to bother with the 429 error. Instead the
+connection is just delayed to the desired rate. Depending on the rate
+the delay might hit `max_execution_time`. In that case you should increase that
+time e.g. with `set_time_limit()`.
 
 # License and authors
 
