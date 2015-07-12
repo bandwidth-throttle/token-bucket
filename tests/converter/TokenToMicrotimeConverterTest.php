@@ -24,7 +24,7 @@ class TokenToMicrotimeConverterTest extends \PHPUnit_Framework_TestCase
      * @param double $delta  The expected delta.
      * @param int    $tokens The tokens.
      * @param Rate   $rate   The rate.
-     * 
+     *
      * @test
      * @dataProvider provideTestConvert
      */

@@ -21,7 +21,7 @@ class TokenToSecondConverterTest extends \PHPUnit_Framework_TestCase
      * @param double $expected The expected seconds.
      * @param int    $tokens   The tokens.
      * @param Rate   $rate     The rate.
-     * 
+     *
      * @test
      * @dataProvider provideTestConvert
      */
