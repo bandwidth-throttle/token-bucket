@@ -32,11 +32,6 @@
 
 						<ul>
 				<li>
-					<a href="namespace-bandwidthThrottle.tokenBucket.lock.html">
-						lock					</a>
-
-						</li>
-				<li>
 					<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">
 						storage<span></span>
 					</a>
@@ -58,11 +53,6 @@
 			<h3>Classes</h3>
 			<ul>
 				<li><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">bandwidthThrottle\tokenBucket\BlockingConsumer</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.lock.DoubleCheckedLocking.html">bandwidthThrottle\tokenBucket\lock\DoubleCheckedLocking</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.lock.Flock.html">bandwidthThrottle\tokenBucket\lock\Flock</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.lock.Mutex.html">bandwidthThrottle\tokenBucket\lock\Mutex</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.lock.NoMutex.html">bandwidthThrottle\tokenBucket\lock\NoMutex</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.lock.TransactionalMutex.html">bandwidthThrottle\tokenBucket\lock\TransactionalMutex</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.Rate.html">bandwidthThrottle\tokenBucket\Rate</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.FileStorage.html">bandwidthThrottle\tokenBucket\storage\FileStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html">bandwidthThrottle\tokenBucket\storage\PDOStorage</a></li>
@@ -82,7 +72,6 @@
 
 			<h3>Exceptions</h3>
 			<ul>
-				<li><a href="class-bandwidthThrottle.tokenBucket.lock.MutexException.html">bandwidthThrottle\tokenBucket\lock\MutexException</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">bandwidthThrottle\tokenBucket\storage\StorageException</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html">bandwidthThrottle\tokenBucket\TokenBucketException</a></li>
 			</ul>
@@ -154,8 +143,8 @@
 </span><span id="33" class="l">        self::HOUR        =&gt;     <span class="php-num">3600</span>,
 </span><span id="34" class="l">        self::DAY         =&gt;    <span class="php-num">86400</span>,
 </span><span id="35" class="l">        self::WEEK        =&gt;   <span class="php-num">604800</span>,
-</span><span id="36" class="l">        self::MONTH       =&gt;  <span class="php-num">2592000</span>,
-</span><span id="37" class="l">        self::YEAR        =&gt; <span class="php-num">31104000</span>,
+</span><span id="36" class="l">        self::MONTH       =&gt;  <span class="php-num">2629743.83</span>,
+</span><span id="37" class="l">        self::YEAR        =&gt; <span class="php-num">31556926</span>,
 </span><span id="38" class="l">    ];
 </span><span id="39" class="l">    
 </span><span id="40" class="l">    <span class="php-comment">/**
@@ -194,7 +183,7 @@
 </span></span><span id="73" class="l"><span class="php-comment">     * @return double The rate.
 </span></span><span id="74" class="l"><span class="php-comment">     * @internal
 </span></span><span id="75" class="l"><span class="php-comment">     */</span>
-</span><span id="76" class="l">    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getRate()
+</span><span id="76" class="l">    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getTokensPerSecond()
 </span><span id="77" class="l">    {
 </span><span id="78" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;tokens / self::<span class="php-var">$unitMap</span>[<span class="php-var">$this</span>-&gt;unit];
 </span><span id="79" class="l">    }
@@ -207,6 +196,6 @@
 </div>
 </div>
 <script src="resources/combined.js?98faccaf09928b26a57d23383958bf1b5b81af38"></script>
-<script src="elementlist.js?5b6b81251a65b0ef4b1a8704c4b1a13657bd628b"></script>
+<script src="elementlist.js?761de1ddd3c4fe4bf2dbe9ecc7b6ee8d80b10e0d"></script>
 </body>
 </html>

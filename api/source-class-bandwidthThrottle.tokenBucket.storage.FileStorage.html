@@ -32,11 +32,6 @@
 
 						<ul>
 				<li>
-					<a href="namespace-bandwidthThrottle.tokenBucket.lock.html">
-						lock					</a>
-
-						</li>
-				<li>
 					<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">
 						storage<span></span>
 					</a>
@@ -58,11 +53,6 @@
 			<h3>Classes</h3>
 			<ul>
 				<li><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">bandwidthThrottle\tokenBucket\BlockingConsumer</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.lock.DoubleCheckedLocking.html">bandwidthThrottle\tokenBucket\lock\DoubleCheckedLocking</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.lock.Flock.html">bandwidthThrottle\tokenBucket\lock\Flock</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.lock.Mutex.html">bandwidthThrottle\tokenBucket\lock\Mutex</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.lock.NoMutex.html">bandwidthThrottle\tokenBucket\lock\NoMutex</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.lock.TransactionalMutex.html">bandwidthThrottle\tokenBucket\lock\TransactionalMutex</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.Rate.html">bandwidthThrottle\tokenBucket\Rate</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.FileStorage.html">bandwidthThrottle\tokenBucket\storage\FileStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html">bandwidthThrottle\tokenBucket\storage\PDOStorage</a></li>
@@ -82,7 +72,6 @@
 
 			<h3>Exceptions</h3>
 			<ul>
-				<li><a href="class-bandwidthThrottle.tokenBucket.lock.MutexException.html">bandwidthThrottle\tokenBucket\lock\MutexException</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">bandwidthThrottle\tokenBucket\storage\StorageException</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html">bandwidthThrottle\tokenBucket\TokenBucketException</a></li>
 			</ul>
@@ -123,7 +112,7 @@
 </span><span id="2" class="l">
 </span><span id="3" class="l"><span class="php-keyword1">namespace</span> bandwidthThrottle\tokenBucket\storage;
 </span><span id="4" class="l">
-</span><span id="5" class="l"><span class="php-keyword1">use</span> bandwidthThrottle\tokenBucket\lock\<span class="php-keyword2">Flock</span>;
+</span><span id="5" class="l"><span class="php-keyword1">use</span> malkusch\lock\<span class="php-keyword2">Flock</span>;
 </span><span id="6" class="l"><span class="php-keyword1">use</span> bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
 </span><span id="7" class="l">
 </span><span id="8" class="l"><span class="php-comment">/**
@@ -268,6 +257,6 @@
 </div>
 </div>
 <script src="resources/combined.js?98faccaf09928b26a57d23383958bf1b5b81af38"></script>
-<script src="elementlist.js?5b6b81251a65b0ef4b1a8704c4b1a13657bd628b"></script>
+<script src="elementlist.js?761de1ddd3c4fe4bf2dbe9ecc7b6ee8d80b10e0d"></script>
 </body>
 </html>
