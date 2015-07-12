@@ -84,6 +84,11 @@ class StorageTest extends \PHPUnit_Framework_TestCase
                 $memcache->connect(getenv("MEMCACHE_HOST"));
                 return new MemcacheStorage("test", $memcache, new NoMutex());
             }];
+            $cases[] = [function () {
+                $memcached = new \Memcached();
+                $memcached->addServer(getenv("MEMCACHE_HOST"), 11211);
+                return new MemcachedStorage("test", $memcached);
+            }];
             
         }
         return $cases;
@@ -100,6 +105,7 @@ class StorageTest extends \PHPUnit_Framework_TestCase
     {
         $this->storage = call_user_func($storageFactory);
         $this->storage->bootstrap(1);
+        $this->storage->getMicrotime();
         
         $this->storage->setMicrotime(1.1);
         $this->assertSame(1.1, $this->storage->getMicrotime());

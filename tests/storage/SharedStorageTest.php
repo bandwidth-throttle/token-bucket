@@ -86,6 +86,11 @@ class SharedStorageTest extends \PHPUnit_Framework_TestCase
                 $memcache->connect(getenv("MEMCACHE_HOST"));
                 return new MemcacheStorage($name, $memcache, new NoMutex());
             }];
+            $cases[] = [function ($name) {
+                $memcached = new \Memcached();
+                $memcached->addServer(getenv("MEMCACHE_HOST"), 11211);
+                return new MemcachedStorage($name, $memcached);
+            }];
             
         }
         return $cases;
@@ -103,10 +108,12 @@ class SharedStorageTest extends \PHPUnit_Framework_TestCase
     {
         $storageA = call_user_func($factory, "A");
         $storageA->bootstrap(0);
+        $storageA->getMicrotime();
         $this->storages[] = $storageA;
 
         $storageB = call_user_func($factory, "B");
         $storageB->bootstrap(0);
+        $storageB->getMicrotime();
         $this->storages[] = $storageB;
         
         $storageA->setMicrotime(1);

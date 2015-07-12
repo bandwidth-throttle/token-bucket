@@ -18,7 +18,7 @@ class MemcacheStorage implements Storage, GlobalScope
 {
 
     /**
-     * @var \Memcache $memcache The connected memcache API.
+     * @var \Memcache The connected memcache API.
      */
     private $memcache;
     
