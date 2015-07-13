@@ -88,7 +88,7 @@ amount of tokens added per unit, e.g. `new Rate(100, Rate::SECOND)`
 would add 100 tokens per second.
 
 The third parameter is the storage, which is used to persist the token amount
-of the bucket. The storage does also determin the scope of the bucket.
+of the bucket. The storage does determine the scope of the bucket.
 
 ### Bootstrapping
 
