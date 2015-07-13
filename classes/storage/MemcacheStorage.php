@@ -3,7 +3,7 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
-use malkusch\lock\Mutex;
+use malkusch\lock\Memcache;
 
 /**
  * Memcache based storage which can be shared among processes.
@@ -43,20 +43,14 @@ class MemcacheStorage implements Storage, GlobalScope
      * The api needs to be connected already. I.e. Memcache::connect() was
      * already called.
      *
-     * The Memcache API doesn't provide any mechanism to avoid race conditions.
-     * You therefore have to provide a Mutex yourself. Note that the
-     * mutex should depend on the $name parameter. You only need to
-     * synchronize per bucket. I.e. provide the same mutex for the same name.
-     *
      * @param string    $name     The name of the shared token bucket.
      * @param \Memcache $memcache The connected memcache API.
-     * @param Mutex     $mutex    The mutex for this storage.
      */
-    public function __construct($name, \Memcache $memcache, Mutex $mutex)
+    public function __construct($name, \Memcache $memcache)
     {
         $this->memcache = $memcache;
         $this->key      = self::PREFIX . $name;
-        $this->mutex    = $mutex;
+        $this->mutex    = new Memcache($name, $memcache);
     }
 
     public function bootstrap($microtime)

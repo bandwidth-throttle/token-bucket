@@ -2,8 +2,6 @@
 
 namespace bandwidthThrottle\tokenBucket\storage;
 
-use malkusch\lock\NoMutex;
-
 /**
  * Tests for MemcacheStorage.
  *
@@ -24,7 +22,7 @@ class MemcacheStorageTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         
-        $this->storage = new MemcacheStorage("test", new \Memcache(), new NoMutex());
+        $this->storage = new MemcacheStorage("test", new \Memcache());
     }
 
     /**

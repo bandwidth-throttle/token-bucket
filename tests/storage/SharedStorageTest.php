@@ -3,7 +3,6 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use org\bovigo\vfs\vfsStream;
-use malkusch\lock\NoMutex;
 
 /**
  * Tests for shared Storage implementations.
@@ -84,7 +83,7 @@ class SharedStorageTest extends \PHPUnit_Framework_TestCase
             $cases[] = [function ($name) {
                 $memcache = new \Memcache();
                 $memcache->connect(getenv("MEMCACHE_HOST"));
-                return new MemcacheStorage($name, $memcache, new NoMutex());
+                return new MemcacheStorage($name, $memcache);
             }];
             $cases[] = [function ($name) {
                 $memcached = new \Memcached();
