@@ -2,7 +2,7 @@
 
 namespace bandwidthThrottle\tokenBucket\storage;
 
-use malkusch\lock\Flock;
+use malkusch\lock\FlockMutex;
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
 
 /**
@@ -60,7 +60,7 @@ class FileStorage implements Storage, GlobalScope
             throw new StorageException("Could not open '$this->path'.");
 
         }
-        $this->mutex = new Flock($this->fileHandle);
+        $this->mutex = new FlockMutex($this->fileHandle);
     }
     
     /**

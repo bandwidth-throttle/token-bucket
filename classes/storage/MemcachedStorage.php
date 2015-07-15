@@ -3,7 +3,7 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
-use malkusch\lock\CAS;
+use malkusch\lock\CASMutex;
 
 /**
  * Memcached based storage which can be shared among processes.
@@ -33,7 +33,7 @@ class MemcachedStorage implements Storage, GlobalScope
     private $key;
     
     /**
-     * @var CAS The mutex for this storage.
+     * @var CASMutex The mutex for this storage.
      */
     private $mutex;
 
@@ -54,7 +54,7 @@ class MemcachedStorage implements Storage, GlobalScope
     public function __construct($name, \Memcached $memcached)
     {
         $this->key   = self::PREFIX . $name;
-        $this->mutex = new CAS();
+        $this->mutex = new CASMutex();
         $this->memcached = $memcached;
     }
     

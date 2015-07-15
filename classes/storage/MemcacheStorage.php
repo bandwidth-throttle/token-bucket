@@ -3,7 +3,7 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
-use malkusch\lock\Memcache;
+use malkusch\lock\MemcacheMutex;
 
 /**
  * Memcache based storage which can be shared among processes.
@@ -28,7 +28,7 @@ class MemcacheStorage implements Storage, GlobalScope
     private $key;
     
     /**
-     * @var Mutex The mutex for this storage.
+     * @var MemcacheMutex The mutex for this storage.
      */
     private $mutex;
 
@@ -50,7 +50,7 @@ class MemcacheStorage implements Storage, GlobalScope
     {
         $this->memcache = $memcache;
         $this->key      = self::PREFIX . $name;
-        $this->mutex    = new Memcache($name, $memcache);
+        $this->mutex    = new MemcacheMutex($name, $memcache);
     }
 
     public function bootstrap($microtime)
