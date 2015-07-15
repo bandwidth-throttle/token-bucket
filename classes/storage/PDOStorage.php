@@ -39,6 +39,9 @@ class PDOStorage implements Storage, GlobalScope
      * The name should be the same for all token buckets which share the same
      * token storage.
      *
+     * The transaction isolation level should avoid lost updates, i.e. it should
+     * be at least Repeatable Read.
+     *
      * @param string $name The name of the token bucket.
      * @param PDO    $pdo  The PDO.
      *
