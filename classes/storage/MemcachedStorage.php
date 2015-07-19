@@ -40,7 +40,7 @@ class MemcachedStorage implements Storage, GlobalScope
     /**
      * @internal
      */
-    const PREFIX = "TokenBucket_";
+    const PREFIX = "TokenBucketD_";
     
     /**
      * Sets the memcached API and the token bucket name.
