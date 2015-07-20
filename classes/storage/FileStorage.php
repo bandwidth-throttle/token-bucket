@@ -4,6 +4,8 @@ namespace bandwidthThrottle\tokenBucket\storage;
 
 use malkusch\lock\FlockMutex;
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
+use bandwidthThrottle\tokenBucket\converter\DoubleToStringConverter;
+use bandwidthThrottle\tokenBucket\converter\StringToDoubleConverter;
 
 /**
  * File based storage which can be shared among processes.
@@ -102,9 +104,9 @@ class FileStorage implements Storage, GlobalScope
         if (fseek($this->fileHandle, 0) !== 0) {
             throw new StorageException("Could not move to beginning of the file.");
         }
-
-        $data = pack("d", $microtime);
-        assert(8 === strlen($data)); // $data is a 64 bit double.
+        
+        $converter = new DoubleToStringConverter();
+        $data      = $converter->convert($microtime);
 
         $result = fwrite($this->fileHandle, $data, strlen($data));
         if ($result !== strlen($data)) {
@@ -122,16 +124,9 @@ class FileStorage implements Storage, GlobalScope
         if ($data === false) {
             throw new StorageException("Could not read from storage.");
         }
-        if (strlen($data) !== 8) {
-            throw new StorageException("Could not read 64 bit from storage.");
-
-        }
-        $unpack = unpack("d", $data);
-        if (!is_array($unpack) || !array_key_exists(1, $unpack)) {
-            throw new StorageException("Could not unpack storage content.");
-
-        }
-        return $unpack[1];
+        
+        $converter = new StringToDoubleConverter();
+        return $converter->convert($data);
     }
     
     public function getMutex()

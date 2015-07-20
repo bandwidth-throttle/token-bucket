@@ -110,25 +110,6 @@ class FileStorageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests unpacking fails in getMicrotime().
-     *
-     * @expectedException bandwidthThrottle\tokenBucket\storage\StorageException
-     */
-    public function testGetMicrotimeFailsUnpacking()
-    {
-        $this->getFunctionMock(__NAMESPACE__, "unpack")
-                ->expects($this->atLeastOnce())
-                ->willReturn([]);
-
-        $data = new vfsStreamFile("data");
-        $data->setContent("12345678");
-        vfsStream::setup('test')->addChild($data);
-
-        $storage = new FileStorage(vfsStream::url("test/data"));
-        $storage->getMicrotime();
-    }
-    
-    /**
      * Tests deleting fails.
      *
      * @test
