@@ -59,6 +59,10 @@ class StorageTest extends \PHPUnit_Framework_TestCase
                 $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 return new PDOStorage("test", $pdo);
             }],
+
+            [function () {
+                return new IPCStorage(ftok(__FILE__, "a"));
+            }],
         ];
         
         if (getenv("MYSQL_DSN")) {

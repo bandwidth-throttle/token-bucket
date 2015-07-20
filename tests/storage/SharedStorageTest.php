@@ -57,6 +57,11 @@ class SharedStorageTest extends \PHPUnit_Framework_TestCase
             }],
 
             [function ($name) {
+                $key = ftok(__FILE__, $name);
+                return new IPCStorage($key);
+            }],
+
+            [function ($name) {
                 $pdo = new \PDO("sqlite::memory:");
                 $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 return new PDOStorage($name, $pdo);
