@@ -3,7 +3,7 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
-use malkusch\lock\CASMutex;
+use malkusch\lock\mutex\CASMutex;
 
 /**
  * Memcached based storage which can be shared among processes.

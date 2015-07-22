@@ -2,7 +2,7 @@
 
 namespace bandwidthThrottle\tokenBucket\storage;
 
-use malkusch\lock\Mutex;
+use malkusch\lock\mutex\Mutex;
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
 use bandwidthThrottle\tokenBucket\storage\scope\SessionScope;
 use bandwidthThrottle\tokenBucket\storage\scope\RequestScope;

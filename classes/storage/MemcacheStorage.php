@@ -3,7 +3,7 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
-use malkusch\lock\MemcacheMutex;
+use malkusch\lock\mutex\MemcacheMutex;
 
 /**
  * Memcache based storage which can be shared among processes.

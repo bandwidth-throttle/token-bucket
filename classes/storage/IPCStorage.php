@@ -2,7 +2,7 @@
 
 namespace bandwidthThrottle\tokenBucket\storage;
 
-use malkusch\lock\SemaphoreMutex;
+use malkusch\lock\mutex\SemaphoreMutex;
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
 use bandwidthThrottle\tokenBucket\converter\DoubleToStringConverter;
 use bandwidthThrottle\tokenBucket\converter\StringToDoubleConverter;

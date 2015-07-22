@@ -2,7 +2,7 @@
 
 namespace bandwidthThrottle\tokenBucket\storage;
 
-use malkusch\lock\FlockMutex;
+use malkusch\lock\mutex\FlockMutex;
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
 use bandwidthThrottle\tokenBucket\converter\DoubleToStringConverter;
 use bandwidthThrottle\tokenBucket\converter\StringToDoubleConverter;
