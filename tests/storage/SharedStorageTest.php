@@ -4,6 +4,7 @@ namespace bandwidthThrottle\tokenBucket\storage;
 
 use org\bovigo\vfs\vfsStream;
 use Redis;
+use Predis\Client;
 
 /**
  * Tests for shared Storage implementations.
@@ -107,6 +108,10 @@ class SharedStorageTest extends \PHPUnit_Framework_TestCase
                 return new PHPRedisStorage($name, $redis);
             }];
             
+            $cases["PredisStorage"] = [function ($name) {
+                $redis = new Client(getenv("REDIS_URI"));
+                return new PredisStorage($name, $redis);
+            }];
         }
         return $cases;
     }

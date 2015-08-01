@@ -22,6 +22,7 @@
     },
     "require-dev": {
         "ext-redis": "^2.2.4",
+        "predis/predis": "^1",
         "phpunit/phpunit": "^4",
         "mikey179/vfsStream": "^1.5.0",
         "php-mock/php-mock-phpunit": "^0.3"

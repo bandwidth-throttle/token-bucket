@@ -2,28 +2,29 @@
 
 namespace bandwidthThrottle\tokenBucket\storage;
 
-use Redis;
+use Predis\Client;
+use Predis\ClientException;
 
 /**
- * Tests for Storage implementations.
+ * Tests for PredisStorage.
  *
  * These tests need the environment variable REDIS_URI.
  *
  * @author Markus Malkusch <markus@malkusch.de>
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
- * @see Storage
+ * @see PredisStorage
  */
-class PHPRedisStorageTest extends \PHPUnit_Framework_TestCase
+class PredisStorageTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var Redis The API.
+     * @var Client The API.
      */
     private $redis;
 
     /**
-     * @var PHPRedisStorage The SUT.
+     * @var PredisStorage The SUT.
      */
     private $storage;
     
@@ -35,11 +36,8 @@ class PHPRedisStorageTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped();
             
         }
-        $uri = parse_url(getenv("REDIS_URI"));
-        $this->redis = new Redis();
-        $this->redis->connect($uri["host"]);
-        
-        $this->storage = new PHPRedisStorage("test", $this->redis);
+        $this->redis   = new Client(getenv("REDIS_URI"));
+        $this->storage = new PredisStorage("test", $this->redis);
     }
     
     /**
@@ -52,8 +50,11 @@ class PHPRedisStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testBrokenCommunication(callable $method)
     {
-        $this->redis->close();
-        call_user_func($method, $this->storage);
+        $redis = $this->getMock(Client::class);
+        $redis->expects($this->once())->method("__call")
+                ->willThrowException(new ClientException());
+        $storage = new PredisStorage("test", $redis);
+        call_user_func($method, $storage);
     }
 
     /**
@@ -64,19 +65,19 @@ class PHPRedisStorageTest extends \PHPUnit_Framework_TestCase
     public function provideTestBrokenCommunication()
     {
         return [
-            [function (PHPRedisStorage $storage) {
+            [function (PredisStorage $storage) {
                 $storage->bootstrap(1);
             }],
-            [function (PHPRedisStorage $storage) {
+            [function (PredisStorage $storage) {
                 $storage->isBootstrapped();
             }],
-            [function (PHPRedisStorage $storage) {
+            [function (PredisStorage $storage) {
                 $storage->remove();
             }],
-            [function (PHPRedisStorage $storage) {
+            [function (PredisStorage $storage) {
                 $storage->setMicrotime(1);
             }],
-            [function (PHPRedisStorage $storage) {
+            [function (PredisStorage $storage) {
                 $storage->getMicrotime();
             }],
         ];
@@ -104,10 +105,11 @@ class PHPRedisStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetMicrotimeFails()
     {
-        $redis = $this->getMock(Redis::class);
-        $redis->expects($this->once())->method("set")
+        $redis = $this->getMock(Client::class);
+        $redis->expects($this->once())->method("__call")
+                ->with("set")
                 ->willReturn(false);
-        $storage = new PHPRedisStorage("test", $redis);
+        $storage = new PredisStorage("test", $redis);
         $storage->setMicrotime(1);
     }
     
