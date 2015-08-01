@@ -3,16 +3,18 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use org\bovigo\vfs\vfsStream;
+use Redis;
 
 /**
  * Tests for shared Storage implementations.
  *
- * If you want to run vendor specific PDO tests you should provide these
+ * If you want to run vendor specific tests you should provide these
  * environment variables:
  *
  * - MYSQL_DSN, MYSQL_USER
  * - PGSQL_DSN, PGSQL_USER
  * - MEMCACHE_HOST
+ * - REDIS_URI
  *
  * @author Markus Malkusch <markus@malkusch.de>
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
@@ -94,6 +96,15 @@ class SharedStorageTest extends \PHPUnit_Framework_TestCase
                 $memcached = new \Memcached();
                 $memcached->addServer(getenv("MEMCACHE_HOST"), 11211);
                 return new MemcachedStorage($name, $memcached);
+            }];
+            
+        }
+        if (getenv("REDIS_URI")) {
+            $cases["PHPRedisStorage"] = [function ($name) {
+                $uri   = parse_url(getenv("REDIS_URI"));
+                $redis = new Redis();
+                $redis->connect($uri["host"]);
+                return new PHPRedisStorage($name, $redis);
             }];
             
         }

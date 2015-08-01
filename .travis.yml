@@ -14,6 +14,7 @@ php:
 
 services:
   - memcached
+  - redis-server
 
 matrix:
   fast_finish: true
@@ -28,6 +29,10 @@ env:
     - PGSQL_DSN="pgsql:host=localhost;dbname=test;"
     - PGSQL_USER=postgres
     - MEMCACHE_HOST=localhost
+    - REDIS_URI=redis://localhost
+
+before_install:
+  - phpenv config-add tests/php-travis.ini
 
 install:
   - composer require squizlabs/php_codesniffer
@@ -36,7 +41,6 @@ install:
 before_script:
   - mysql -e 'create database test;'
   - psql  -c 'create database test;' -U postgres
-  - phpenv config-add tests/php-travis.ini
 
 script:
   - vendor/bin/phpunit

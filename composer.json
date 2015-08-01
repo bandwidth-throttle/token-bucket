@@ -18,9 +18,10 @@
     },
     "require": {
         "php": ">=5.5",
-        "malkusch/lock": "dev-master"
+        "malkusch/lock": "^0.3"
     },
     "require-dev": {
+        "ext-redis": "^2.2.4",
         "phpunit/phpunit": "^4",
         "mikey179/vfsStream": "^1.5.0",
         "php-mock/php-mock-phpunit": "^0.3"
