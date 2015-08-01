@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class bandwidthThrottle\tokenBucket\storage\SingleProcessStorage</title>
+	<title>Class bandwidthThrottle\tokenBucket\storage\MemcachedStorage</title>
 
 	<link rel="stylesheet" href="resources/style.css?95ada9fb523b6ab4fd1c47bb375f713f2cc65542">
 
@@ -53,13 +53,13 @@
 			<ul>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.FileStorage.html">FileStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.IPCStorage.html">IPCStorage</a></li>
-				<li><a href="class-bandwidthThrottle.tokenBucket.storage.MemcachedStorage.html">MemcachedStorage</a></li>
+				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.storage.MemcachedStorage.html">MemcachedStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.MemcacheStorage.html">MemcacheStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html">PDOStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PHPRedisStorage.html">PHPRedisStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PredisStorage.html">PredisStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.SessionStorage.html">SessionStorage</a></li>
-				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.storage.SingleProcessStorage.html">SingleProcessStorage</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.SingleProcessStorage.html">SingleProcessStorage</a></li>
 			</ul>
 
 			<h3>Interfaces</h3>
@@ -106,23 +106,22 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class SingleProcessStorage</h1>
+	<h1>Class MemcachedStorage</h1>
 
 
 	<div class="description">
-	<p>In-memory token storage which is only used for one single process.</p>
+	<p>Memcached based storage which can be shared among processes.</p>
 
-<p>This storage is in the request scope. It is not shared among processes and
-therefore needs no locking.</p>
+<p>This storage is in the global scope.</p>
 	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-<b><span>bandwidthThrottle\tokenBucket\storage\SingleProcessStorage</span></b>			
+<b><span>bandwidthThrottle\tokenBucket\storage\MemcachedStorage</span></b>			
 			 implements 
 				<a href="class-bandwidthThrottle.tokenBucket.storage.Storage.html"><span>bandwidthThrottle\tokenBucket\storage\Storage</span></a>, 
 			
-				<a href="class-bandwidthThrottle.tokenBucket.storage.scope.RequestScope.html"><span>bandwidthThrottle\tokenBucket\storage\scope\RequestScope</span></a>
+				<a href="class-bandwidthThrottle.tokenBucket.storage.scope.GlobalScope.html"><span>bandwidthThrottle\tokenBucket\storage\scope\GlobalScope</span></a>
 			
 			
 		</dd>
@@ -147,7 +146,7 @@ therefore needs no locking.</p>
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.SingleProcessStorage.html#8-68" title="Go to source code">storage/SingleProcessStorage.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.MemcachedStorage.html#8-127" title="Go to source code">storage/MemcachedStorage.php</a>
 		<br>
 	</div>
 
@@ -167,16 +166,26 @@ therefore needs no locking.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.storage.SingleProcessStorage.html#31-37" title="Go to source code">__construct</a>( )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.storage.MemcachedStorage.html#45-59" title="Go to source code">__construct</a>( <span>string <var>$name</var></span>, <span>Memcached <var>$memcached</var></span> )</code>
 
 		<div class="description short">
-			<p>Initialization.</p>
+			<p>Sets the memcached API and the token bucket name.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Initialization.</p>
+			<p>Sets the memcached API and the token bucket name.</p>
+
+<p>The api needs to have at least one server in its pool. I.e.
+it has to be added with Memcached::addServer().</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd>The name of the shared token bucket.</dd>
+					<dt><var>$memcached</var></dt>
+					<dd>The memcached API.</dd>
+				</dl></div>
 
 
 

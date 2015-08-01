@@ -52,7 +52,12 @@
 			<h3>Classes</h3>
 			<ul>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.FileStorage.html">FileStorage</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.IPCStorage.html">IPCStorage</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.MemcachedStorage.html">MemcachedStorage</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.MemcacheStorage.html">MemcacheStorage</a></li>
 				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html">PDOStorage</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PHPRedisStorage.html">PHPRedisStorage</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PredisStorage.html">PredisStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.SessionStorage.html">SessionStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.SingleProcessStorage.html">SingleProcessStorage</a></li>
 			</ul>
@@ -141,7 +146,7 @@
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html#9-194" title="Go to source code">storage/PDOStorage.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html#9-197" title="Go to source code">storage/PDOStorage.php</a>
 		<br>
 	</div>
 
@@ -161,7 +166,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html#36-61" title="Go to source code">__construct</a>( <span>string <var>$name</var></span>, <span>PDO <var>$pdo</var></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html#36-64" title="Go to source code">__construct</a>( <span>string <var>$name</var></span>, <span>PDO <var>$pdo</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the PDO and the bucket's name for the shared storage.</p>
@@ -172,6 +177,9 @@
 
 <p>The name should be the same for all token buckets which share the same
 token storage.</p>
+
+<p>The transaction isolation level should avoid lost updates, i.e. it should
+be at least Repeatable Read.</p>
 
 
 				<h4>Parameters</h4>
