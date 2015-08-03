@@ -143,9 +143,7 @@ echo "API respose";
 
 This will effectively limit the rate to 10 requests per seconds as well. But
 in this case the client has not to bother with the 429 error. Instead the
-connection is just delayed to the desired rate. Depending on the rate
-the delay might hit `max_execution_time`. In that case you should increase that
-time e.g. with `set_time_limit()`.
+connection is just delayed to the desired rate.
 
 # License and authors
 
