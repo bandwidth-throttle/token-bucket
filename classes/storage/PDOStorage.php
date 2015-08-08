@@ -155,7 +155,7 @@ class PDOStorage implements Storage, GlobalScope
      *
      * @return string The vendor specific value.
      */
-    private function forVendor($map, $default = "")
+    private function forVendor(array $map, $default = "")
     {
         $vendor = $this->pdo->getAttribute(\PDO::ATTR_DRIVER_NAME);
         return isset($map[$vendor]) ? $map[$vendor] : $default;
