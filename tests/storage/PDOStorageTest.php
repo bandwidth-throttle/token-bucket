@@ -42,11 +42,14 @@ class PDOStorageTest extends \PHPUnit_Framework_TestCase
             [new \PDO("sqlite::memory:")],
         ];
         if (getenv("MYSQL_DSN")) {
-            $cases[] = [new \PDO(getenv("MYSQL_DSN"), getenv("MYSQL_USER"))];
+            $pdo = new \PDO(getenv("MYSQL_DSN"), getenv("MYSQL_USER"));
+            $pdo->setAttribute(\PDO::ATTR_AUTOCOMMIT, false);
+            $cases[] = [$pdo];
             
         }
         if (getenv("PGSQL_DSN")) {
-            $cases[] = [new \PDO(getenv("PGSQL_DSN"), getenv("PGSQL_USER"))];
+            $pdo = new \PDO(getenv("PGSQL_DSN"), getenv("PGSQL_USER"));
+            $cases[] = [$pdo];
             
         }
         foreach ($cases as $case) {

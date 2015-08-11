@@ -18,7 +18,7 @@
     },
     "require": {
         "php": ">=5.5",
-        "malkusch/lock": "^0.3"
+        "malkusch/lock": "^0.4"
     },
     "require-dev": {
         "ext-redis": "^2.2.4",

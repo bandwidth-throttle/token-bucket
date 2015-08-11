@@ -75,7 +75,13 @@ class SharedStorageTest extends \PHPUnit_Framework_TestCase
             $cases[] = [function ($name) {
                 $pdo = new \PDO(getenv("MYSQL_DSN"), getenv("MYSQL_USER"));
                 $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-                return new PDOStorage($name, $pdo);
+                $pdo->setAttribute(\PDO::ATTR_AUTOCOMMIT, false);
+                
+                $storage = new PDOStorage($name, $pdo);
+                
+                $pdo->setAttribute(\PDO::ATTR_AUTOCOMMIT, true);
+                
+                return $storage;
             }];
             
         }
