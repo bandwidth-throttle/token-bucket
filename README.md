@@ -1,4 +1,4 @@
-# Tocken Bucket
+# Token Bucket
 
 This is a threadsafe implementation of the [Token Bucket algorithm](https://en.wikipedia.org/wiki/Token_bucket)
 in PHP. You can use a token bucket to limit an usage rate for a resource 
