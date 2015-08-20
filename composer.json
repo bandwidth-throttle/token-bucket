@@ -2,7 +2,7 @@
     "name": "bandwidth-throttle/token-bucket",
     "type": "library",
     "description": "Implementation of the Token Bucket algorithm.",
-    "keywords": ["token bucket", "rate", "limit", "bandwidth"],
+    "keywords": ["token bucket", "bandwidth", "rate limit", "throttle", "throttling", "rate limiting"],
     "homepage": "https://github.com/bandwidth-throttle/token-bucket",
     "license": "WTFPL",
     "authors": [
