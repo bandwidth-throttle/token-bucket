@@ -61,12 +61,12 @@ class MemcachedStorage implements Storage, GlobalScope
     public function bootstrap($microtime)
     {
         if ($this->memcached->add($this->key, $microtime)) {
-            $this->mutex->notify(); // [CAS] Stop TockenBucket::bootstrap()
+            $this->mutex->notify(); // [CAS] Stop TokenBucket::bootstrap()
             return;
 
         }
         if ($this->memcached->getResultCode() === \Memcached::RES_NOTSTORED) {
-            // [CAS] repeat TockenBucket::bootstrap()
+            // [CAS] repeat TokenBucket::bootstrap()
             return;
         }
         throw new StorageException($this->memcached->getResultMessage(), $this->memcached->getResultCode());
@@ -75,7 +75,7 @@ class MemcachedStorage implements Storage, GlobalScope
     public function isBootstrapped()
     {
         if ($this->memcached->get($this->key) !== false) {
-            $this->mutex->notify(); // [CAS] Stop TockenBucket::bootstrap()
+            $this->mutex->notify(); // [CAS] Stop TokenBucket::bootstrap()
             return true;
 
         }
@@ -100,11 +100,11 @@ class MemcachedStorage implements Storage, GlobalScope
             
         }
         if ($this->memcached->cas($this->casToken, $this->key, $microtime)) {
-            $this->mutex->notify(); // [CAS] Stop TockenBucket::consume()
+            $this->mutex->notify(); // [CAS] Stop TokenBucket::consume()
             return;
         }
         if ($this->memcached->getResultCode() === \Memcached::RES_DATA_EXISTS) {
-            // [CAS] repeat TockenBucket::consume()
+            // [CAS] repeat TokenBucket::consume()
             return;
 
         }

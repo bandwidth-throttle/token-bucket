@@ -15,7 +15,7 @@ class BlockingConsumer
 {
     
     /**
-     * @var TokenBucket The tocken bucket.
+     * @var TokenBucket The token bucket.
      */
     private $bucket;
 
