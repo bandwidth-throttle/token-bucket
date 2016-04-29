@@ -63,7 +63,6 @@ class MemcachedStorage implements Storage, GlobalScope
         if ($this->memcached->add($this->key, $microtime)) {
             $this->mutex->notify(); // [CAS] Stop TokenBucket::bootstrap()
             return;
-
         }
         if ($this->memcached->getResultCode() === \Memcached::RES_NOTSTORED) {
             // [CAS] repeat TokenBucket::bootstrap()
@@ -77,11 +76,9 @@ class MemcachedStorage implements Storage, GlobalScope
         if ($this->memcached->get($this->key) !== false) {
             $this->mutex->notify(); // [CAS] Stop TokenBucket::bootstrap()
             return true;
-
         }
         if ($this->memcached->getResultCode() === \Memcached::RES_NOTFOUND) {
             return false;
-            
         }
         throw new StorageException($this->memcached->getResultMessage(), $this->memcached->getResultCode());
     }
@@ -97,7 +94,6 @@ class MemcachedStorage implements Storage, GlobalScope
     {
         if (is_null($this->casToken)) {
             throw new StorageException("CAS token is null. Call getMicrotime() first.");
-            
         }
         if ($this->memcached->cas($this->casToken, $this->key, $microtime)) {
             $this->mutex->notify(); // [CAS] Stop TokenBucket::consume()
@@ -106,7 +102,6 @@ class MemcachedStorage implements Storage, GlobalScope
         if ($this->memcached->getResultCode() === \Memcached::RES_DATA_EXISTS) {
             // [CAS] repeat TokenBucket::consume()
             return;
-
         }
         throw new StorageException($this->memcached->getResultMessage(), $this->memcached->getResultCode());
     }

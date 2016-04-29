@@ -27,12 +27,10 @@ class StringToDoubleConverter
     {
         if (strlen($string) !== 8) {
             throw new StorageException("The string is not 64 bit long.");
-
         }
         $unpack = unpack("d", $string);
         if (!is_array($unpack) || !array_key_exists(1, $unpack)) {
             throw new StorageException("Could not unpack string.");
-
         }
         return $unpack[1];
     }

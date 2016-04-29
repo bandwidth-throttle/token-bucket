@@ -59,7 +59,6 @@ class PredisStorage implements Storage, GlobalScope
     {
         try {
             return $this->redis->exists($this->key);
-
         } catch (PredisException $e) {
             throw new StorageException("Failed to check for key existence", 0, $e);
         }
@@ -70,7 +69,6 @@ class PredisStorage implements Storage, GlobalScope
         try {
             if (!$this->redis->del($this->key)) {
                 throw new StorageException("Failed to delete key");
-                
             }
         } catch (PredisException $e) {
             throw new StorageException("Failed to delete key", 0, $e);
@@ -85,7 +83,6 @@ class PredisStorage implements Storage, GlobalScope
             
             if (!$this->redis->set($this->key, $data)) {
                 throw new StorageException("Failed to store microtime");
-                
             }
         } catch (PredisException $e) {
             throw new StorageException("Failed to store microtime", 0, $e);
@@ -98,11 +95,9 @@ class PredisStorage implements Storage, GlobalScope
             $data = $this->redis->get($this->key);
             if ($data === false) {
                 throw new StorageException("Failed to get microtime");
-                
             }
             $converter = new StringToDoubleConverter();
             return $converter->convert($data);
-            
         } catch (PredisException $e) {
             throw new StorageException("Failed to get microtime", 0, $e);
         }

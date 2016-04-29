@@ -52,11 +52,9 @@ class PDOStorage implements Storage, GlobalScope
     {
         if (strlen($name) > 128) {
             throw new \LengthException("The name should not be longer than 128 characters.");
-            
         }
         if ($pdo->getAttribute(\PDO::ATTR_ERRMODE) !== \PDO::ERRMODE_EXCEPTION) {
             throw new \InvalidArgumentException("The pdo must have PDO::ERRMODE_EXCEPTION set.");
-            
         }
         $this->pdo   = $pdo;
         $this->name  = $name;
@@ -74,7 +72,6 @@ class PDOStorage implements Storage, GlobalScope
                         microtime DOUBLE PRECISION NOT NULL
                      ) $options;"
                 );
-
             } catch (\PDOException $e) {
                 /*
                  * This exception is ignored to provide a portable way
@@ -88,7 +85,6 @@ class PDOStorage implements Storage, GlobalScope
             $insert->execute([$this->name, $microtime]);
             if ($insert->rowCount() !== 1) {
                 throw new StorageException("Failed to insert token bucket into storage '$this->name'");
-
             }
         } catch (\PDOException $e) {
             throw new StorageException("Failed to bootstrap storage '$this->name'", 0, $e);
@@ -102,7 +98,6 @@ class PDOStorage implements Storage, GlobalScope
                 "SELECT 1 FROM TokenBucket WHERE name=?",
                 [$this->name]
             );
-
         } catch (StorageException $e) {
             // This seems to be a portable way to determine if the table exists or not.
             return false;
@@ -118,7 +113,6 @@ class PDOStorage implements Storage, GlobalScope
             $count = $this->querySingleValue("SELECT count(*) FROM TokenBucket");
             if ($count == 0) {
                 $this->pdo->exec("DROP TABLE TokenBucket");
-                
             }
         } catch (\PDOException $e) {
             throw new StorageException("Failed to remove the storage.", 0, $e);
@@ -132,7 +126,6 @@ class PDOStorage implements Storage, GlobalScope
                 "UPDATE TokenBucket SET microtime = ? WHERE name = ?"
             );
             $update->execute([$microtime, $this->name]);
-            
         } catch (\PDOException $e) {
             throw new StorageException("Failed to write to storage '$this->name'.", 0, $e);
         }
@@ -181,10 +174,8 @@ class PDOStorage implements Storage, GlobalScope
             $statement->closeCursor();
             if ($value === false) {
                 throw new StorageException("The query returned no result.");
-                
             }
             return $value;
-
         } catch (\PDOException $e) {
             throw new StorageException("The query failed.", 0, $e);
         }

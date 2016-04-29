@@ -34,7 +34,6 @@ class PredisStorageTest extends \PHPUnit_Framework_TestCase
         
         if (!getenv("REDIS_URI")) {
             $this->markTestSkipped();
-            
         }
         $this->redis   = new Client(getenv("REDIS_URI"));
         $this->storage = new PredisStorage("test", $this->redis);

@@ -45,16 +45,13 @@ class PDOStorageTest extends \PHPUnit_Framework_TestCase
             $pdo = new \PDO(getenv("MYSQL_DSN"), getenv("MYSQL_USER"));
             $pdo->setAttribute(\PDO::ATTR_AUTOCOMMIT, false);
             $cases[] = [$pdo];
-            
         }
         if (getenv("PGSQL_DSN")) {
             $pdo = new \PDO(getenv("PGSQL_DSN"), getenv("PGSQL_USER"));
             $cases[] = [$pdo];
-            
         }
         foreach ($cases as $case) {
             $case[0]->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
         }
         return $cases;
     }

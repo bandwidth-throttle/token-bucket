@@ -32,7 +32,6 @@ class MemcachedStorageTest extends \PHPUnit_Framework_TestCase
         if (!getenv("MEMCACHE_HOST")) {
             $this->markTestSkipped();
             return;
-
         }
         $this->memcached = new \Memcached();
         $this->memcached->addServer(getenv("MEMCACHE_HOST"), 11211);
@@ -47,7 +46,6 @@ class MemcachedStorageTest extends \PHPUnit_Framework_TestCase
         
         if (!getenv("MEMCACHE_HOST")) {
             return;
-
         }
         $memcached = new \Memcached();
         $memcached->addServer(getenv("MEMCACHE_HOST"), 11211);

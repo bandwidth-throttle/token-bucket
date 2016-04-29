@@ -75,7 +75,6 @@ class StorageTest extends \PHPUnit_Framework_TestCase
                 $pdo->setAttribute(\PDO::ATTR_AUTOCOMMIT, false);
                 return new PDOStorage("test", $pdo);
             }];
-            
         }
         if (getenv("PGSQL_DSN")) {
             $cases[] = [function () {
@@ -83,7 +82,6 @@ class StorageTest extends \PHPUnit_Framework_TestCase
                 $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 return new PDOStorage("test", $pdo);
             }];
-            
         }
         if (getenv("MEMCACHE_HOST")) {
             $cases[] = [function () {
@@ -96,7 +94,6 @@ class StorageTest extends \PHPUnit_Framework_TestCase
                 $memcached->addServer(getenv("MEMCACHE_HOST"), 11211);
                 return new MemcachedStorage("test", $memcached);
             }];
-            
         }
         if (getenv("REDIS_URI")) {
             $cases["PHPRedisStorage"] = [function () {
@@ -110,7 +107,6 @@ class StorageTest extends \PHPUnit_Framework_TestCase
                 $redis = new Client(getenv("REDIS_URI"));
                 return new PredisStorage("test", $redis);
             }];
-            
         }
         return $cases;
     }

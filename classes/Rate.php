@@ -61,7 +61,6 @@ class Rate
     {
         if (!isset(self::$unitMap[$unit])) {
             throw new \InvalidArgumentException("Not a valid unit.");
-
         }
         $this->tokens = $tokens;
         $this->unit   = $unit;

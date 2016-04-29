@@ -65,7 +65,6 @@ class IPCStorage implements Storage, GlobalScope
         try {
             $this->semaphore = sem_get($this->key);
             $this->mutex     = new SemaphoreMutex($this->semaphore);
-            
         } catch (\InvalidArgumentException $e) {
             throw new StorageException("Could not get semaphore id.", 0, $e);
         }

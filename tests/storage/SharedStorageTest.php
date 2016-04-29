@@ -35,7 +35,6 @@ class SharedStorageTest extends \PHPUnit_Framework_TestCase
         foreach ($this->storages as $storage) {
             try {
                 @$storage->remove();
-
             } catch (StorageException $e) {
                 // ignore missing vfsStream files.
             }
@@ -83,7 +82,6 @@ class SharedStorageTest extends \PHPUnit_Framework_TestCase
                 
                 return $storage;
             }];
-            
         }
         if (getenv("PGSQL_DSN")) {
             $cases[] = [function ($name) {
@@ -91,7 +89,6 @@ class SharedStorageTest extends \PHPUnit_Framework_TestCase
                 $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 return new PDOStorage($name, $pdo);
             }];
-            
         }
         if (getenv("MEMCACHE_HOST")) {
             $cases[] = [function ($name) {
@@ -104,7 +101,6 @@ class SharedStorageTest extends \PHPUnit_Framework_TestCase
                 $memcached->addServer(getenv("MEMCACHE_HOST"), 11211);
                 return new MemcachedStorage($name, $memcached);
             }];
-            
         }
         if (getenv("REDIS_URI")) {
             $cases["PHPRedisStorage"] = [function ($name) {

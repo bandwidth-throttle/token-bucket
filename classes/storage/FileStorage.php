@@ -60,7 +60,6 @@ class FileStorage implements Storage, GlobalScope
         $this->fileHandle = fopen($this->path, "c+");
         if (!is_resource($this->fileHandle)) {
             throw new StorageException("Could not open '$this->path'.");
-
         }
         $this->mutex = new FlockMutex($this->fileHandle);
     }
@@ -92,7 +91,6 @@ class FileStorage implements Storage, GlobalScope
         // Truncate to notify isBootstrapped() about the new state.
         if (!ftruncate($this->fileHandle, 0)) {
             throw new StorageException("Could not truncate $this->path");
-
         }
         if (!unlink($this->path)) {
             throw new StorageException("Could not delete $this->path");
@@ -118,7 +116,6 @@ class FileStorage implements Storage, GlobalScope
     {
         if (fseek($this->fileHandle, 0) !== 0) {
             throw new StorageException("Could not move to beginning of the file.");
-
         }
         $data = fread($this->fileHandle, 8);
         if ($data === false) {

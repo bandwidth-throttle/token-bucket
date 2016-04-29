@@ -128,7 +128,6 @@ class TokenBucket
                 ->then(function () use ($tokens) {
                     $this->storage->bootstrap($this->tokenToMicrotimeConverter->convert($tokens));
                 });
-                
         } catch (MutexException $e) {
             throw new StorageException("Could not lock bootstrapping", 0, $e);
         }
@@ -174,7 +173,6 @@ class TokenBucket
                         $passed  = microtime(true) - $microtime;
                         $seconds = max(0, $this->tokenToSecondConverter->convert($tokens) - $passed);
                         return false;
-
                     } else {
                         $microtime += $this->tokenToSecondConverter->convert($tokens);
                         $this->storage->setMicrotime($microtime);
@@ -183,7 +181,6 @@ class TokenBucket
                     }
                 }
             );
-
         } catch (MutexException $e) {
             throw new StorageException("Could not lock token consumption.", 0, $e);
         }

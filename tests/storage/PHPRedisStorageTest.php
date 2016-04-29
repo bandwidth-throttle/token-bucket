@@ -33,7 +33,6 @@ class PHPRedisStorageTest extends \PHPUnit_Framework_TestCase
         
         if (!getenv("REDIS_URI")) {
             $this->markTestSkipped();
-            
         }
         $uri = parse_url(getenv("REDIS_URI"));
         $this->redis = new Redis();
