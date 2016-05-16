@@ -9,7 +9,6 @@ cache:
 php:
   - 7.0
   - 5.6
-  - 5.5
   - hhvm
 
 services:
