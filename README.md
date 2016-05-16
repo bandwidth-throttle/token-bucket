@@ -132,7 +132,7 @@ use bandwidthThrottle\tokenBucket\storage\FileStorage;
 $storage  = new FileStorage(__DIR__ . "/api.bucket");
 $rate     = new Rate(10, Rate::SECOND);
 $bucket   = new TokenBucket(10, $rate, $storage);
-$consumer = new BlockingConsumer(bucket);
+$consumer = new BlockingConsumer($bucket);
 $bucket->bootstrap(10);
 
 // This will block until one token is available.
