@@ -28,8 +28,6 @@ This example will limit the rate of a global resource to 10 requests per second
 for all requests.
 
 ```php
-<?php
-
 use bandwidthThrottle\tokenBucket\Rate;
 use bandwidthThrottle\tokenBucket\TokenBucket;
 use bandwidthThrottle\tokenBucket\storage\FileStorage;
@@ -122,8 +120,6 @@ serving the requests. You can do this by consuming the token bucket with
 a [`BlockingConsumer`](http://bandwidth-throttle.github.io/token-bucket/api/class-bandwidthThrottle.tokenBucket.BlockingConsumer.html).
 
 ```php
-<?php
-
 use bandwidthThrottle\tokenBucket\Rate;
 use bandwidthThrottle\tokenBucket\TokenBucket;
 use bandwidthThrottle\tokenBucket\BlockingConsumer;

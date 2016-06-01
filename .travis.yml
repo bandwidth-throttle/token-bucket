@@ -34,8 +34,7 @@ before_install:
   - phpenv config-add tests/php-travis.ini
 
 install:
-  - composer require squizlabs/php_codesniffer
-  - composer require phpmd/phpmd
+  - composer require squizlabs/php_codesniffer phpmd/phpmd cundd/test-flight
 
 before_script:
   - mysql -e 'create database test;'
@@ -43,6 +42,8 @@ before_script:
 
 script:
   - vendor/bin/phpunit
+  - vendor/bin/test-flight README.md
+  - vendor/bin/test-flight classes/
   - vendor/bin/phpcs --standard=PSR2 classes/ tests/
   - vendor/bin/phpmd classes/ text cleancode,codesize,controversial,design,naming,unusedcode
 
