@@ -52,15 +52,16 @@ class Rate
      *
      * E.g. new Rate(100, Rate::SECOND) will produce 100 tokens per second.
      *
-     * @param int    $tokens The amount of tokens to produce per unit.
-     * @param string $unit   The unit as one of Rate's constants.
-     *
-     * @throws \InvalidArgumentException The unit must be a valid constant.
+     * @param int    $tokens positive amount of tokens to produce per unit
+     * @param string $unit   unit as one of Rate's constants
      */
     public function __construct($tokens, $unit)
     {
         if (!isset(self::$unitMap[$unit])) {
             throw new \InvalidArgumentException("Not a valid unit.");
+        }
+        if ($tokens <= 0) {
+            throw new \InvalidArgumentException("Amount of tokens should be greater then 0.");
         }
         $this->tokens = $tokens;
         $this->unit   = $unit;

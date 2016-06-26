@@ -66,4 +66,29 @@ class RateTest extends \PHPUnit_Framework_TestCase
     {
         new Rate(1, "invalid");
     }
+
+    /**
+     * Tests building a rate with an invalid amount fails.
+     *
+     * @test
+     * @expectedException InvalidArgumentException
+     * @dataProvider provideTestInvalidAmount
+     */
+    public function testInvalidAmount($amount)
+    {
+        new Rate($amount, Rate::SECOND);
+    }
+
+    /**
+     * Provides tests cases for testInvalidAmount().
+     *
+     * @return array Test cases.
+     */
+    public function provideTestInvalidAmount()
+    {
+        return [
+            [0],
+            [-1],
+        ];
+    }
 }
