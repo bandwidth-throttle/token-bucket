@@ -249,4 +249,30 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($tokenBucket->consume(10));
         $this->assertFalse($tokenBucket->consume(1));
     }
+    
+    /**
+     * Tests building a token bucket with an invalid caüacity fails.
+     *
+     * @test
+     * @expectedException InvalidArgumentException
+     * @dataProvider provideTestInvalidCapacity
+     */
+    public function testInvalidCapacity($capacity)
+    {
+        $rate = new Rate(1, Rate::SECOND);
+        new TokenBucket($capacity, $rate, new SingleProcessStorage());
+    }
+
+    /**
+     * Provides tests cases for testInvalidCapacity().
+     *
+     * @return array Test cases.
+     */
+    public function provideTestInvalidCapacity()
+    {
+        return [
+            [0],
+            [-1],
+        ];
+    }
 }

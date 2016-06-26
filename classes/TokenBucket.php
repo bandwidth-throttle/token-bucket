@@ -81,12 +81,16 @@ class TokenBucket
      *
      * The storage determines the scope of the bucket.
      *
-     * @param int     $capacity  Capacity of the bucket.
-     * @param Rate    $rate      The rate.
-     * @param Storage $storage   The storage.
+     * @param int     $capacity  positive capacity of the bucket
+     * @param Rate    $rate      rate
+     * @param Storage $storage   storage
      */
     public function __construct($capacity, Rate $rate, Storage $storage)
     {
+        if ($capacity <= 0) {
+            throw new \InvalidArgumentException("Capacity should be greater than 0.");
+        }
+
         $this->capacity = $capacity;
         $this->rate     = $rate;
         $this->storage  = $storage;
