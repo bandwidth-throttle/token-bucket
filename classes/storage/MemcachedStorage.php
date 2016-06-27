@@ -108,13 +108,22 @@ class MemcachedStorage implements Storage, GlobalScope
 
     public function getMicrotime()
     {
-        $microtime = $this->memcached->get($this->key, null, $this->casToken);
-        if ($microtime === false) {
+        $getDelayed = $this->memcached->getDelayed([$this->key], true);
+        if (!$getDelayed) {
             throw new StorageException($this->memcached->getResultMessage(), $this->memcached->getResultCode());
         }
+        
+        $result = $this->memcached->fetchAll();
+        if (!$result) {
+            throw new StorageException($this->memcached->getResultMessage(), $this->memcached->getResultCode());
+        }
+        
+        $microtime = $result[0]["value"];
+        $this->casToken = $result[0]["cas"];
         if ($this->casToken === null) {
             throw new StorageException("Failed to aquire a CAS token.");
         }
+        
         return (double) $microtime;
     }
 
