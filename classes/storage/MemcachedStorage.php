@@ -112,6 +112,9 @@ class MemcachedStorage implements Storage, GlobalScope
         if ($microtime === false) {
             throw new StorageException($this->memcached->getResultMessage(), $this->memcached->getResultCode());
         }
+        if ($this->casToken === null) {
+            throw new StorageException("Failed to aquire a CAS token.");
+        }
         return (double) $microtime;
     }
 
