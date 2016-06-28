@@ -13,7 +13,7 @@ use malkusch\lock\mutex\MemcacheMutex;
  * @author Markus Malkusch <markus@malkusch.de>
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
- * @deprecated 0.5 There's no support for the memcache extension under PHP-7.
+ * @deprecated 1.0.0 There's no support for the memcache extension under PHP-7.
  *             Consider using ext-mecached and {@link MemcachedStorage}.
  *             This storage will not be removed, however there's no guarantee
  *             that it will work. As soon as ext-memcache is available for PHP-7
