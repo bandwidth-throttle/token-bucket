@@ -5,7 +5,7 @@
 
 	<title>Class bandwidthThrottle\tokenBucket\BlockingConsumer</title>
 
-	<link rel="stylesheet" href="resources/style.css?95ada9fb523b6ab4fd1c47bb375f713f2cc65542">
+	<link rel="stylesheet" href="resources/style.css?c2f33731c1948fbed7c333554678bfa68d4817da">
 
 </head>
 
@@ -123,7 +123,7 @@
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#7-63" title="Go to source code">BlockingConsumer.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#7-59" title="Go to source code">BlockingConsumer.php</a>
 		<br>
 	</div>
 
@@ -178,7 +178,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_consume">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#32-62" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#32-58" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span> )</code>
 
 		<div class="description short">
 			<p>Consumes tokens.</p>
@@ -189,10 +189,6 @@
 
 <p>If the underlying token bucket doesn't have sufficient tokens, the
 consumer blocks until it can consume the tokens.</p>
-
-<p>Please be aware that this delay might hit PHP's max_execution_time.
-You should adjust that time (with e.g. set_time_limit()) to the
-expected delay.</p>
 
 
 				<h4>Parameters</h4>

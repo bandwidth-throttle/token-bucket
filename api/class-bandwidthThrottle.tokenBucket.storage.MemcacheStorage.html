@@ -3,9 +3,9 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class bandwidthThrottle\tokenBucket\storage\MemcacheStorage</title>
+	<title>Deprecated Class bandwidthThrottle\tokenBucket\storage\MemcacheStorage</title>
 
-	<link rel="stylesheet" href="resources/style.css?95ada9fb523b6ab4fd1c47bb375f713f2cc65542">
+	<link rel="stylesheet" href="resources/style.css?c2f33731c1948fbed7c333554678bfa68d4817da">
 
 </head>
 
@@ -54,7 +54,7 @@
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.FileStorage.html">FileStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.IPCStorage.html">IPCStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.MemcachedStorage.html">MemcachedStorage</a></li>
-				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.storage.MemcacheStorage.html">MemcacheStorage</a></li>
+				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.storage.MemcacheStorage.html" class="deprecated">MemcacheStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PDOStorage.html">PDOStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PHPRedisStorage.html">PHPRedisStorage</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.storage.PredisStorage.html">PredisStorage</a></li>
@@ -106,7 +106,7 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class MemcacheStorage</h1>
+	<h1 class="deprecated">Class MemcacheStorage</h1>
 
 
 	<div class="description">
@@ -117,7 +117,7 @@
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-<b><span>bandwidthThrottle\tokenBucket\storage\MemcacheStorage</span></b>			
+<b><span class="deprecated">bandwidthThrottle\tokenBucket\storage\MemcacheStorage</span></b>			
 			 implements 
 				<a href="class-bandwidthThrottle.tokenBucket.storage.Storage.html"><span>bandwidthThrottle\tokenBucket\storage\Storage</span></a>, 
 			
@@ -140,13 +140,19 @@
 		<b>Namespace:</b> <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\<a href="namespace-bandwidthThrottle.tokenBucket.html">tokenBucket</a>\<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">storage</a><br>
 		
 
+				<b>Deprecated:</b>
+				<p>1.0.0 There's no support for the memcache extension under PHP-7.
+            Consider using ext-mecached and <code><a href="class-bandwidthThrottle.tokenBucket.storage.MemcachedStorage.html">bandwidthThrottle\tokenBucket\storage\MemcachedStorage</a></code>.
+            This storage will not be removed, however there's no guarantee
+            that it will work. As soon as ext-memcache is available for PHP-7
+            the deprecation will be reverted.</p><br>
 				<b>License:</b>
 				<a href="WTFPL">WTFPL</a><br>
 				<b>Author:</b>
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.MemcacheStorage.html#8-93" title="Go to source code">storage/MemcacheStorage.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.MemcacheStorage.html#8-98" title="Go to source code">storage/MemcacheStorage.php</a>
 		<br>
 	</div>
 
@@ -154,7 +160,7 @@
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="__construct" id="___construct">
+	<tr data-order="__construct" id="___construct" class="deprecated">
 
 		<td class="attributes"><code>
 			 public 
@@ -166,7 +172,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.storage.MemcacheStorage.html#40-54" title="Go to source code">__construct</a>( <span>string <var>$name</var></span>, <span>Memcache <var>$memcache</var></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.storage.MemcacheStorage.html#45-59" title="Go to source code">__construct</a>( <span>string <var>$name</var></span>, <span>Memcache <var>$memcache</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the connected memcache API and the token bucket name.</p>
