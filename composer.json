@@ -22,7 +22,7 @@
         "ext-bcmath":"*"
     },
     "require-dev": {
-        "ext-redis": "^2.2.4",
+        "ext-redis": "^2.2.4|^3",
         "predis/predis": "^1",
         "phpunit/phpunit": "^5",
         "mikey179/vfsStream": "^1.5.0",
