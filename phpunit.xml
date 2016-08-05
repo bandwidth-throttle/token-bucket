@@ -4,9 +4,5 @@
          bootstrap="vendor/autoload.php">
     <testsuite>
         <directory>tests</directory>
-        <exclude>tests/storage/MemcacheStorageTest.php</exclude>
-    </testsuite>
-    <testsuite>
-        <file phpVersion="7" phpVersionOperator="&lt;">tests/storage/MemcacheStorageTest.php</file>
     </testsuite>
 </phpunit>

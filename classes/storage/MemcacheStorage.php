@@ -53,6 +53,8 @@ class MemcacheStorage implements Storage, GlobalScope
      */
     public function __construct($name, \Memcache $memcache)
     {
+        trigger_error("MemcacheStorage has been deprecated in favour of MemcachedStorage.", E_USER_DEPRECATED);
+        
         $this->memcache = $memcache;
         $this->key      = self::PREFIX . $name;
         $this->mutex    = new MemcacheMutex($name, $memcache);

@@ -91,13 +91,6 @@ class SharedStorageTest extends \PHPUnit_Framework_TestCase
             }];
         }
         if (getenv("MEMCACHE_HOST")) {
-            if (version_compare(PHP_VERSION, '7', "<")) {
-                $cases[] = [function ($name) {
-                    $memcache = new \Memcache();
-                    $memcache->connect(getenv("MEMCACHE_HOST"));
-                    return new MemcacheStorage($name, $memcache);
-                }];
-            }
             $cases[] = [function ($name) {
                 $memcached = new \Memcached();
                 $memcached->addServer(getenv("MEMCACHE_HOST"), 11211);
