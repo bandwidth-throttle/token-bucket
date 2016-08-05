@@ -49,7 +49,7 @@ class PredisStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testBrokenCommunication(callable $method)
     {
-        $redis = $this->getMock(Client::class);
+        $redis = $this->createMock(Client::class);
         $redis->expects($this->once())->method("__call")
                 ->willThrowException(new ClientException());
         $storage = new PredisStorage("test", $redis);
@@ -104,7 +104,7 @@ class PredisStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetMicrotimeFails()
     {
-        $redis = $this->getMock(Client::class);
+        $redis = $this->createMock(Client::class);
         $redis->expects($this->once())->method("__call")
                 ->with("set")
                 ->willReturn(false);

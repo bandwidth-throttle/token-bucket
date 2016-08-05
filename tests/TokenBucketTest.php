@@ -45,7 +45,9 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testBootstrapOnce()
     {
-        $storage = $this->getMock(SingleProcessStorage::class, ["isBootstrapped", "bootstrap"]);
+        $storage = $this->getMockBuilder(SingleProcessStorage::class)
+                ->setMethods(["isBootstrapped", "bootstrap"])
+                ->getMock();
         $storage->expects($this->any())
                 ->method("isBootstrapped")
                 ->willReturn(true);

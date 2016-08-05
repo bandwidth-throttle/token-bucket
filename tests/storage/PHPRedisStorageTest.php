@@ -103,7 +103,7 @@ class PHPRedisStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetMicrotimeFails()
     {
-        $redis = $this->getMock(Redis::class);
+        $redis = $this->createMock(Redis::class);
         $redis->expects($this->once())->method("set")
                 ->willReturn(false);
         $storage = new PHPRedisStorage("test", $redis);
