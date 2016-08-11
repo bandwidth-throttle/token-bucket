@@ -277,4 +277,122 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
             [-1],
         ];
     }
+    
+    /**
+     * After bootstraping, getTokens() should return the initial amount.
+     *
+     * @test
+     */
+    public function getTokensShouldReturnInitialAmountOnBootstrap()
+    {
+        $rate = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(10, $rate, new SingleProcessStorage());
+
+        $bucket->bootstrap(10);
+        
+        $this->assertEquals(10, $bucket->getTokens());
+    }
+    
+    /**
+     * After one consumtion, getTokens() should return the initial amount - 1.
+     *
+     * @test
+     */
+    public function getTokensShouldReturnRemainingTokensAfterConsumption()
+    {
+        $rate = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(10, $rate, new SingleProcessStorage());
+        $bucket->bootstrap(10);
+        
+        $bucket->consume(1);
+        
+        $this->assertEquals(9, $bucket->getTokens());
+    }
+    
+    /**
+     * After consuming all, getTokens() should return 0.
+     *
+     * @test
+     */
+    public function getTokensShouldReturnZeroTokensAfterConsumingAll()
+    {
+        $rate = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(10, $rate, new SingleProcessStorage());
+        $bucket->bootstrap(10);
+        
+        $bucket->consume(10);
+        
+        $this->assertEquals(0, $bucket->getTokens());
+    }
+    
+    /**
+     * After consuming too many, getTokens() should return the same as before.
+     *
+     * @test
+     */
+    public function getTokensShouldReturnSameAfterConsumingTooMany()
+    {
+        $rate = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(10, $rate, new SingleProcessStorage());
+        $bucket->bootstrap(10);
+        
+        try {
+            $bucket->consume(11);
+            $this->fail("Expected an exception.");
+        } catch (\LengthException $e) {
+            // expected
+        }
+        
+        $this->assertEquals(10, $bucket->getTokens());
+    }
+    
+    /**
+     * After waiting on an non full bucket, getTokens() should return more.
+     *
+     * @test
+     */
+    public function getTokensShouldReturnMoreAfterWaiting()
+    {
+        $rate = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(10, $rate, new SingleProcessStorage());
+        $bucket->bootstrap(5);
+        
+        sleep(1);
+        
+        $this->assertEquals(6, $bucket->getTokens());
+    }
+    
+    /**
+     * After waiting the complete refill period on an empty bucket, getTokens()
+     * should return the capacity of the bucket.
+     *
+     * @test
+     */
+    public function getTokensShouldReturnCapacityAfterWaitingRefillPeriod()
+    {
+        $rate = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(10, $rate, new SingleProcessStorage());
+        $bucket->bootstrap(0);
+        
+        sleep(10);
+        
+        $this->assertEquals(10, $bucket->getTokens());
+    }
+    
+    /**
+     * After waiting longer than the complete refill period on an empty bucket,
+     * getTokens() should return the capacity of the bucket.
+     *
+     * @test
+     */
+    public function getTokensShouldReturnCapacityAfterWaitingLongerThanRefillPeriod()
+    {
+        $rate = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket(10, $rate, new SingleProcessStorage());
+        $bucket->bootstrap(0);
+        
+        sleep(11);
+        
+        $this->assertEquals(10, $bucket->getTokens());
+    }
 }

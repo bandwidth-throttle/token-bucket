@@ -164,15 +164,11 @@ class TokenBucket
 
             return $this->storage->getMutex()->synchronized(
                 function () use ($tokens, &$seconds) {
-                    $microtime = $this->storage->getMicrotime();
+                    $tokensAndMicrotime = $this->loadTokensAndTimestamp();
+                    $microtime = $tokensAndMicrotime["microtime"];
+                    $availableTokens = $tokensAndMicrotime["tokens"];
 
-                    // Drop overflowing tokens
-                    $minMicrotime = $this->tokenToMicrotimeConverter->convert($this->capacity);
-                    if ($minMicrotime > $microtime) {
-                        $microtime = $minMicrotime;
-                    }
-
-                    $delta = $this->getTokens($microtime) - $tokens;
+                    $delta = $availableTokens - $tokens;
                     if ($delta < 0) {
                         $passed  = microtime(true) - $microtime;
                         $seconds = max(0, $this->tokenToSecondConverter->convert($tokens) - $passed);
@@ -209,15 +205,60 @@ class TokenBucket
     {
         return $this->capacity;
     }
+
+    /**
+     * Returns the currently available tokens of this bucket.
+     *
+     * This is a purely informative method. Use this method if you are
+     * interested in the amount of remaining tokens. Those tokens
+     * could be consumed instantly. This method will not consume any token.
+     * Use {@link consume()} to do so.
+     *
+     * This method will never return more than the capacity of the bucket.
+     *
+     * @return int amount of currently available tokens
+     * @throws StorageException The stored microtime could not be accessed.
+     */
+    public function getTokens()
+    {
+        return $this->loadTokensAndTimestamp()["tokens"];
+    }
     
     /**
-     * Returns the tokens.
+     * Loads the stored timestamp and its respective amount of tokens.
+     *
+     * This method is a convenience method to allow sharing code in
+     * {@link TokenBucket::getTokens()} and {@link TokenBucket::consume()}
+     * while accessing the storage only once.
+     *
+     * @throws StorageException The stored microtime could not be accessed.
+     * @return array tokens and microtime
+     */
+    private function loadTokensAndTimestamp()
+    {
+        $microtime = $this->storage->getMicrotime();
+        
+        // Drop overflowing tokens
+        $minMicrotime = $this->tokenToMicrotimeConverter->convert($this->capacity);
+        if ($minMicrotime > $microtime) {
+            $microtime = $minMicrotime;
+        }
+        
+        $tokens = $this->convertTimestampToTokens($microtime);
+        return [
+            "tokens" => $tokens,
+            "microtime" => $microtime
+        ];
+    }
+    
+    /**
+     * Converts a timestamp into tokens.
      *
      * @param double $microtime The timestamp.
      *
      * @return int The tokens.
      */
-    private function getTokens($microtime)
+    private function convertTimestampToTokens($microtime)
     {
         $delta = bcsub(microtime(true), $microtime, $this->bcScale);
         return $this->secondToTokenConverter->convert($delta);
