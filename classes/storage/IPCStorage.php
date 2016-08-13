@@ -4,8 +4,7 @@ namespace bandwidthThrottle\tokenBucket\storage;
 
 use malkusch\lock\mutex\SemaphoreMutex;
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
-use bandwidthThrottle\tokenBucket\converter\DoubleToStringConverter;
-use bandwidthThrottle\tokenBucket\converter\StringToDoubleConverter;
+use bandwidthThrottle\tokenBucket\util\DoublePacker;
 
 /**
  * Shared memory based storage which can be shared among processes of a single host.
@@ -101,24 +100,27 @@ class IPCStorage implements Storage, GlobalScope
         $this->semaphore = null;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
     public function setMicrotime($microtime)
     {
-        $converter = new DoubleToStringConverter();
-        $data      = $converter->convert($microtime);
-
+        $data = DoublePacker::pack($microtime);
         if (!shm_put_var($this->memory, 0, $data)) {
             throw new StorageException("Could not store in shared memory.");
         }
     }
     
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
     public function getMicrotime()
     {
         $data = shm_get_var($this->memory, 0);
         if ($data === false) {
             throw new StorageException("Could not read from shared memory.");
         }
-        $converter = new StringToDoubleConverter();
-        return $converter->convert($data);
+        return DoublePacker::unpack($data);
     }
 
     public function getMutex()

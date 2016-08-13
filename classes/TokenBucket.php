@@ -5,9 +5,7 @@ namespace bandwidthThrottle\tokenBucket;
 use malkusch\lock\MutexException;
 use bandwidthThrottle\tokenBucket\storage\Storage;
 use bandwidthThrottle\tokenBucket\storage\StorageException;
-use bandwidthThrottle\tokenBucket\converter\TokenToMicrotimeConverter;
-use bandwidthThrottle\tokenBucket\converter\TokenToSecondConverter;
-use bandwidthThrottle\tokenBucket\converter\SecondToTokenConverter;
+use bandwidthThrottle\tokenBucket\util\TokenConverter;
 
 /**
  * Token Bucket algorithm.
@@ -52,29 +50,14 @@ class TokenBucket
     private $capacity;
     
     /**
-     * @var int precision scale for bc_* operations.
-     */
-    private $bcScale = 8;
-    
-    /**
      * @var Storage The storage.
      */
     private $storage;
     
     /**
-     * @var TokenToSecondConverter Token to second converter.
+     * @var TokenConverter Token converter.
      */
-    private $tokenToSecondConverter;
-    
-    /**
-     * @var TokenToMicrotimeConverter Token to microtime converter.
-     */
-    private $tokenToMicrotimeConverter;
-
-    /**
-     * @var SecondToTokenConverter Seconds to tokens converter.
-     */
-    private $secondToTokenConverter;
+    private $tokenConverter;
     
     /**
      * Initializes the Token bucket.
@@ -95,9 +78,7 @@ class TokenBucket
         $this->rate     = $rate;
         $this->storage  = $storage;
 
-        $this->tokenToSecondConverter    = new TokenToSecondConverter($rate);
-        $this->secondToTokenConverter    = new SecondToTokenConverter($rate);
-        $this->tokenToMicrotimeConverter = new TokenToMicrotimeConverter($this->tokenToSecondConverter);
+        $this->tokenConverter = new TokenConverter($rate);
     }
     
     /**
@@ -130,7 +111,7 @@ class TokenBucket
                     return !$this->storage->isBootstrapped();
                 })
                 ->then(function () use ($tokens) {
-                    $this->storage->bootstrap($this->tokenToMicrotimeConverter->convert($tokens));
+                    $this->storage->bootstrap($this->tokenConverter->convertTokensToMicrotime($tokens));
                 });
         } catch (MutexException $e) {
             throw new StorageException("Could not lock bootstrapping", 0, $e);
@@ -171,10 +152,10 @@ class TokenBucket
                     $delta = $availableTokens - $tokens;
                     if ($delta < 0) {
                         $passed  = microtime(true) - $microtime;
-                        $seconds = max(0, $this->tokenToSecondConverter->convert($tokens) - $passed);
+                        $seconds = max(0, $this->tokenConverter->convertTokensToSeconds($tokens) - $passed);
                         return false;
                     } else {
-                        $microtime += $this->tokenToSecondConverter->convert($tokens);
+                        $microtime += $this->tokenConverter->convertTokensToSeconds($tokens);
                         $this->storage->setMicrotime($microtime);
                         $seconds = 0;
                         return true;
@@ -239,28 +220,15 @@ class TokenBucket
         $microtime = $this->storage->getMicrotime();
         
         // Drop overflowing tokens
-        $minMicrotime = $this->tokenToMicrotimeConverter->convert($this->capacity);
+        $minMicrotime = $this->tokenConverter->convertTokensToMicrotime($this->capacity);
         if ($minMicrotime > $microtime) {
             $microtime = $minMicrotime;
         }
         
-        $tokens = $this->convertTimestampToTokens($microtime);
+        $tokens = $this->tokenConverter->convertMicrotimeToTokens($microtime);
         return [
             "tokens" => $tokens,
             "microtime" => $microtime
         ];
-    }
-    
-    /**
-     * Converts a timestamp into tokens.
-     *
-     * @param double $microtime The timestamp.
-     *
-     * @return int The tokens.
-     */
-    private function convertTimestampToTokens($microtime)
-    {
-        $delta = bcsub(microtime(true), $microtime, $this->bcScale);
-        return $this->secondToTokenConverter->convert($delta);
     }
 }

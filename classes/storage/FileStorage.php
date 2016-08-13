@@ -4,8 +4,7 @@ namespace bandwidthThrottle\tokenBucket\storage;
 
 use malkusch\lock\mutex\FlockMutex;
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
-use bandwidthThrottle\tokenBucket\converter\DoubleToStringConverter;
-use bandwidthThrottle\tokenBucket\converter\StringToDoubleConverter;
+use bandwidthThrottle\tokenBucket\util\DoublePacker;
 
 /**
  * File based storage which can be shared among processes.
@@ -97,21 +96,25 @@ class FileStorage implements Storage, GlobalScope
         }
     }
 
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
     public function setMicrotime($microtime)
     {
         if (fseek($this->fileHandle, 0) !== 0) {
             throw new StorageException("Could not move to beginning of the file.");
         }
         
-        $converter = new DoubleToStringConverter();
-        $data      = $converter->convert($microtime);
-
+        $data = DoublePacker::pack($microtime);
         $result = fwrite($this->fileHandle, $data, strlen($data));
         if ($result !== strlen($data)) {
             throw new StorageException("Could not write to storage.");
         }
     }
     
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
     public function getMicrotime()
     {
         if (fseek($this->fileHandle, 0) !== 0) {
@@ -122,8 +125,7 @@ class FileStorage implements Storage, GlobalScope
             throw new StorageException("Could not read from storage.");
         }
         
-        $converter = new StringToDoubleConverter();
-        return $converter->convert($data);
+        return DoublePacker::unpack($data);
     }
     
     public function getMutex()

@@ -3,8 +3,7 @@
 namespace bandwidthThrottle\tokenBucket\storage;
 
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
-use bandwidthThrottle\tokenBucket\converter\DoubleToStringConverter;
-use bandwidthThrottle\tokenBucket\converter\StringToDoubleConverter;
+use bandwidthThrottle\tokenBucket\util\DoublePacker;
 use Predis\Client;
 use Predis\PredisException;
 use malkusch\lock\mutex\PredisMutex;
@@ -75,12 +74,13 @@ class PredisStorage implements Storage, GlobalScope
         }
     }
     
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
     public function setMicrotime($microtime)
     {
         try {
-            $converter = new DoubleToStringConverter();
-            $data      = $converter->convert($microtime);
-            
+            $data = DoublePacker::pack($microtime);
             if (!$this->redis->set($this->key, $data)) {
                 throw new StorageException("Failed to store microtime");
             }
@@ -89,6 +89,9 @@ class PredisStorage implements Storage, GlobalScope
         }
     }
 
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
     public function getMicrotime()
     {
         try {
@@ -96,8 +99,7 @@ class PredisStorage implements Storage, GlobalScope
             if ($data === false) {
                 throw new StorageException("Failed to get microtime");
             }
-            $converter = new StringToDoubleConverter();
-            return $converter->convert($data);
+            return DoublePacker::unpack($data);
         } catch (PredisException $e) {
             throw new StorageException("Failed to get microtime", 0, $e);
         }

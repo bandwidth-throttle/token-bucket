@@ -26,7 +26,7 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
     {
         $builder = new SleepEnvironmentBuilder();
         $builder->addNamespace(__NAMESPACE__)
-                ->addNamespace("bandwidthThrottle\\tokenBucket\\converter")
+                ->addNamespace("bandwidthThrottle\\tokenBucket\\util")
                 ->setTimestamp(1417011228);
 
         $this->sleepEnvironent = $builder->build();
