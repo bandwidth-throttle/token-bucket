@@ -138,13 +138,13 @@ storage.</p>
 		<b>Namespace:</b> <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\<a href="namespace-bandwidthThrottle.tokenBucket.html">tokenBucket</a><br>
 		
 
-				<b>License:</b>
-				<a href="WTFPL">WTFPL</a><br>
 				<b>Author:</b>
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
-				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#12-225" title="Go to source code">TokenBucket.php</a>
+				bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations<br>
+				<b>License:</b>
+				<a href="WTFPL">WTFPL</a><br>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#10-234" title="Go to source code">TokenBucket.php</a>
 		<br>
 	</div>
 
@@ -164,7 +164,7 @@ storage.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#79-101" title="Go to source code">__construct</a>( <span>integer <var>$capacity</var></span>, <span><code><a href="class-bandwidthThrottle.tokenBucket.Rate.html">bandwidthThrottle\tokenBucket\Rate</a></code> <var>$rate</var></span>, <span><code><a href="class-bandwidthThrottle.tokenBucket.storage.Storage.html">bandwidthThrottle\tokenBucket\storage\Storage</a></code> <var>$storage</var></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#62-82" title="Go to source code">__construct</a>( <span>integer <var>$capacity</var></span>, <span><code><a href="class-bandwidthThrottle.tokenBucket.Rate.html">bandwidthThrottle\tokenBucket\Rate</a></code> <var>$rate</var></span>, <span><code><a href="class-bandwidthThrottle.tokenBucket.storage.Storage.html">bandwidthThrottle\tokenBucket\storage\Storage</a></code> <var>$storage</var></span> )</code>
 
 		<div class="description short">
 			<p>Initializes the Token bucket.</p>
@@ -205,7 +205,7 @@ storage.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_bootstrap">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#103-138" title="Go to source code">bootstrap</a>( <span>integer <var>$tokens</var> = <span class="php-num">0</span></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#84-119" title="Go to source code">bootstrap</a>( <span>integer <var>$tokens</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
 			<p>Bootstraps the storage with an initial amount of tokens.</p>
@@ -254,7 +254,7 @@ method in your application's bootstrap or deploy process.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_consume">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#140-191" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span>, <span>float <var>&amp; $seconds</var> = <span class="php-num">0</span></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#121-168" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span>, <span>float <var>&amp; $seconds</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
 			<p>Consumes tokens from the bucket.</p>
@@ -309,7 +309,7 @@ remaining seconds to wait are written to $seconds.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getRate">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#193-201" title="Go to source code">getRate</a>( )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#170-178" title="Go to source code">getRate</a>( )</code>
 
 		<div class="description short">
 			<p>Returns the token add rate.</p>
@@ -343,7 +343,7 @@ remaining seconds to wait are written to $seconds.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getCapacity">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#203-211" title="Go to source code">getCapacity</a>( )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#180-188" title="Go to source code">getCapacity</a>( )</code>
 
 		<div class="description short">
 			<p>The token capacity of this bucket.</p>
@@ -359,6 +359,51 @@ remaining seconds to wait are written to $seconds.</p>
 					integer<br>The capacity.
 				</div>
 
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getTokens" id="_getTokens">
+
+		<td class="attributes"><code>
+			 public 
+
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getTokens">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#190-206" title="Go to source code">getTokens</a>( )</code>
+
+		<div class="description short">
+			<p>Returns the currently available tokens of this bucket.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns the currently available tokens of this bucket.</p>
+
+<p>This is a purely informative method. Use this method if you are
+interested in the amount of remaining tokens. Those tokens
+could be consumed instantly. This method will not consume any token.
+Use <code><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html#_consume">bandwidthThrottle\tokenBucket\TokenBucket::consume()</a></code> to do so.</p>
+
+<p>This method will never return more than the capacity of the bucket.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					integer<br>amount of currently available tokens
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">bandwidthThrottle\tokenBucket\storage\StorageException</a></code><br>The stored microtime could not be accessed.
+				</div>
 
 
 
@@ -391,7 +436,7 @@ remaining seconds to wait are written to $seconds.</p>
 	</div>
 </div>
 </div>
-<script src="resources/combined.js"></script>
-<script src="elementlist.js"></script>
+<script src="resources/combined.js?216ad6a5e970b627bbbc803f52eaed170c9ec7d7"></script>
+<script src="elementlist.js?742a879dbebc693def4e2e0b4ad85ce8345a9992"></script>
 </body>
 </html>

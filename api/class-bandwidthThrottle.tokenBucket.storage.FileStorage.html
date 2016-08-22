@@ -141,13 +141,13 @@ underlying filesystem. I.e. the scope is not shared between hosts.</p>
 		<b>Namespace:</b> <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\<a href="namespace-bandwidthThrottle.tokenBucket.html">tokenBucket</a>\<a href="namespace-bandwidthThrottle.tokenBucket.storage.html">storage</a><br>
 		
 
-				<b>License:</b>
-				<a href="WTFPL">WTFPL</a><br>
 				<b>Author:</b>
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
-				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.FileStorage.html#10-133" title="Go to source code">storage/FileStorage.php</a>
+				bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations<br>
+				<b>License:</b>
+				<a href="WTFPL">WTFPL</a><br>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.storage.FileStorage.html#9-135" title="Go to source code">storage/FileStorage.php</a>
 		<br>
 	</div>
 
@@ -167,7 +167,7 @@ underlying filesystem. I.e. the scope is not shared between hosts.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.storage.FileStorage.html#38-51" title="Go to source code">__construct</a>( <span>string <var>$path</var></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.storage.FileStorage.html#37-50" title="Go to source code">__construct</a>( <span>string <var>$path</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the file path and opens it.</p>
@@ -192,6 +192,89 @@ operation.</p>
 					<code><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">bandwidthThrottle\tokenBucket\storage\StorageException</a></code><br>Failed to open the file.
 				</div>
 
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setMicrotime" id="_setMicrotime">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setMicrotime">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.storage.FileStorage.html#99-113" title="Go to source code">setMicrotime</a>( <span>float <var>$microtime</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$microtime</var></dt>
+					<dd>The timestamp.</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">bandwidthThrottle\tokenBucket\storage\StorageException</a></code><br>Writing to the storage failed.
+				</div>
+
+				<h4>Suppresswarnings(phpmd)</h4>
+				<div class="list">
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getMicrotime" id="_getMicrotime">
+
+		<td class="attributes"><code>
+			 public 
+
+			float
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getMicrotime">#</a>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.storage.FileStorage.html#115-129" title="Go to source code">getMicrotime</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					float<br>The timestamp.
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">bandwidthThrottle\tokenBucket\storage\StorageException</a></code><br>Reading from the storage failed.
+				</div>
+
+				<h4>Suppresswarnings(phpmd)</h4>
+				<div class="list">
+				</div>
 
 
 		</div>
@@ -223,7 +306,7 @@ operation.</p>
 	</div>
 </div>
 </div>
-<script src="resources/combined.js"></script>
-<script src="elementlist.js"></script>
+<script src="resources/combined.js?216ad6a5e970b627bbbc803f52eaed170c9ec7d7"></script>
+<script src="elementlist.js?742a879dbebc693def4e2e0b4ad85ce8345a9992"></script>
 </body>
 </html>
