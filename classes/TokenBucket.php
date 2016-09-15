@@ -106,6 +106,12 @@ class TokenBucket
                     "Initial token amount ($tokens) is larger than the capacity ($this->capacity)."
                 );
             }
+            if ($tokens < 0) {
+                throw new \InvalidArgumentException(
+                    "Initial token amount ($tokens) should be greater than 0."
+                );
+            }
+            
             $this->storage->getMutex()
                 ->check(function () {
                     return !$this->storage->isBootstrapped();
