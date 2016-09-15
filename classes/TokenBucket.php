@@ -148,6 +148,9 @@ class TokenBucket
             if ($tokens > $this->capacity) {
                 throw new \LengthException("Token amount ($tokens) is larger than the capacity ($this->capacity).");
             }
+            if ($tokens <= 0) {
+                throw new \InvalidArgumentException("Token amount ($tokens) should be greater than 0.");
+            }
 
             return $this->storage->getMutex()->synchronized(
                 function () use ($tokens, &$seconds) {
