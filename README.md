@@ -43,7 +43,7 @@ if (!$bucket->consume(1, $seconds)) {
     exit();
 }
 
-echo "API respose";
+echo "API response";
 ```
 
 Note: In this example `TokenBucket::bootstrap()` is part of the code. This is
@@ -134,7 +134,7 @@ $bucket->bootstrap(10);
 // This will block until one token is available.
 $consumer->consume(1);
 
-echo "API respose";
+echo "API response";
 ```
 
 This will effectively limit the rate to 10 requests per seconds as well. But
