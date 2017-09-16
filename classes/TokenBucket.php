@@ -2,7 +2,7 @@
 
 namespace bandwidthThrottle\tokenBucket;
 
-use malkusch\lock\MutexException;
+use malkusch\lock\exception\MutexException;
 use bandwidthThrottle\tokenBucket\storage\Storage;
 use bandwidthThrottle\tokenBucket\storage\StorageException;
 use bandwidthThrottle\tokenBucket\util\TokenConverter;
