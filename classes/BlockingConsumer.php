@@ -18,15 +18,26 @@ final class BlockingConsumer
      * @var TokenBucket The token bucket.
      */
     private $bucket;
+    
+    /**
+     * @var int|null optional timeout in seconds.
+     */
+    private $timeout;
 
     /**
-     * Set the token bucket.
+     * Set the token bucket and an optional timeout.
      *
      * @param TokenBucket $bucket The token bucket.
+     * @param int|null $timeout Optional timeout in seconds.
      */
-    public function __construct(TokenBucket $bucket)
+    public function __construct(TokenBucket $bucket, $timeout = null)
     {
         $this->bucket = $bucket;
+
+        if ($timeout < 0) {
+            throw new \InvalidArgumentException("Timeout must be null or positive");
+        }
+        $this->timeout = $timeout;
     }
     
     /**
@@ -39,6 +50,7 @@ final class BlockingConsumer
      *
      * @throws \LengthException The token amount is larger than the bucket's capacity.
      * @throws StorageException The stored microtime could not be accessed.
+     * @throws TimeoutException The timeout was exceeded.
      */
     public function consume($tokens)
     {

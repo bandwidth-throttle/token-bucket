@@ -120,4 +120,50 @@ class BlockingConsumerTest extends \PHPUnit_Framework_TestCase
         $consumer->consume(1);
         $this->assertLessThan(1e-5, abs((microtime(true) - $time) - 0.001));
     }
+    
+    /**
+     * consume() should fail after a timeout.
+     *
+     * @expectedException \bandwidthThrottle\tokenBucket\TimeoutException
+     * @test
+     */
+    public function consumeShouldFailAfterTimeout()
+    {
+        $rate = new Rate(0.1, Rate::SECOND);
+        $bucket = new TokenBucket(1, $rate, new SingleProcessStorage());
+        $bucket->bootstrap(0);
+        $consumer = new BlockingConsumer($bucket, 9);
+        
+        $consumer->consume(1);
+    }
+    
+    /**
+     * consume() should not fail before a timeout.
+     *
+     * @test
+     */
+    public function consumeShouldNotFailBeforeTimeout()
+    {
+        $rate = new Rate(0.1, Rate::SECOND);
+        $bucket = new TokenBucket(1, $rate, new SingleProcessStorage());
+        $bucket->bootstrap(0);
+        $consumer = new BlockingConsumer($bucket, 11);
+        
+        $consumer->consume(1);
+    }
+    
+    /**
+     * consume() should not never time out.
+     *
+     * @test
+     */
+    public function consumeWithoutTimeoutShouldNeverFail()
+    {
+        $rate = new Rate(0.1, Rate::YEAR);
+        $bucket = new TokenBucket(1, $rate, new SingleProcessStorage());
+        $bucket->bootstrap(0);
+        $consumer = new BlockingConsumer($bucket);
+        
+        $consumer->consume(1);
+    }
 }
