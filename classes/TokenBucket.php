@@ -42,22 +42,22 @@ final class TokenBucket
     /**
      * @var Rate The rate.
      */
-    private $rate;
+    protected $rate;
     
     /**
      * @var int Token capacity of this bucket.
      */
-    private $capacity;
+    protected $capacity;
     
     /**
      * @var Storage The storage.
      */
-    private $storage;
+    protected $storage;
     
     /**
      * @var TokenConverter Token converter.
      */
-    private $tokenConverter;
+    protected $tokenConverter;
     
     /**
      * Initializes the Token bucket.
@@ -225,7 +225,7 @@ final class TokenBucket
      * @throws StorageException The stored microtime could not be accessed.
      * @return array tokens and microtime
      */
-    private function loadTokensAndTimestamp()
+    protected function loadTokensAndTimestamp()
     {
         $microtime = $this->storage->getMicrotime();
         
