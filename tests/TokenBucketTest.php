@@ -2,9 +2,11 @@
 
 namespace bandwidthThrottle\tokenBucket;
 
+use malkusch\lock\mutex\NoMutex;
 use phpmock\environment\SleepEnvironmentBuilder;
 use phpmock\environment\MockEnvironment;
 use bandwidthThrottle\tokenBucket\storage\SingleProcessStorage;
+use bandwidthThrottle\tokenBucket\storage\Storage;
 
 /**
  * Test for TokenBucket.
@@ -45,9 +47,11 @@ class TokenBucketTest extends \PHPUnit_Framework_TestCase
      */
     public function testBootstrapOnce()
     {
-        $storage = $this->getMockBuilder(SingleProcessStorage::class)
-                ->setMethods(["isBootstrapped", "bootstrap"])
+        $storage = $this->getMockBuilder(Storage::class)
                 ->getMock();
+        $storage->expects($this->any())
+                ->method("getMutex")
+                ->willReturn(new NoMutex());
         $storage->expects($this->any())
                 ->method("isBootstrapped")
                 ->willReturn(true);
