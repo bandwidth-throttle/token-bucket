@@ -9,7 +9,7 @@ namespace bandwidthThrottle\tokenBucket;
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class Rate
+final class Rate
 {
     
     const MICROSECOND = "microsecond";

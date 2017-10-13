@@ -11,7 +11,7 @@ use bandwidthThrottle\tokenBucket\TokenBucketException;
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class StorageException extends TokenBucketException
+final class StorageException extends TokenBucketException
 {
 
 }

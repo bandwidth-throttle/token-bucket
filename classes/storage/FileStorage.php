@@ -16,7 +16,7 @@ use bandwidthThrottle\tokenBucket\util\DoublePacker;
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class FileStorage implements Storage, GlobalScope
+final class FileStorage implements Storage, GlobalScope
 {
  
     /**

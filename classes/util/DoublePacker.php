@@ -12,7 +12,7 @@ use bandwidthThrottle\tokenBucket\storage\StorageException;
  * @license WTFPL
  * @internal
  */
-class DoublePacker
+final class DoublePacker
 {
     
     /**

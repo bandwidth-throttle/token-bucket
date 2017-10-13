@@ -20,7 +20,7 @@ use malkusch\lock\mutex\Mutex;
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class PHPRedisStorage implements Storage, GlobalScope
+final class PHPRedisStorage implements Storage, GlobalScope
 {
     
     /**

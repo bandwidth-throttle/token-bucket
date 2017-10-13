@@ -36,7 +36,7 @@ use bandwidthThrottle\tokenBucket\util\TokenConverter;
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class TokenBucket
+final class TokenBucket
 {
 
     /**
