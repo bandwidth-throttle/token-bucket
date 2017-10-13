@@ -185,4 +185,8 @@ final class PDOStorage implements Storage, GlobalScope
     {
         return $this->mutex;
     }
+
+    public function letMicrotimeUnchanged()
+    {
+    }
 }

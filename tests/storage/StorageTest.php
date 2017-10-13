@@ -5,6 +5,8 @@ namespace bandwidthThrottle\tokenBucket\storage;
 use org\bovigo\vfs\vfsStream;
 use Redis;
 use Predis\Client;
+use bandwidthThrottle\tokenBucket\TokenBucket;
+use bandwidthThrottle\tokenBucket\Rate;
 
 /**
  * Tests for Storage implementations.
@@ -45,31 +47,28 @@ class StorageTest extends \PHPUnit_Framework_TestCase
     public function provideStorageFactories()
     {
         $cases = [
-            [function () {
+            "SingleProcessStorage" => [function () {
                 return new SingleProcessStorage();
             }],
-            [function () {
+            "SessionStorage" => [function () {
                 return new SessionStorage("test");
             }],
-
-            [function () {
+            "FileStorage" => [function () {
                 vfsStream::setup('fileStorage');
                 return new FileStorage(vfsStream::url("fileStorage/data"));
             }],
-
-            [function () {
+            "sqlite" => [function () {
                 $pdo = new \PDO("sqlite::memory:");
                 $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 return new PDOStorage("test", $pdo);
             }],
-
-            [function () {
+            "IPCStorage" => [function () {
                 return new IPCStorage(ftok(__FILE__, "a"));
             }],
         ];
         
         if (getenv("MYSQL_DSN")) {
-            $cases[] = [function () {
+            $cases["MYSQL"] = [function () {
                 $pdo = new \PDO(getenv("MYSQL_DSN"), getenv("MYSQL_USER"));
                 $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 $pdo->setAttribute(\PDO::ATTR_AUTOCOMMIT, false);
@@ -77,14 +76,14 @@ class StorageTest extends \PHPUnit_Framework_TestCase
             }];
         }
         if (getenv("PGSQL_DSN")) {
-            $cases[] = [function () {
+            $cases["PGSQL"] = [function () {
                 $pdo = new \PDO(getenv("PGSQL_DSN"), getenv("PGSQL_USER"));
                 $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 return new PDOStorage("test", $pdo);
             }];
         }
         if (getenv("MEMCACHE_HOST")) {
-            $cases[] = [function () {
+            $cases["MemcachedStorage"] = [function () {
                 $memcached = new \Memcached();
                 $memcached->addServer(getenv("MEMCACHE_HOST"), 11211);
                 return new MemcachedStorage("test", $memcached);
@@ -179,5 +178,41 @@ class StorageTest extends \PHPUnit_Framework_TestCase
 
         $this->storage->remove();
         $this->assertFalse($this->storage->isBootstrapped());
+    }
+    
+    /**
+     * When no tokens are available, the bucket should return false.
+     *
+     * @param callable $storageFactory Returns a storage.
+     * @test
+     * @dataProvider provideStorageFactories
+     */
+    public function testConsumingUnavailableTokensReturnsFalse(callable $storageFactory)
+    {
+        $this->storage = call_user_func($storageFactory);
+        $capacity = 10;
+        $rate = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket($capacity, $rate, $this->storage);
+        $bucket->bootstrap(0);
+
+        $this->assertFalse($bucket->consume(10));
+    }
+    
+    /**
+     * When tokens are available, the bucket should return true.
+     *
+     * @param callable $storageFactory Returns a storage.
+     * @test
+     * @dataProvider provideStorageFactories
+     */
+    public function testConsumingAvailableTokensReturnsTrue(callable $storageFactory)
+    {
+        $this->storage = call_user_func($storageFactory);
+        $capacity = 10;
+        $rate = new Rate(1, Rate::SECOND);
+        $bucket = new TokenBucket($capacity, $rate, $this->storage);
+        $bucket->bootstrap(10);
+
+        $this->assertTrue($bucket->consume(10));
     }
 }

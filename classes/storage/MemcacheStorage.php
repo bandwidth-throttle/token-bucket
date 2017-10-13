@@ -97,4 +97,8 @@ final class MemcacheStorage implements Storage, GlobalScope
     {
         return $this->mutex;
     }
+
+    public function letMicrotimeUnchanged()
+    {
+    }
 }

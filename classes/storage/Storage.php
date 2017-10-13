@@ -73,6 +73,13 @@ interface Storage
     public function setMicrotime($microtime);
 
     /**
+     * Indicates, that there won't be any change within this transaction.
+     *
+     * @internal
+     */
+    public function letMicrotimeUnchanged();
+
+    /**
      * Returns the stored timestamp.
      *
      * @return double The timestamp.
