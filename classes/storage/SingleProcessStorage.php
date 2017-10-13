@@ -65,4 +65,8 @@ class SingleProcessStorage implements Storage, RequestScope
     {
         return $this->mutex;
     }
+
+    public function letMicrotimeUnchanged()
+    {
+    }
 }

@@ -151,6 +151,7 @@ class TokenBucket
 
                     $delta = $availableTokens - $tokens;
                     if ($delta < 0) {
+                        $this->storage->letMicrotimeUnchanged();
                         $passed  = microtime(true) - $microtime;
                         $seconds = max(0, $this->tokenConverter->convertTokensToSeconds($tokens) - $passed);
                         return false;

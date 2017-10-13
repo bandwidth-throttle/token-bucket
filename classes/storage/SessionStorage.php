@@ -91,4 +91,8 @@ class SessionStorage implements Storage, SessionScope
     {
         $_SESSION[$this->key] = $microtime;
     }
+
+    public function letMicrotimeUnchanged()
+    {
+    }
 }

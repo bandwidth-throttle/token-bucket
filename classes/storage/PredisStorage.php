@@ -109,4 +109,8 @@ class PredisStorage implements Storage, GlobalScope
     {
         return $this->mutex;
     }
+
+    public function letMicrotimeUnchanged()
+    {
+    }
 }

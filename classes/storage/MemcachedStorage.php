@@ -131,4 +131,9 @@ class MemcachedStorage implements Storage, GlobalScope
     {
         return $this->mutex;
     }
+
+    public function letMicrotimeUnchanged()
+    {
+        $this->mutex->notify();
+    }
 }
