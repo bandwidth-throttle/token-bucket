@@ -215,4 +215,21 @@ class StorageTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($bucket->consume(10));
     }
+    
+    /**
+     * Tests synchronized bootstrap
+     *
+     * @param callable $storageFactory Returns a storage.
+     * @test
+     * @dataProvider provideStorageFactories
+     */
+    public function testSynchronizedBootstrap(callable $storageFactory)
+    {
+        $this->storage = call_user_func($storageFactory);
+        $this->storage->getMutex()->synchronized(function () {
+            $this->assertFalse($this->storage->isBootstrapped());
+            $this->storage->bootstrap(123);
+            $this->assertTrue($this->storage->isBootstrapped());
+        });
+    }
 }

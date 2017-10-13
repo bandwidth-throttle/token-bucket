@@ -65,13 +65,15 @@ final class PDOStorage implements Storage, GlobalScope
     {
         try {
             try {
-                $options = $this->forVendor(["mysql" => "ENGINE=InnoDB CHARSET=utf8"]);
-                $this->pdo->exec(
-                    "CREATE TABLE TokenBucket (
-                        name      VARCHAR(128)     PRIMARY KEY,
-                        microtime DOUBLE PRECISION NOT NULL
-                     ) $options;"
-                );
+                $this->onErrorRollback(function () {
+                    $options = $this->forVendor(["mysql" => "ENGINE=InnoDB CHARSET=utf8"]);
+                    $this->pdo->exec(
+                        "CREATE TABLE TokenBucket (
+                            name      VARCHAR(128)     PRIMARY KEY,
+                            microtime DOUBLE PRECISION NOT NULL
+                         ) $options;"
+                    );
+                });
             } catch (\PDOException $e) {
                 /*
                  * This exception is ignored to provide a portable way
@@ -94,13 +96,17 @@ final class PDOStorage implements Storage, GlobalScope
     public function isBootstrapped()
     {
         try {
-            return (bool) $this->querySingleValue(
-                "SELECT 1 FROM TokenBucket WHERE name=?",
-                [$this->name]
-            );
+            return $this->onErrorRollback(function () {
+                return (bool) $this->querySingleValue(
+                    "SELECT 1 FROM TokenBucket WHERE name=?",
+                    [$this->name]
+                );
+            });
         } catch (StorageException $e) {
             // This seems to be a portable way to determine if the table exists or not.
             return false;
+        } catch (\PDOException $e) {
+            throw new StorageException("Can't check bootstrapped state", 0, $e);
         }
     }
 
@@ -180,7 +186,29 @@ final class PDOStorage implements Storage, GlobalScope
             throw new StorageException("The query failed.", 0, $e);
         }
     }
-    
+
+    /**
+     * Rollback to an implicit savepoint.
+     *
+     * @throws \PDOException
+     */
+    private function onErrorRollback(callable $code)
+    {
+        if (!$this->pdo->inTransaction()) {
+            return call_user_func($code);
+        }
+        
+        $this->pdo->exec("SAVEPOINT onErrorRollback");
+        try {
+            $result = call_user_func($code);
+        } catch (\Exception $e) {
+            $this->pdo->exec("ROLLBACK TO SAVEPOINT onErrorRollback");
+            throw $e;
+        }
+        $this->pdo->exec("RELEASE SAVEPOINT onErrorRollback");
+        return $result;
+    }
+
     public function getMutex()
     {
         return $this->mutex;
