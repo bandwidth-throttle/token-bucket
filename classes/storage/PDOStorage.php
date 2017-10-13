@@ -15,7 +15,7 @@ use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class PDOStorage implements Storage, GlobalScope
+final class PDOStorage implements Storage, GlobalScope
 {
 
     /**

@@ -12,7 +12,7 @@ use bandwidthThrottle\tokenBucket\Rate;
  * @license WTFPL
  * @internal
  */
-class TokenConverter
+final class TokenConverter
 {
     
     /**

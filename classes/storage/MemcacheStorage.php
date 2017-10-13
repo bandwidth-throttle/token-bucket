@@ -19,7 +19,7 @@ use malkusch\lock\mutex\MemcacheMutex;
  *             that it will work. As soon as ext-memcache is available for PHP-7
  *             the deprecation will be reverted.
  */
-class MemcacheStorage implements Storage, GlobalScope
+final class MemcacheStorage implements Storage, GlobalScope
 {
 
     /**

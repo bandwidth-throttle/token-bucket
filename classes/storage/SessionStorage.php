@@ -17,7 +17,7 @@ use bandwidthThrottle\tokenBucket\storage\scope\SessionScope;
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class SessionStorage implements Storage, SessionScope
+final class SessionStorage implements Storage, SessionScope
 {
  
     /**

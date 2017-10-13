@@ -15,7 +15,7 @@ use bandwidthThrottle\tokenBucket\storage\scope\RequestScope;
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class SingleProcessStorage implements Storage, RequestScope
+final class SingleProcessStorage implements Storage, RequestScope
 {
  
     /**

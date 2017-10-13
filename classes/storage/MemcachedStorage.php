@@ -14,7 +14,7 @@ use malkusch\lock\mutex\CASMutex;
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license WTFPL
  */
-class MemcachedStorage implements Storage, GlobalScope
+final class MemcachedStorage implements Storage, GlobalScope
 {
 
     /**
