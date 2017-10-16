@@ -60,6 +60,7 @@
 
 			<h3>Exceptions</h3>
 			<ul>
+				<li><a href="class-bandwidthThrottle.tokenBucket.TimeoutException.html">TimeoutException</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html">TokenBucketException</a></li>
 			</ul>
 
@@ -133,7 +134,7 @@ storage.</p>
 
 
 	<div class="info">
-		
+		<b>Final</b><br>
 		
 		<b>Namespace:</b> <a href="namespace-bandwidthThrottle.html">bandwidthThrottle</a>\<a href="namespace-bandwidthThrottle.tokenBucket.html">tokenBucket</a><br>
 		
@@ -144,7 +145,7 @@ storage.</p>
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#10-234" title="Go to source code">TokenBucket.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#10-244" title="Go to source code">TokenBucket.php</a>
 		<br>
 	</div>
 
@@ -205,7 +206,7 @@ storage.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_bootstrap">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#84-119" title="Go to source code">bootstrap</a>( <span>integer <var>$tokens</var> = <span class="php-num">0</span></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#84-125" title="Go to source code">bootstrap</a>( <span>integer <var>$tokens</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
 			<p>Bootstraps the storage with an initial amount of tokens.</p>
@@ -254,7 +255,7 @@ method in your application's bootstrap or deploy process.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_consume">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#121-168" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span>, <span>float <var>&amp; $seconds</var> = <span class="php-num">0</span></span> )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#127-178" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span>, <span>float <var>&amp; $seconds</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
 			<p>Consumes tokens from the bucket.</p>
@@ -309,7 +310,7 @@ remaining seconds to wait are written to $seconds.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getRate">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#170-178" title="Go to source code">getRate</a>( )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#180-188" title="Go to source code">getRate</a>( )</code>
 
 		<div class="description short">
 			<p>Returns the token add rate.</p>
@@ -343,7 +344,7 @@ remaining seconds to wait are written to $seconds.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getCapacity">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#180-188" title="Go to source code">getCapacity</a>( )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#190-198" title="Go to source code">getCapacity</a>( )</code>
 
 		<div class="description short">
 			<p>The token capacity of this bucket.</p>
@@ -377,7 +378,7 @@ remaining seconds to wait are written to $seconds.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getTokens">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#190-206" title="Go to source code">getTokens</a>( )</code>
+		<code><a href="source-class-bandwidthThrottle.tokenBucket.TokenBucket.html#200-216" title="Go to source code">getTokens</a>( )</code>
 
 		<div class="description short">
 			<p>Returns the currently available tokens of this bucket.</p>

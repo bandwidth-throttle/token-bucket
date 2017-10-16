@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class bandwidthThrottle\tokenBucket\BlockingConsumer</title>
+	<title>Class bandwidthThrottle\tokenBucket\TimeoutException</title>
 
 	<link rel="stylesheet" href="resources/style.css?c2f33731c1948fbed7c333554678bfa68d4817da">
 
@@ -51,7 +51,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">BlockingConsumer</a></li>
+				<li><a href="class-bandwidthThrottle.tokenBucket.BlockingConsumer.html">BlockingConsumer</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.Rate.html">Rate</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">TokenBucket</a></li>
 			</ul>
@@ -60,7 +60,7 @@
 
 			<h3>Exceptions</h3>
 			<ul>
-				<li><a href="class-bandwidthThrottle.tokenBucket.TimeoutException.html">TimeoutException</a></li>
+				<li class="active"><a href="class-bandwidthThrottle.tokenBucket.TimeoutException.html">TimeoutException</a></li>
 				<li><a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html">TokenBucketException</a></li>
 			</ul>
 
@@ -97,13 +97,35 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class BlockingConsumer</h1>
+	<h1>Class TimeoutException</h1>
 
 
 	<div class="description">
-	<p>Blocking token bucket consumer.</p>
+	<p>This exception indicates an exceeded timeout.</p>
 	</div>
 
+	<dl class="tree">
+		<dd style="padding-left:0px">
+Exception
+			 implements 
+<span>Throwable</span>
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+			<a href="class-bandwidthThrottle.tokenBucket.TokenBucketException.html"><span>bandwidthThrottle\tokenBucket\TokenBucketException</span></a>
+			
+			
+			
+		</dd>
+		<dd style="padding-left:60px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>bandwidthThrottle\tokenBucket\TimeoutException</span></b>			
+			
+			
+		</dd>
+	</dl>
 
 
 
@@ -124,94 +146,28 @@
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#7-108" title="Go to source code">BlockingConsumer.php</a>
+			<b>Located at</b> <a href="source-class-bandwidthThrottle.tokenBucket.TimeoutException.html#5-15" title="Go to source code">TimeoutException.php</a>
 		<br>
 	</div>
 
 
 
-	<table class="summary methods" id="methods">
-	<caption>Methods summary</caption>
-	<tr data-order="__construct" id="___construct">
 
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#27-41" title="Go to source code">__construct</a>( <span><code><a href="class-bandwidthThrottle.tokenBucket.TokenBucket.html">bandwidthThrottle\tokenBucket\TokenBucket</a></code> <var>$bucket</var></span>, <span>integer|null <var>$timeout</var> = <span class="php-keyword1">null</span></span> )</code>
-
-		<div class="description short">
-			<p>Set the token bucket and an optional timeout.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Set the token bucket and an optional timeout.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$bucket</var></dt>
-					<dd>The token bucket.</dd>
-					<dt><var>$timeout</var></dt>
-					<dd>Optional timeout in seconds.</dd>
-				</dl></div>
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="consume" id="_consume">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_consume">#</a>
-		<code><a href="source-class-bandwidthThrottle.tokenBucket.BlockingConsumer.html#43-74" title="Go to source code">consume</a>( <span>integer <var>$tokens</var></span> )</code>
-
-		<div class="description short">
-			<p>Consumes tokens.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Consumes tokens.</p>
-
-<p>If the underlying token bucket doesn't have sufficient tokens, the
-consumer blocks until it can consume the tokens.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$tokens</var></dt>
-					<dd>The token amount.</dd>
-				</dl></div>
-
-
-				<h4>Throws</h4>
-				<div class="list">
-					LengthException<br>The token amount is larger than the bucket's capacity.<br>
-					<code><a href="class-bandwidthThrottle.tokenBucket.storage.StorageException.html">bandwidthThrottle\tokenBucket\storage\StorageException</a></code><br>The stored microtime could not be accessed.<br>
-					<code><a href="class-bandwidthThrottle.tokenBucket.TimeoutException.html">bandwidthThrottle\tokenBucket\TimeoutException</a></code><br>The timeout was exceeded.
-				</div>
-
-
-
-		</div>
-		</div></td>
+	<table class="summary inherited">
+	<caption>Methods inherited from Exception</caption>
+	<tr>
+		<td><code>
+__construct(), 
+__toString(), 
+__wakeup(), 
+getCode(), 
+getFile(), 
+getLine(), 
+getMessage(), 
+getPrevious(), 
+getTrace(), 
+getTraceAsString()
+		</code></td>
 	</tr>
 	</table>
 
@@ -226,7 +182,17 @@ consumer blocks until it can consume the tokens.</p>
 
 
 
-
+	<table class="summary inherited">
+	<caption>Properties inherited from Exception</caption>
+	<tr>
+		<td><code>
+<var>$code</var>, 
+<var>$file</var>, 
+<var>$line</var>, 
+<var>$message</var>
+		</code></td>
+	</tr>
+	</table>
 
 
 
