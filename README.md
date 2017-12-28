@@ -4,7 +4,7 @@ This is a threadsafe implementation of the [Token Bucket algorithm](https://en.w
 in PHP. You can use a token bucket to limit an usage rate for a resource 
 (e.g. a stream bandwidth or an API usage).
 
-The token bucket is an abstract metapher which doesn't have a direction of
+The token bucket is an abstract metaphor which doesn't have a direction of
 the resource consumption. I.e. you can limit a rate for consuming or producing.
 E.g. you can limit the consumption rate of a third party API service, or you
 can limit the usage rate of your own API service.
