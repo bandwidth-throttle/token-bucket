@@ -5,6 +5,7 @@ namespace bandwidthThrottle\tokenBucket\storage;
 use bandwidthThrottle\tokenBucket\storage\scope\GlobalScope;
 use bandwidthThrottle\tokenBucket\util\DoublePacker;
 use Redis;
+use RedisCluster;
 use RedisException;
 use malkusch\lock\mutex\PHPRedisMutex;
 use malkusch\lock\mutex\Mutex;
@@ -45,9 +46,9 @@ final class PHPRedisStorage implements Storage, GlobalScope
      * called already.
      *
      * @param string $name  The resource name.
-     * @param Redis  $redis The Redis API.
+     * @param Redis|RedisCluster  $redis The Redis API.
      */
-    public function __construct($name, Redis $redis)
+    public function __construct($name, $redis)
     {
         $this->key   = $name;
         $this->redis = $redis;
