@@ -36,14 +36,19 @@ class ZendStorage implements Storage, GlobalScope
 
     public function isBootstrapped()
     {
-        $result = ($this->storage->getItem($this->key) !== null);
-        $this->mutex->notify();
-        return $result;
+        if ($this->storage->getItem($this->key) !== null) {
+            $this->mutex->notify();
+            return true;
+        }
+
+        return false;
     }
 
     public function bootstrap($microtime)
     {
-        $this->setMicrotime($microtime);
+        if ($this->storage->setItem($this->key, $microtime)) {
+            $this->mutex->notify();
+        }
     }
 
     public function remove()
