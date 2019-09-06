@@ -75,7 +75,13 @@ class ZendStorage implements Storage, GlobalScope
         $microtime = $this->storage->getItem($this->key, $success, $casToken);
 
         if (!$microtime) {
-            throw new StorageException('Microtime not stored.');
+            if ($success) {
+                throw new StorageException('Stored microtime is invalid.');
+            } else {
+                throw new StorageException(
+                    'Failed to retrieve stored microtime. Did you bootstrap the storage before this point?'
+                );
+            }
         }
 
         $this->casToken = $casToken;
