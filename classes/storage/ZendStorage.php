@@ -46,9 +46,11 @@ class ZendStorage implements Storage, GlobalScope
 
     public function bootstrap($microtime)
     {
-        if ($this->storage->setItem($this->key, $microtime)) {
-            $this->mutex->notify();
+        if (!$this->storage->setItem($this->key, $microtime)) {
+            throw new StorageException('Could not bootstrap storage.');
         }
+
+        $this->mutex->notify();
     }
 
     public function remove()
