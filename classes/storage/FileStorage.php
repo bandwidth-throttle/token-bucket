@@ -81,7 +81,6 @@ final class FileStorage implements Storage, GlobalScope
     
     public function bootstrap($microtime)
     {
-        $this->open(); // remove() could have deleted the file.
         $this->setMicrotime($microtime);
     }
     
