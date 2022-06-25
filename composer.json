@@ -18,7 +18,7 @@
     },
     "require": {
         "php": ">=5.6",
-        "malkusch/lock": "^1",
+        "malkusch/lock": "^1|^2",
         "ext-bcmath":"*"
     },
     "require-dev": {
