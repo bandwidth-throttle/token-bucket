@@ -69,7 +69,7 @@ final class BlockingConsumer
             }
 
             // sleep at least 1 millisecond.
-            usleep(max(1000, $seconds * 1000000));
+            usleep(max(1000, (int)($seconds * 1000000)));
         }
     }
     
