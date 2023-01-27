@@ -1,0 +1,15 @@
+FROM php:7.4-cli-alpine
+
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install sysvsem
+RUN docker-php-ext-install sysvshm
+RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
+        && pecl install redis-3.1.6 \
+        && docker-php-ext-enable redis.so
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+COPY . .
+
+RUN composer install
+

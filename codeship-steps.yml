@@ -1,0 +1,5 @@
+- type: parallel
+  steps:
+    - command: vendor/bin/phpunit
+      name: Run unit tests for PHP 7.4
+      service: php7

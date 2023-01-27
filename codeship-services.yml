@@ -1,0 +1,5 @@
+php7:
+  build:
+    dockerfile: Dockerfile.php7
+    image: php7
+    cached: true
